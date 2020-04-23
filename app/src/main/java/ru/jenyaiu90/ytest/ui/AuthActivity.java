@@ -1,6 +1,7 @@
-package ru.jenyaiu90.ytest;
+package ru.jenyaiu90.ytest.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,8 +9,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import ru.jenyaiu90.ytest.R;
 
 public class AuthActivity extends Activity
 {
@@ -44,6 +46,24 @@ public class AuthActivity extends Activity
 		teacherCB.setText(R.string.teacher);
 
 		signBT = (Button)findViewById(R.id.signBT);
+		signBT.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				if (loginET.getText().toString().isEmpty())
+				{
+					Toast.makeText(AuthActivity.this, R.string.no_login, Toast.LENGTH_LONG).show();
+					return;
+				}
+				if (passwordET.getText().toString().isEmpty())
+				{
+					Toast.makeText(AuthActivity.this, R.string.no_password, Toast.LENGTH_LONG).show();
+					return;
+				}
+				signIn();
+			}
+		});
 	}
 	public void in(View view)
 	{
@@ -110,10 +130,15 @@ public class AuthActivity extends Activity
 	}
 	public void signIn()
 	{
-		Toast.makeText(AuthActivity.this, "Signed in", Toast.LENGTH_LONG).show();
+		//Todo: signing in
+		Intent i = new Intent();
+		i.putExtra("login", loginET.getText().toString());
+		setResult(RESULT_OK, i);
+		finish();
 	}
 	public void signUp()
 	{
-		Toast.makeText(AuthActivity.this, "Signed up", Toast.LENGTH_LONG).show();
+		//Todo: signing up
+		signIn();
 	}
 }

@@ -1,45 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".AuthActivity">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:minHeight="?actionBarSize"
-            android:padding="@dimen/appbar_padding"
-            android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"/>
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"/>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:padding="10dp"
+		android:text="@string/auth"
+		android:textSize="30sp"
+		android:background="@color/colorPrimary"
+		android:textColor="#FFFFFF"
+		android:textStyle="bold"/>
+	<RadioGroup
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+		<RadioButton
+			android:id="@+id/signInRB"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/sign_in"
+			android:checked="true"
+			android:onClick="in"/>
+		<RadioButton
+			android:id="@+id/signUpRB"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/sign_up"
+			android:onClick="up"/>
+	</RadioGroup>
+	<LinearLayout
+		android:id="@+id/inputLL"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+		<EditText
+			android:id="@+id/loginET"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@string/login"/>
+		<EditText
+			android:id="@+id/passwordET"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@string/password"
+			android:inputType="textPassword"/>
+	</LinearLayout>
+	<Button
+		android:id="@+id/signBT"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/sign_in"/>
+</LinearLayout>
