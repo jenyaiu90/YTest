@@ -8,10 +8,19 @@
 	<string name="password">Password</string>
 	<string name="name">Name</string>
 	<string name="surname">Surname</string>
-	<string name="teacher">I`m a teacher</string>
+	<string name="im_teacher">I`m a teacher</string>
 	
 	<string name="no_login">Login must be filled</string>
 	<string name="no_password">Password must be filled</string>
 	<string name="no_name">Name must be filled</string>
 	<string name="no_surname">Surname must be filled</string>
+	
+	<string name="icons_copyright">Icons were created by icons8.ru</string>
+	
+	<string name="teacher">Teacher</string>
+	<string name="student">Student</string>
+	<string name="is_teacher">Type</string>
+	<string name="email">E-mail</string>
+	<string name="phone_number">Phone number</string>
+	<string name="edit">Edit</string>
 </resources>

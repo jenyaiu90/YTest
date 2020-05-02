@@ -1,4 +1,4 @@
-package ru.jenyaiu90.ytest.ui;
+package ru.jenyaiu90.ytest.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -43,7 +43,7 @@ public class AuthActivity extends Activity
 		surnameET.setHint(R.string.surname);
 
 		teacherCB = new CheckBox(AuthActivity.this);
-		teacherCB.setText(R.string.teacher);
+		teacherCB.setText(R.string.im_teacher);
 
 		signBT = (Button)findViewById(R.id.signBT);
 		signBT.setOnClickListener(new View.OnClickListener()
