@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity
 	public void account(@Nullable View view)
 	{
 		Intent i = new Intent(MainActivity.this, AccountActivity.class);
+		i.putExtra(AccountActivity.LOGIN, login);
+		i.putExtra(AccountActivity.ACC_LOGIN, login);
 		startActivity(i);
 	}
 	public void auth(@Nullable View view)
