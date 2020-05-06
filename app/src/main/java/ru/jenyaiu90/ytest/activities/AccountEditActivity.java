@@ -15,20 +15,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.io.InputStream;
 
 import ru.jenyaiu90.ytest.R;
+import ru.jenyaiu90.ytest.data.User;
 
 public class AccountEditActivity extends Activity
 {
-	public static final String LOGIN = "login";
-	public static final String NAME = "name";
-	public static final String SURNAME = "surname";
-	public static final String EMAIL = "email";
-	public static final String PHONE_NUMBER = "phone_number";
+	public static final String USER = "user";
 	public static final int GET_IMAGE_REQUEST = 1;
 
-	protected String login, name, surname, email, phoneNumber;
+	protected User user;
 	protected Drawable image;
 
 	protected ImageView imageIV;
@@ -41,12 +40,7 @@ public class AccountEditActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_account_edit);
 
-		login = getIntent().getStringExtra(LOGIN);
-		name = getIntent().getStringExtra(NAME);
-		surname = getIntent().getStringExtra(SURNAME);
-		email = getIntent().getStringExtra(EMAIL);
-		phoneNumber = getIntent().getStringExtra(PHONE_NUMBER);
-		image = getResources().getDrawable(R.drawable.account);
+		user = new Gson().fromJson(getIntent().getStringExtra(USER), User.class);
 
 		imageIV = (ImageView)findViewById(R.id.imageIV);
 		loginTV = (TextView)findViewById(R.id.loginTV);
@@ -57,12 +51,13 @@ public class AccountEditActivity extends Activity
 		oldPasswordET = (EditText)findViewById(R.id.oldPasswordET);
 		newPasswordET = (EditText)findViewById(R.id.newPasswordET);
 
+		image = user.getImage();
 		imageIV.setImageDrawable(image == null ? getResources().getDrawable(R.drawable.account) : image);
-		loginTV.setText(login);
-		nameET.setText(name);
-		surnameET.setText(surname);
-		emailET.setText(email);
-		phoneNumberET.setText(phoneNumber);
+		loginTV.setText(user.getLogin());
+		nameET.setText(user.getName());
+		surnameET.setText(user.getSurname());
+		emailET.setText(user.getEmail());
+		phoneNumberET.setText(user.getPhone_number());
 	}
 
 	public void load(View view)
@@ -88,8 +83,49 @@ public class AccountEditActivity extends Activity
 			Toast.makeText(AccountEditActivity.this, R.string.no_password, Toast.LENGTH_LONG).show();
 			return;
 		}
-		//Todo: Check password
-		//Todo: Send to server
+		String email = emailET.getText().toString();
+		if (!email.isEmpty())
+		{
+			boolean wasA = false, wasD = false;
+			for (int i = 0; i < email.length(); i++)
+			{
+				switch (email.charAt(i))
+				{
+					case ' ':
+						Toast.makeText(AccountEditActivity.this, R.string.invalid_email, Toast.LENGTH_LONG).show();
+						return;
+					case '@':
+						if (wasA)
+						{
+							Toast.makeText(AccountEditActivity.this, R.string.invalid_email, Toast.LENGTH_LONG).show();
+							return;
+						}
+						else
+						{
+							wasA = true;
+						}
+						break;
+					case '.':
+						if (wasA)
+						{
+							wasD = true;
+						}
+				}
+
+			}
+			if (!wasA || !wasD)
+			{
+				Toast.makeText(AccountEditActivity.this, R.string.invalid_email, Toast.LENGTH_LONG).show();
+				return;
+			}
+		}
+		//Todo: check password
+		user.setName(nameET.getText().toString());
+		user.setSurname(surnameET.getText().toString());
+		user.setEmail(emailET.getText().toString());
+		user.setPhone_number(phoneNumberET.getText().toString());
+		user.setImage(image);
+		//Todo: send to server
 		setResult(RESULT_OK);
 		finish();
 	}

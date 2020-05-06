@@ -2,19 +2,18 @@ package ru.jenyaiu90.ytest.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import java.io.Serializable;
+import com.google.gson.Gson;
 
 import ru.jenyaiu90.ytest.R;
 import ru.jenyaiu90.ytest.adapters.InfoAdapter;
+import ru.jenyaiu90.ytest.data.User;
 
 public class AccountActivity extends Activity
 {
@@ -26,9 +25,8 @@ public class AccountActivity extends Activity
 	protected ImageView imageIV;
 	protected ListView infoLV;
 
-	protected String login, accountLogin, name, surname, email, phoneNumber;
-	protected Drawable image;
-	protected boolean isTeacher;
+	protected User user;
+	protected String login, accountLogin;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -38,7 +36,6 @@ public class AccountActivity extends Activity
 
 		login = getIntent().getStringExtra(LOGIN);
 		accountLogin = getIntent().getStringExtra(ACC_LOGIN);
-		isTeacher = false;
 
 		accountLL = (LinearLayout)findViewById(R.id.accountLL);
 		imageIV = (ImageView)findViewById(R.id.imageIV);
@@ -56,11 +53,7 @@ public class AccountActivity extends Activity
 				public void onClick(View v)
 				{
 					Intent i = new Intent(AccountActivity.this, AccountEditActivity.class);
-					i.putExtra(AccountEditActivity.LOGIN, login);
-					i.putExtra(AccountEditActivity.NAME, name);
-					i.putExtra(AccountEditActivity.SURNAME, surname);
-					i.putExtra(AccountEditActivity.EMAIL, email);
-					i.putExtra(AccountEditActivity.PHONE_NUMBER, phoneNumber);
+					i.putExtra(AccountEditActivity.USER, new Gson().toJson(user));
 					startActivityForResult(i, EDIT_REQUEST);
 				}
 			});
@@ -70,20 +63,16 @@ public class AccountActivity extends Activity
 
 	protected void load()
 	{
-		name = "Name";
-		surname = "Surname";
-		email = "Email@example.com";
-		phoneNumber = "+70000000000";
-		image = getResources().getDrawable(R.drawable.account);
+		user = new User(accountLogin);
 
-		imageIV.setImageDrawable(image == null ? getResources().getDrawable(R.drawable.account) : image);
+		imageIV.setImageDrawable(user.getImage() == null ? getResources().getDrawable(R.drawable.account) : user.getImage());
 
 		String infos[][] = new String[][]
 				{{ getResources().getString(R.string.login), accountLogin },
-						{ getResources().getString(R.string.name), name + " " + surname },
-						{ "Is teacher", getResources().getString(isTeacher ? R.string.teacher : R.string.student) },
-						{ getResources().getString(R.string.email), email },
-						{ getResources().getString(R.string.phone_number), phoneNumber }};
+						{ getResources().getString(R.string.name), user.getName() + " " + user.getSurname() },
+						{ "Is teacher", getResources().getString(user.getIsTeacher() ? R.string.teacher : R.string.student) },
+						{ getResources().getString(R.string.email), user.getEmail() },
+						{ getResources().getString(R.string.phone_number), user.getPhone_number() }};
 		InfoAdapter infoAdapter = new InfoAdapter(AccountActivity.this, infos);
 		infoLV.setAdapter(infoAdapter);
 	}
