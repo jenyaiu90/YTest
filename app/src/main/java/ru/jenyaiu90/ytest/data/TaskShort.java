@@ -1,18 +1,34 @@
 package ru.jenyaiu90.ytest.data;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class TaskShort extends Task
 {
-	protected String answer;
+	protected String answers[];
+	protected String inAnswer;
 
-	public TaskShort(@NonNull String text, @Nullable Drawable image, int cost,
-					 String answer)
+	public TaskShort(String text, @Nullable Bitmap image, int cost, @NonNull String answers[])
 	{
 		super(text, image, TaskType.SHORT, cost);
-		this.answer = answer;
+		this.answers = answers;
+		inAnswer = "";
+	}
+
+	public void inputAnswer(String ans)
+	{
+		inAnswer = ans;
+	}
+
+	public boolean isAnswer()
+	{
+		return !(inAnswer.isEmpty());
+	}
+
+	public String getInAnswer()
+	{
+		return inAnswer;
 	}
 }

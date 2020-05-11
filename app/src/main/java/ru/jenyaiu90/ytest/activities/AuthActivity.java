@@ -65,7 +65,7 @@ public class AuthActivity extends Activity
 			}
 		});
 	}
-	public void in(View view)
+	public void in(View view) //Переключение полей на вход
 	{
 		inputLL.removeAllViews();
 		inputLL.addView(loginET);
@@ -90,7 +90,7 @@ public class AuthActivity extends Activity
 			}
 		});
 	}
-	public void up(View view)
+	public void up(View view) //Переключение полей на регистрацию
 	{
 		inputLL.removeAllViews();
 		inputLL.addView(loginET);
@@ -128,15 +128,20 @@ public class AuthActivity extends Activity
 			}
 		});
 	}
-	public void signIn()
+	public void signIn() //Вход
 	{
 		//Todo: signing in
 		Intent i = new Intent();
-		i.putExtra("login", loginET.getText().toString());
+		i.putExtra(MainActivity.LOGIN, loginET.getText().toString());
+
+		//TMP
+		i.putExtra(MainActivity.IS_TEACHER, teacherCB.isChecked());
+		//End TMP
+
 		setResult(RESULT_OK, i);
 		finish();
 	}
-	public void signUp()
+	public void signUp() //Регистрация
 	{
 		//Todo: signing up
 		signIn();

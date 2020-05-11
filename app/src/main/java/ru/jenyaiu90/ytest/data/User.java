@@ -1,8 +1,8 @@
 package ru.jenyaiu90.ytest.data;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 
 public class User
 {
@@ -11,10 +11,10 @@ public class User
 	protected String surname;
 	protected String email;
 	protected String phone_number;
-	protected Drawable image;
+	protected Bitmap image;
 	protected boolean isTeacher;
 
-	public User(String login)
+	public User(@NonNull String login)
 	{
 		this.login = login;
 		name = "Name";
@@ -70,12 +70,12 @@ public class User
 		this.phone_number = phone_number;
 	}
 
-	public Drawable getImage()
+	public Bitmap getImage()
 	{
 		return image;
 	}
 
-	public void setImage(Drawable image)
+	public void setImage(Bitmap image)
 	{
 		this.image = image;
 	}

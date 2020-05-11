@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,11 +23,11 @@ import ru.jenyaiu90.ytest.data.User;
 
 public class AccountEditActivity extends Activity
 {
-	public static final String USER = "user";
-	public static final int GET_IMAGE_REQUEST = 1;
+	public static final String USER = "user"; //Для намерения: пользователь
+	public static final int GET_IMAGE_REQUEST = 1; //Код запроса на получение фотографии
 
 	protected User user;
-	protected Drawable image;
+	protected Bitmap image;
 
 	protected ImageView imageIV;
 	protected TextView loginTV;
@@ -52,7 +51,14 @@ public class AccountEditActivity extends Activity
 		newPasswordET = (EditText)findViewById(R.id.newPasswordET);
 
 		image = user.getImage();
-		imageIV.setImageDrawable(image == null ? getResources().getDrawable(R.drawable.account) : image);
+		if (image == null)
+		{
+			imageIV.setImageDrawable(getResources().getDrawable(R.drawable.account));
+		}
+		else
+		{
+			imageIV.setImageBitmap(image);
+		}
 		loginTV.setText(user.getLogin());
 		nameET.setText(user.getName());
 		surnameET.setText(user.getSurname());
@@ -60,14 +66,14 @@ public class AccountEditActivity extends Activity
 		phoneNumberET.setText(user.getPhone_number());
 	}
 
-	public void load(View view)
+	public void load(View view) //Загрузка изображения
 	{
 		Intent getImage = new Intent(Intent.ACTION_PICK);
 		getImage.setType("image/*");
 		startActivityForResult(getImage, GET_IMAGE_REQUEST);
 	}
 
-	public void remove(View view)
+	public void remove(View view) //Удаление изображения
 	{
 		if (image != null)
 		{
@@ -76,15 +82,15 @@ public class AccountEditActivity extends Activity
 		}
 	}
 
-	public void save(View view)
+	public void save(View view) //Сохранение данных
 	{
-		if (newPasswordET.getText().toString().isEmpty() ^ oldPasswordET.getText().toString().isEmpty())
+		if (newPasswordET.getText().toString().isEmpty() ^ oldPasswordET.getText().toString().isEmpty()) //Если введён только один пароль
 		{
 			Toast.makeText(AccountEditActivity.this, R.string.no_password, Toast.LENGTH_LONG).show();
 			return;
 		}
 		String email = emailET.getText().toString();
-		if (!email.isEmpty())
+		if (!email.isEmpty()) //Проверка адреса элекронной почты на корректность
 		{
 			boolean wasA = false, wasD = false;
 			for (int i = 0; i < email.length(); i++)
@@ -113,7 +119,7 @@ public class AccountEditActivity extends Activity
 				}
 
 			}
-			if (!wasA || !wasD)
+			if (!wasA || !wasD) //Если в адресе не встретилось ни @, ни . после неё
 			{
 				Toast.makeText(AccountEditActivity.this, R.string.invalid_email, Toast.LENGTH_LONG).show();
 				return;
@@ -130,7 +136,7 @@ public class AccountEditActivity extends Activity
 		finish();
 	}
 
-	public void cancel(View view)
+	public void cancel(View view) //Отменить
 	{
 		setResult(RESULT_CANCELED);
 		finish();
@@ -141,16 +147,15 @@ public class AccountEditActivity extends Activity
 	{
 		switch (requestCode)
 		{
-			case GET_IMAGE_REQUEST:
+			case GET_IMAGE_REQUEST: //Получение изображения
 				if (resultCode == RESULT_OK)
 				{
 					try
 					{
 						Uri imageUri = data.getData();
 						InputStream imageStream = getContentResolver().openInputStream(imageUri);
-						Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-						image = new BitmapDrawable(getResources(), selectedImage);
-						imageIV.setImageDrawable(image);
+						image = BitmapFactory.decodeStream(imageStream);
+						imageIV.setImageBitmap(image);
 					}
 					catch (Exception e)
 					{

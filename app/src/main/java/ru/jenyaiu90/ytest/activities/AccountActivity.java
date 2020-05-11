@@ -17,9 +17,9 @@ import ru.jenyaiu90.ytest.data.User;
 
 public class AccountActivity extends Activity
 {
-	public static final String LOGIN = "login";
-	public static final String ACC_LOGIN = "accountLogin";
-	public static final int EDIT_REQUEST = 1;
+	public static final String LOGIN = "login"; //Для намерения: логин просматриващего
+	public static final String ACC_LOGIN = "accountLogin"; //Для намерения: логин просматриваемого аккаунта
+	public static final int EDIT_REQUEST = 1; //Код запроса активности редактирования аккаунта
 
 	protected LinearLayout accountLL;
 	protected ImageView imageIV;
@@ -43,7 +43,7 @@ public class AccountActivity extends Activity
 
 		load();
 
-		if (login.equals(accountLogin))
+		if (login.equals(accountLogin)) //Добавление кнопки редактирования, если пользователь просматривает свой аккаунт
 		{
 			Button editBT = new Button(AccountActivity.this);
 			editBT.setText(R.string.edit);
@@ -57,15 +57,22 @@ public class AccountActivity extends Activity
 					startActivityForResult(i, EDIT_REQUEST);
 				}
 			});
-			accountLL.addView(editBT);
+			accountLL.addView(editBT, 1 );
 		}
 	}
 
-	protected void load()
+	protected void load() //Загрузка информации о пользователе
 	{
 		user = new User(accountLogin);
 
-		imageIV.setImageDrawable(user.getImage() == null ? getResources().getDrawable(R.drawable.account) : user.getImage());
+		if (user.getImage() == null)
+		{
+			imageIV.setImageDrawable(getResources().getDrawable(R.drawable.account));
+		}
+		else
+		{
+			imageIV.setImageBitmap(user.getImage());
+		}
 
 		String infos[][] = new String[][]
 				{{ getResources().getString(R.string.login), accountLogin },
@@ -83,7 +90,7 @@ public class AccountActivity extends Activity
 		switch (requestCode)
 		{
 			case EDIT_REQUEST:
-				if (resultCode == RESULT_OK)
+				if (resultCode == RESULT_OK) //Если изменения внесены, перезагрузить данные  пользователя
 				{
 					load();
 				}

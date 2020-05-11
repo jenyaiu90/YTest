@@ -18,8 +18,8 @@ public class InfoAdapter extends ArrayAdapter<String[]>
 		super(context, R.layout.list_item_info, arr);
 	}
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent)
+	@Override @NonNull
+	public View getView(int position, View convertView, @NonNull ViewGroup parent)
 	{
 		String[] str = getItem(position);
 		if (convertView == null)

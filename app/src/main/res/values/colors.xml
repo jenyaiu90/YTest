@@ -4,4 +4,6 @@
 	<color name="colorPrimaryDark">#1F0065</color>
 	<color name="colorAccent">#00E1CB</color>
 	<color name="colorText">#000000</color>
+	<color name="currentTask">#EEEE33</color>
+	<color name="savedTask">#5555FF</color>
 </resources>

@@ -26,9 +26,14 @@
 	
 	<string name="load_image">Load image</string>
 	<string name="remove_image">Remove image</string>
+	<string name="remove_images">Remove images</string>
 	<string name="save">Save</string>
 	<string name="cancel">Cancel</string>
 	<string name="old_password">Old password</string>
 	<string name="new_password">New password</string>
 	<string name="invalid_email">Invalid email</string>
+	
+	<string name="prev">Previous</string>
+	<string name="next">Next</string>
+	<string name="no_answer">You didn`t give an answer</string>
 </resources>
