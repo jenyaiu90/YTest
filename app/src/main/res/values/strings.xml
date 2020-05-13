@@ -36,4 +36,9 @@
 	<string name="prev">Previous</string>
 	<string name="next">Next</string>
 	<string name="no_answer">You didn`t give an answer</string>
+	
+	<string name="one_q">One of many</string>
+	<string name="many_q">Many of many</string>
+	<string name="short_q">Short answer</string>
+	<string name="long_q">Long answer</string>
 </resources>

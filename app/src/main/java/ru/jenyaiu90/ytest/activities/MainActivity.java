@@ -70,31 +70,31 @@ public class MainActivity extends AppCompatActivity
 		Intent i;
 		if (isTeacher)
 		{
-			return;
+			i = new Intent(MainActivity.this, TestQListActivity.class);
 		}
 		else
 		{
 			i = new Intent(MainActivity.this, TestQActivity.class);
-			i.putExtra(TestQActivity.TASKS, test.size());
-			for (int j = 0; j < test.size(); j++)
+		}
+		i.putExtra(TestQActivity.TASKS, test.size());
+		for (int j = 0; j < test.size(); j++)
+		{
+			Task.TaskType type = test.getTask(j).getType();
+			i.putExtra(TestQActivity.TASK_TYPE_ + j, type);
+			switch (type)
 			{
-				Task.TaskType type = test.getTask(j).getType();
-				i.putExtra(TestQActivity.TASK_TYPE_ + j, type);
-				switch (type)
-				{
-					case ONE:
-						i.putExtra(TestQActivity.TASK_ + j, new Gson().toJson((TaskOne) (test.getTask(j))));
-						break;
-					case MANY:
-						i.putExtra(TestQActivity.TASK_ + j, new Gson().toJson((TaskMany) (test.getTask(j))));
-						break;
-					case SHORT:
-						i.putExtra(TestQActivity.TASK_ + j, new Gson().toJson((TaskShort) (test.getTask(j))));
-						break;
-					case LONG:
-						i.putExtra(TestQActivity.TASK_ + j, new Gson().toJson((TaskLong) (test.getTask(j))));
-						break;
-				}
+				case ONE:
+					i.putExtra(TestQActivity.TASK_ + j, new Gson().toJson((TaskOne) (test.getTask(j))));
+					break;
+				case MANY:
+					i.putExtra(TestQActivity.TASK_ + j, new Gson().toJson((TaskMany) (test.getTask(j))));
+					break;
+				case SHORT:
+					i.putExtra(TestQActivity.TASK_ + j, new Gson().toJson((TaskShort) (test.getTask(j))));
+					break;
+				case LONG:
+					i.putExtra(TestQActivity.TASK_ + j, new Gson().toJson((TaskLong) (test.getTask(j))));
+					break;
 			}
 		}
 		startActivity(i);
