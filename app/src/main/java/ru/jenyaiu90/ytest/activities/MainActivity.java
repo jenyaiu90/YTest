@@ -23,6 +23,7 @@ import ru.jenyaiu90.ytest.data.TaskMany;
 import ru.jenyaiu90.ytest.data.TaskOne;
 import ru.jenyaiu90.ytest.data.TaskShort;
 import ru.jenyaiu90.ytest.data.Test;
+import ru.jenyaiu90.ytest.data.Util;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity
 
 		auth(null);
 
-		test = generateTest();
+		test = Util.generateTest();
 	}
 
 	public void tests(@Nullable View view) //Перейти к тестам
@@ -76,27 +77,7 @@ public class MainActivity extends AppCompatActivity
 		{
 			i = new Intent(MainActivity.this, TestQActivity.class);
 		}
-		i.putExtra(TestQActivity.TASKS, test.size());
-		for (int j = 0; j < test.size(); j++)
-		{
-			Task.TaskType type = test.getTask(j).getType();
-			i.putExtra(TestQActivity.TASK_TYPE_ + j, type);
-			switch (type)
-			{
-				case ONE:
-					i.putExtra(TestQActivity.TASK_ + j, new Gson().toJson((TaskOne) (test.getTask(j))));
-					break;
-				case MANY:
-					i.putExtra(TestQActivity.TASK_ + j, new Gson().toJson((TaskMany) (test.getTask(j))));
-					break;
-				case SHORT:
-					i.putExtra(TestQActivity.TASK_ + j, new Gson().toJson((TaskShort) (test.getTask(j))));
-					break;
-				case LONG:
-					i.putExtra(TestQActivity.TASK_ + j, new Gson().toJson((TaskLong) (test.getTask(j))));
-					break;
-			}
-		}
+		Util.putTest(test, i);
 		startActivity(i);
 	}
 	public void groups(@Nullable View view) //Перейти к группам
@@ -135,42 +116,5 @@ public class MainActivity extends AppCompatActivity
 				login = data.getStringExtra(LOGIN);
 				isTeacher = data.getBooleanExtra(IS_TEACHER, false); //TMP
 		}
-	}
-
-	protected Test generateTest() //Временный метод, генерирующий тест
-	{
-		LinkedList<String> choiceOne = new LinkedList<>();
-		choiceOne.add("1");
-		choiceOne.add("2");
-		choiceOne.add("4");
-		choiceOne.add("8");
-		TaskOne taskOne = new TaskOne("Сколько будет 2 + 2?", null, 1, choiceOne, 3);
-
-		LinkedList<String> choiceMany = new LinkedList<>();
-		choiceMany.add("А");
-		choiceMany.add("Г");
-		choiceMany.add("D");
-		choiceMany.add("E");
-		choiceMany.add("Ы");
-		LinkedList<Integer> ansMany = new LinkedList<>();
-		ansMany.add(0);
-		ansMany.add(3);
-		TaskMany taskMany = new TaskMany("Какие буквы есть и в русском, и в английском алфавитах?",
-				BitmapFactory.decodeResource(getResources(), R.drawable.info), 1, choiceMany, ansMany);
-
-		TaskShort taskShort = new TaskShort("Какая часть речи отвечает на вопрос \"Какой\"?",
-				null, 1, new String[] {"прилагательное", "Прилагательное",
-				"имя прилагательное", "Имя прилагательное", "причастие", "Причастие"});
-
-		TaskLong taskLong = new TaskLong("Назовите любой город Германии.",
-				BitmapFactory.decodeResource(getResources(), R.drawable.sign_out), 2);
-
-		ArrayList<Task> t = new ArrayList<>(4);
-		t.add(taskOne);
-		t.add(taskMany);
-		t.add(taskShort);
-		t.add(taskLong);
-
-		return new Test(t);
 	}
 }

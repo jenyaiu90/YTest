@@ -37,13 +37,11 @@ import ru.jenyaiu90.ytest.data.TaskMany;
 import ru.jenyaiu90.ytest.data.TaskOne;
 import ru.jenyaiu90.ytest.data.TaskShort;
 import ru.jenyaiu90.ytest.data.Test;
+import ru.jenyaiu90.ytest.data.Util;
 
 public class TestQActivity extends Activity
 {
 	public static final int PHOTO_REQUEST = 1; //Код запроса на получение фотографии
-	public static final String TASK_ = "task_"; //Для намерения: задание номер ...
-	public static final String TASK_TYPE_ = "task_type_"; //Для намерения: тип задания номер ...
-	public static final String TASKS = "tasks"; //Для намерения: количество заданий
 
 	protected Test test;
 
@@ -59,27 +57,8 @@ public class TestQActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_test_q);
 
-		int count = getIntent().getIntExtra(TASKS, 0);
-		ArrayList<Task> alist = new ArrayList<>(count);
-		for (int i = 0; i < count; i++)
-		{
-			switch ((Task.TaskType)(getIntent().getSerializableExtra(TASK_TYPE_ + i)))
-			{
-				case ONE:
-					alist.add(new Gson().fromJson(getIntent().getStringExtra(TASK_ + i), TaskOne.class));
-					break;
-				case MANY:
-					alist.add(new Gson().fromJson(getIntent().getStringExtra(TASK_ + i), TaskMany.class));
-					break;
-				case SHORT:
-					alist.add(new Gson().fromJson(getIntent().getStringExtra(TASK_ + i), TaskShort.class));
-					break;
-				case LONG:
-					alist.add(new Gson().fromJson(getIntent().getStringExtra(TASK_ + i), TaskLong.class));
-					break;
-			}
-		}
-		test = new Test(alist);
+		test = Util.getTestAsExtra(getIntent());
+
 		counterLL = (LinearLayout)findViewById(R.id.counterLL);
 		choiceLL = (LinearLayout)findViewById(R.id.choiceLL);
 		imageIV = (ImageView)findViewById(R.id.imageIV);

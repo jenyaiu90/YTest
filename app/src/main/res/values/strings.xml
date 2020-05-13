@@ -41,4 +41,6 @@
 	<string name="many_q">Many of many</string>
 	<string name="short_q">Short answer</string>
 	<string name="long_q">Long answer</string>
+	
+	<string name="create_q">Create new task</string>
 </resources>

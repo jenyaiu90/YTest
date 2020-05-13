@@ -22,4 +22,9 @@ public class Test
 	{
 		return tasks.get(i);
 	}
+
+	public ArrayList<Task> getTasks()
+	{
+		return tasks;
+	}
 }

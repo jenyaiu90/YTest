@@ -1,7 +1,9 @@
 package ru.jenyaiu90.ytest.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -16,15 +18,12 @@ import ru.jenyaiu90.ytest.data.TaskMany;
 import ru.jenyaiu90.ytest.data.TaskOne;
 import ru.jenyaiu90.ytest.data.TaskShort;
 import ru.jenyaiu90.ytest.data.Test;
+import ru.jenyaiu90.ytest.data.Util;
 
 public class TestQListActivity extends Activity
 {
-	public static final int PHOTO_REQUEST = 1; //Код запроса на получение фотографии
-	public static final String TASK_ = "task_"; //Для намерения: задание номер ...
-	public static final String TASK_TYPE_ = "task_type_"; //Для намерения: тип задания номер ...
-	public static final String TASKS = "tasks"; //Для намерения: количество заданий
-
 	protected Test test;
+	protected ArrayList<Task> alist;
 
 	ListView questionsLV;
 	@Override
@@ -35,28 +34,14 @@ public class TestQListActivity extends Activity
 
 		questionsLV = (ListView)findViewById(R.id.questionsLV);
 
-		int count = getIntent().getIntExtra(TASKS, 0);
-		ArrayList<Task> alist = new ArrayList<>(count);
-		for (int i = 0; i < count; i++)
-		{
-			switch ((Task.TaskType)(getIntent().getSerializableExtra(TASK_TYPE_ + i)))
-			{
-				case ONE:
-					alist.add(new Gson().fromJson(getIntent().getStringExtra(TASK_ + i), TaskOne.class));
-					break;
-				case MANY:
-					alist.add(new Gson().fromJson(getIntent().getStringExtra(TASK_ + i), TaskMany.class));
-					break;
-				case SHORT:
-					alist.add(new Gson().fromJson(getIntent().getStringExtra(TASK_ + i), TaskShort.class));
-					break;
-				case LONG:
-					alist.add(new Gson().fromJson(getIntent().getStringExtra(TASK_ + i), TaskLong.class));
-					break;
-			}
-		}
-		test = new Test(alist);
+		test = Util.getTestAsExtra(getIntent());
+		alist = test.getTasks();
 
+		loadTest();
+	}
+
+	protected void loadTest()
+	{
 		String tasks[][] = new String[test.size()][2];
 
 		for (int i = 0; i < alist.size(); i++)
@@ -84,5 +69,10 @@ public class TestQListActivity extends Activity
 		}
 		QuestionAdapter adapter = new QuestionAdapter(TestQListActivity.this, tasks);
 		questionsLV.setAdapter(adapter);
+	}
+
+	public void create(View view)
+	{
+		
 	}
 }
