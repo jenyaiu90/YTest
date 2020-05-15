@@ -43,4 +43,9 @@ public class TaskOne extends Task
 	{
 		return inAnswer;
 	}
+
+	public int getAnswer()
+	{
+		return answer;
+	}
 }

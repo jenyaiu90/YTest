@@ -9,6 +9,7 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import ru.jenyaiu90.ytest.R;
 import ru.jenyaiu90.ytest.adapters.QuestionAdapter;
@@ -22,6 +23,8 @@ import ru.jenyaiu90.ytest.data.Util;
 
 public class TestQListActivity extends Activity
 {
+	public static final int RESULT_DELETE = -2;
+
 	protected Test test;
 	protected ArrayList<Task> alist;
 
@@ -67,12 +70,54 @@ public class TestQListActivity extends Activity
 			tasks[i][0] = alist.get(i).getText();
 			tasks[i][1] = type;
 		}
-		QuestionAdapter adapter = new QuestionAdapter(TestQListActivity.this, tasks);
+		QuestionAdapter adapter = new QuestionAdapter(TestQListActivity.this, tasks, alist);
 		questionsLV.setAdapter(adapter);
 	}
 
 	public void create(View view)
 	{
-		
+		LinkedList<String> list = new LinkedList<>();
+		list.add("1");
+		list.add("2");
+		TaskOne task = new TaskOne(getResources().getString(R.string.new_task), null, 1, list, 1);
+		test.addTask(task);
+		Intent i = new Intent(TestQListActivity.this, TestQEditActivity.class);
+		i.putExtra(TestQEditActivity.TASK_TYPE, Task.TaskType.ONE);
+		i.putExtra(TestQEditActivity.TASK, new Gson().toJson(task));
+		startActivityForResult(i, test.getTasks().size() - 1);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		if (resultCode == RESULT_OK)
+		{
+			switch ((Task.TaskType)data.getSerializableExtra(TestQEditActivity.TASK_TYPE))
+			{
+				case ONE:
+					test.setTask(requestCode, new Gson().fromJson(data.getStringExtra(TestQEditActivity.TASK), TaskOne.class));
+					break;
+				case MANY:
+					test.setTask(requestCode, new Gson().fromJson(data.getStringExtra(TestQEditActivity.TASK), TaskMany.class));
+					break;
+				case SHORT:
+					test.setTask(requestCode, new Gson().fromJson(data.getStringExtra(TestQEditActivity.TASK), TaskShort.class));
+					break;
+				case LONG:
+					test.setTask(requestCode, new Gson().fromJson(data.getStringExtra(TestQEditActivity.TASK), TaskLong.class));
+					break;
+			}
+			loadTest();
+		}
+		else if (resultCode == RESULT_DELETE)
+		{
+			test.deleteTask(requestCode);
+			loadTest();
+		}
+	}
+
+	public void sActivityForResult(Intent intent, int requestCode)
+	{
+		startActivityForResult(intent, requestCode);
 	}
 }

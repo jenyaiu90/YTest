@@ -27,4 +27,19 @@ public class Test
 	{
 		return tasks;
 	}
+
+	public void setTask(int i, Task task)
+	{
+		tasks.set(i, task);
+	}
+
+	public void addTask(Task task)
+	{
+		tasks.add(task);
+	}
+
+	public void deleteTask(int i)
+	{
+		tasks.remove(i);
+	}
 }

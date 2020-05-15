@@ -40,4 +40,9 @@ public class TaskMany extends Task
 	{
 		return inAnswer;
 	}
+
+	public LinkedList<Integer> getAnswer()
+	{
+		return answer;
+	}
 }

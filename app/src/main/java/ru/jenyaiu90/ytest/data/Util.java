@@ -59,16 +59,16 @@ public class Util
 			switch (type)
 			{
 				case ONE:
-					intent.putExtra(TASK_ + j, new Gson().toJson((TaskOne) (test.getTask(j))));
+					intent.putExtra(TASK_ + j, new Gson().toJson((TaskOne)(test.getTask(j))));
 					break;
 				case MANY:
-					intent.putExtra(TASK_ + j, new Gson().toJson((TaskMany) (test.getTask(j))));
+					intent.putExtra(TASK_ + j, new Gson().toJson((TaskMany)(test.getTask(j))));
 					break;
 				case SHORT:
-					intent.putExtra(TASK_ + j, new Gson().toJson((TaskShort) (test.getTask(j))));
+					intent.putExtra(TASK_ + j, new Gson().toJson((TaskShort)(test.getTask(j))));
 					break;
 				case LONG:
-					intent.putExtra(TASK_ + j, new Gson().toJson((TaskLong) (test.getTask(j))));
+					intent.putExtra(TASK_ + j, new Gson().toJson((TaskLong)(test.getTask(j))));
 					break;
 			}
 		}

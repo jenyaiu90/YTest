@@ -31,4 +31,9 @@ public class TaskShort extends Task
 	{
 		return inAnswer;
 	}
+
+	public String[] getAnswers()
+	{
+		return answers;
+	}
 }

@@ -7,7 +7,8 @@
 	<Button
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:text="@string/create_q"/>
+		android:text="@string/create_q"
+		android:onClick="create"/>
 	<ListView
 		android:id="@+id/questionsLV"
 		android:layout_width="match_parent"
