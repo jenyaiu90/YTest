@@ -49,12 +49,15 @@
 	<string name="short_q">Réponse courte</string>
 	<string name="long_q">Réponse détaillée</string>
 	
+	<string name="result">Résultat</string>
 	<string name="create_q">Créer une nouvelle question</string>
 	<string name="enter_task">Ecrivez votre queston ici</string>
 	<string name="answers">Réponses:</string>
 	<string name="answer">Réponse</string>
 	<string name="cost_">Points pour bonne réponse:</string>
 	<string name="cost">Points</string>
+	<string name="points">Баллы</string>
+	<string name="task">Задание</string>
 	<string name="add_answer">Ajouter une réponse</string>
 	<string name="at_least_two_ans">Il doit y avoir minimun 2 réponses possibles</string>
 	<string name="at_least_one_ans">Il doit y avoir minimun une réponse correcte</string>
@@ -66,6 +69,7 @@
 	<string name="new_task">Nouvelle question</string>
 	<string name="delete">Supprimer</string>
 	<string name="delete_sure">Voulez-vous vraiment suprimer cette question?</string>
-	<string name="answer_sure">Are yot sure you want to finish a test?</string>
+	<string name="answer_sure">Voulez-vous terminer ?</string>
 	<string name="should_set_answer">Вы должны указать правильный ответ</string>
+	<string name="not_checked">Некоторые задания ещё не проверены учителем.</string>
 </resources>

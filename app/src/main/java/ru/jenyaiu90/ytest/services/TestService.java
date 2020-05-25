@@ -6,6 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import ru.jenyaiu90.ytest.entity.AnswerEntity;
 import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
 import ru.jenyaiu90.ytest.entity.TestEntity;
 import ru.jenyaiu90.ytest.entity.UserEntity;
@@ -17,6 +18,9 @@ public interface TestService
 
 	@POST("/test/answer")
 	Call<ServerAnswerEntity> setAnswer(@Query("answers") String[] answers, @Query("test_id") int test_id, @Query("login") String login, @Query("password") String password);
+
+	@GET("test/get_result")
+	Call<List<AnswerEntity>> getAnswers(@Query("login") String login, @Query("test_id") int test_id);
 
 	@GET("/test/get_for_user")
 	Call<List<TestEntity>> getTestsForUser(@Query("login") String login);

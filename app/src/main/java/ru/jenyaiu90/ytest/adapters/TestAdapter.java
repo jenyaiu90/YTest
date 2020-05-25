@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 
 import ru.jenyaiu90.ytest.R;
 import ru.jenyaiu90.ytest.activities.TestQActivity;
+import ru.jenyaiu90.ytest.activities.TestResultActivity;
 import ru.jenyaiu90.ytest.data.Test;
 import ru.jenyaiu90.ytest.entity.TestEntity;
 
@@ -68,7 +69,11 @@ public class TestAdapter extends ArrayAdapter<TestAdapter.TestSolve>
 				{
 					if (getItem(pos).isSolved)
 					{
-
+						Intent testResultIntent = new Intent(getContext(), TestResultActivity.class);
+						testResultIntent.putExtra(TestResultActivity.LOGIN, login);
+						testResultIntent.putExtra(TestResultActivity.TEST_ID, getItem(pos).test.getId());
+						testResultIntent.putExtra(TestResultActivity.TEST_NAME, getItem(pos).test.getName());
+						getContext().startActivity(testResultIntent);
 					}
 					else
 					{

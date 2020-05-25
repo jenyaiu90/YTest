@@ -24,6 +24,7 @@
 		<activity android:name=".activities.TestQListActivity" android:configChanges="orientation|screenSize"/>
 		<activity android:name=".activities.TestQEditActivity" android:configChanges="orientation|screenSize"/>
 		<activity android:name=".activities.TestListActivity" android:configChanges="orientation|screenSize"/>
+		<activity android:name=".activities.TestResultActivity" android:configChanges="orientation|screenSize"/>
 	</application>
 	
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>

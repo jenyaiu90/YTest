@@ -3,6 +3,7 @@ package ru.jenyaiu90.ytest.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
@@ -416,6 +417,12 @@ public class TestQActivity extends Activity
 		{
 			if (result != null && result.getAnswer().equals("OK"))
 			{
+				Intent testResultIntent = new Intent(TestQActivity.this, TestResultActivity.class);
+				testResultIntent.putExtra(TestResultActivity.LOGIN, login);
+				testResultIntent.putExtra(TestResultActivity.TEST_ID, test.getId());
+				testResultIntent.putExtra(TestResultActivity.TEST_NAME, test.getName());
+				startActivity(testResultIntent);
+
 				TestQActivity.this.finish();
 			}
 			else
