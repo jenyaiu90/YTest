@@ -30,13 +30,12 @@ public class MainActivity extends AppCompatActivity
 	public static final int AUTH_REQUEST = 1; //Код запроса на вход
 
 	public static final String LOGIN = "login"; //Для намерения: логин
-
-	//TMP
+	public static final String PASSWORD = "password"; //Для намерения: пароль
 	public static final String IS_TEACHER = "is_teacher"; //Для намерения: является ли учителем
-	protected Test test;
-	//End TMP
 
-	protected String login;
+	protected Test test;
+
+	protected String login, password;
 	protected boolean isTeacher;
 
 	protected ImageButton testsIB, groupsIB, accountIB, signOutIB;
@@ -72,13 +71,16 @@ public class MainActivity extends AppCompatActivity
 		if (isTeacher)
 		{
 			i = new Intent(MainActivity.this, TestQListActivity.class);
+			Util.putTest(test, i);
+			startActivity(i);
 		}
 		else
 		{
-			i = new Intent(MainActivity.this, TestQActivity.class);
+			i = new Intent(MainActivity.this, TestListActivity.class);
+			i.putExtra(TestListActivity.LOGIN, login);
+			i.putExtra(TestListActivity.PASSWORD, password);
+			startActivity(i);
 		}
-		Util.putTest(test, i);
-		startActivity(i);
 	}
 	public void groups(@Nullable View view) //Перейти к группам
 	{
@@ -114,7 +116,8 @@ public class MainActivity extends AppCompatActivity
 		{
 			case AUTH_REQUEST: //Получение логина
 				login = data.getStringExtra(LOGIN);
-				isTeacher = data.getBooleanExtra(IS_TEACHER, false); //TMP
+				password = data.getStringExtra(PASSWORD);
+				isTeacher = data.getBooleanExtra(IS_TEACHER, false);
 		}
 	}
 }

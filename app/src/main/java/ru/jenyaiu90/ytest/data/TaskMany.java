@@ -5,7 +5,10 @@ import android.graphics.Bitmap;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Arrays;
 import java.util.LinkedList;
+
+import ru.jenyaiu90.ytest.entity.TaskEntity;
 
 public class TaskMany extends Task
 {
@@ -13,12 +16,42 @@ public class TaskMany extends Task
 	protected LinkedList<Integer> answer;
 	protected LinkedList<Integer> inAnswer;
 
-	public TaskMany(String text, @Nullable Bitmap image, int cost, @NonNull LinkedList<String> choice, @NonNull LinkedList<Integer> answer)
+	public TaskMany(String text, int cost, @NonNull LinkedList<String> choice, @NonNull LinkedList<Integer> answer)
 	{
-		super(text, image, TaskType.MANY, cost);
+		super(text, TaskType.MANY, cost);
 		this.choice = choice;
 		this.answer = answer;
 		inAnswer = null;
+	}
+
+	public TaskMany(TaskEntity entity)
+	{
+		super(entity);
+	}
+
+	@Override
+	protected void _fromEntity(TaskEntity entity)
+	{
+		choice = new LinkedList<>();
+		choice.addAll(Arrays.asList(entity.getChoice()));
+		answer = new LinkedList<>();
+		for (String i : entity.getAnswer())
+		{
+			answer.add(Integer.parseInt(i));
+		}
+	}
+
+	@Override
+	protected TaskEntity _toEntity()
+	{
+		TaskEntity entity = new TaskEntity();
+		String[] choiceA = new String[] {};
+		choice.toArray(choiceA);
+		entity.setChoice(choiceA);
+		String[] answerA = new String[] {};
+		answer.toArray(answerA);
+		entity.setAnswer(answerA);
+		return entity;
 	}
 
 	public LinkedList<String> getChoice()

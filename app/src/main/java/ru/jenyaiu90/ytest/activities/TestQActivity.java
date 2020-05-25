@@ -1,52 +1,58 @@
 package ru.jenyaiu90.ytest.activities;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.provider.MediaStore;
 import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
-import java.io.File;
-import java.io.WriteAbortedException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import ru.jenyaiu90.ytest.R;
 import ru.jenyaiu90.ytest.data.Task;
+import ru.jenyaiu90.ytest.data.TaskEntityComparator;
 import ru.jenyaiu90.ytest.data.TaskLong;
 import ru.jenyaiu90.ytest.data.TaskMany;
 import ru.jenyaiu90.ytest.data.TaskOne;
 import ru.jenyaiu90.ytest.data.TaskShort;
 import ru.jenyaiu90.ytest.data.Test;
 import ru.jenyaiu90.ytest.data.Util;
+import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
+import ru.jenyaiu90.ytest.entity.TaskEntity;
+import ru.jenyaiu90.ytest.entity.TestEntity;
+import ru.jenyaiu90.ytest.services.TaskService;
+import ru.jenyaiu90.ytest.services.TestService;
 
 public class TestQActivity extends Activity
 {
-	public static final int PHOTO_REQUEST = 1; //Код запроса на получение фотографии
+	public static final String TEST_ID = "test_id";
+	public static final String LOGIN = "login";
+	public static final String PASSWORD = "password";
 
 	protected Test test;
+	protected String login, password;
 
-	protected LinearLayout counterLL, choiceLL, imagesLL;
-	protected ImageView imageIV;
+	protected LinearLayout counterLL, choiceLL;
 	protected TextView taskTV;
 
 	protected int task;
@@ -57,15 +63,19 @@ public class TestQActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_test_q);
 
-		test = Util.getTestAsExtra(getIntent());
-
 		counterLL = (LinearLayout)findViewById(R.id.counterLL);
 		choiceLL = (LinearLayout)findViewById(R.id.choiceLL);
-		imageIV = (ImageView)findViewById(R.id.imageIV);
 		taskTV = (TextView)findViewById(R.id.taskTV);
-		imagesLL = null;
 
-		draw(0);
+		login = getIntent().getStringExtra(LOGIN);
+		password = getIntent().getStringExtra(PASSWORD);
+
+		ProgressBar loadPB = new ProgressBar(TestQActivity.this);
+		loadPB.setLayoutParams(new LinearLayout.LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+		loadPB.setIndeterminate(true);
+		counterLL.addView(loadPB);
+		new LoadTestAsync().execute(getIntent().getIntExtra(TEST_ID, 1));
 	}
 
 	protected void draw(int n)
@@ -79,11 +89,11 @@ public class TestQActivity extends Activity
 			taskBT.setWidth(25);
 			if (i == n) //Выделить текущее задание
 			{
-				taskBT.setBackgroundColor(getResources().getColor(R.color.currentTask));
+				taskBT.setBackgroundColor(getResources().getColor(R.color.colorCurrentTask));
 			}
 			else if (test.getTask(i).isAnswer()) //Выделить решённые задания
 			{
-				taskBT.setBackgroundColor(getResources().getColor(R.color.savedTask));
+				taskBT.setBackgroundColor(getResources().getColor(R.color.colorSavedTask));
 			}
 			taskBT.setOnClickListener(new View.OnClickListener()
 			{
@@ -96,7 +106,6 @@ public class TestQActivity extends Activity
 			counterLL.addView(taskBT);
 		}
 		Task currentTask = test.getTask(n); //Получить текущее задание
-		imageIV.setImageBitmap(currentTask.getImage());
 		taskTV.setText(currentTask.getText());
 		choiceLL.removeAllViews();
 		switch (currentTask.getType())
@@ -157,47 +166,6 @@ public class TestQActivity extends Activity
 			}
 			case LONG:
 			{
-				HorizontalScrollView imagesHSV = new HorizontalScrollView(TestQActivity.this);
-				imagesHSV.setLayoutParams(new LinearLayout.LayoutParams(
-						ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-				imagesLL = new LinearLayout(TestQActivity.this);
-				imagesLL.setLayoutParams(new LinearLayout.LayoutParams(
-						ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
-				imagesLL.setOrientation(LinearLayout.HORIZONTAL);
-
-				LinearLayout buttonsLL = new LinearLayout(TestQActivity.this);
-				buttonsLL.setLayoutParams(new LinearLayout.LayoutParams(
-						ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-				buttonsLL.setOrientation(LinearLayout.HORIZONTAL);
-
-				Button loadBT = new Button(TestQActivity.this);
-				Button removeBT = new Button(TestQActivity.this);
-				loadBT.setText(R.string.load_image);
-				removeBT.setText(R.string.remove_images);
-				loadBT.setLayoutParams(new LinearLayout.LayoutParams(
-						0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-				removeBT.setLayoutParams(new LinearLayout.LayoutParams(
-						0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-				loadBT.setOnClickListener(new View.OnClickListener()
-				{
-					@Override
-					public void onClick(View v)
-					{
-						//StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-						//StrictMode.setVmPolicy(builder.build());
-						Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-						startActivityForResult(intent, PHOTO_REQUEST);
-					}
-				});
-				removeBT.setOnClickListener(new View.OnClickListener()
-				{
-					@Override
-					public void onClick(View v)
-					{
-						imagesLL.removeAllViews();
-					}
-				});
-
 				EditText answerET = new EditText(TestQActivity.this);
 				answerET.setLayoutParams(new LinearLayout.LayoutParams(
 						ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -207,43 +175,10 @@ public class TestQActivity extends Activity
 				{
 					TaskLong cTask = (TaskLong)currentTask;
 					answerET.setText(cTask.getInAnswerS());
-					LinkedList<Bitmap> images = cTask.getInAnswerI();
-					if (images != null)
-					{
-						for (Bitmap i : images)
-						{
-							ImageView tmpImageIV = new ImageView(TestQActivity.this);
-							tmpImageIV.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 100));
-							tmpImageIV.setImageBitmap(i);
-							imagesLL.addView(tmpImageIV);
-						}
-					}
 				}
 
-				imagesHSV.addView(imagesLL);
-				buttonsLL.addView(loadBT);
-				buttonsLL.addView(removeBT);
-				choiceLL.addView(imagesHSV);
-				choiceLL.addView(buttonsLL);
 				choiceLL.addView(answerET);
 			}
-		}
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-		switch (requestCode)
-		{
-			case PHOTO_REQUEST: //Получение фотографии
-				if (resultCode == RESULT_OK && data != null && data.getExtras() != null)
-				{
-					ImageView newImageIV = new ImageView(TestQActivity.this);
-					newImageIV.setLayoutParams(new LinearLayout.LayoutParams(
-							ViewGroup.LayoutParams.WRAP_CONTENT, 100));
-					newImageIV.setImageBitmap((Bitmap)data.getExtras().get("data"));
-					imagesLL.addView(newImageIV);
-				}
 		}
 	}
 
@@ -306,18 +241,12 @@ public class TestQActivity extends Activity
 			case LONG:
 			{
 				TaskLong cTask = (TaskLong)test.getTask(task);
-				String answer = ((EditText)(choiceLL.getChildAt(2))).getText().toString();
-				LinkedList<Bitmap> answers = new LinkedList<>();
-				for (int i = 0; i < imagesLL.getChildCount(); i++)
-				{
-					answers.add(((BitmapDrawable)(((ImageView)(imagesLL.getChildAt(i))).getDrawable())).getBitmap());
-				}
-				if (answer.isEmpty() && answers.isEmpty()) //Если ответ не был дан
+				String answer = ((EditText)(choiceLL.getChildAt(0))).getText().toString();
+				if (answer.isEmpty()) //Если ответ не был дан
 				{
 					Toast.makeText(TestQActivity.this, R.string.no_answer, Toast.LENGTH_LONG).show();
 					return;
 				}
-				cTask.inputAnswer(answers);
 				cTask.inputAnswer(answer);
 				break;
 			}
@@ -340,11 +269,160 @@ public class TestQActivity extends Activity
 	{
 		if (task == test.size() - 1)
 		{
-			Toast.makeText(TestQActivity.this, "Vsyo!", Toast.LENGTH_LONG).show();
+			AlertDialog.Builder builder = new AlertDialog.Builder(TestQActivity.this);
+			builder.setMessage(R.string.answer_sure)
+					.setIcon(R.drawable.info)
+					.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
+					{
+						@Override
+						public void onClick(DialogInterface dialog, int which)
+						{
+							finishTest();
+						}
+					})
+					.setNegativeButton(R.string.no, null)
+					.setCancelable(true);
+			AlertDialog alert = builder.create();
+			alert.show();
 		}
 		else
 		{
 			draw(task + 1);
+		}
+	}
+
+	protected void finishTest()
+	{
+		String[] answers = new String[test.getTasks().size()];
+		for (int i = 0; i < test.getTasks().size(); i++)
+		{
+			if (test.getTask(i).isAnswer())
+			{
+				switch (test.getTask(i).getType())
+				{
+					case ONE:
+						answers[i] = Integer.toString(((TaskOne)test.getTask(i)).getInAnswer());
+						break;
+					case MANY:
+						Integer[] ans = new Integer[((TaskMany)test.getTask(i)).getInAnswer().size()];
+						((TaskMany)test.getTask(i)).getInAnswer().toArray(ans);
+						answers[i] = ans[0].toString();
+						for (int j = 1; j < ans.length; j++)
+						{
+							answers[i] += "/=@/" + ans[j];
+						}
+						break;
+					case SHORT:
+						answers[i] = ((TaskShort)test.getTask(i)).getInAnswer();
+						break;
+					default:
+						answers[i] = ((TaskLong)test.getTask(i)).getInAnswerS();
+						break;
+				}
+			}
+			else
+			{
+				answers[i] = "/@=/";
+			}
+		}
+		counterLL.removeAllViews();
+		ProgressBar loadPB = new ProgressBar(TestQActivity.this);
+		loadPB.setLayoutParams(new LinearLayout.LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+		loadPB.setIndeterminate(true);
+		counterLL.addView(loadPB);
+		String[] data = new String[answers.length + 3];
+		data[0] = login;
+		data[1] = password;
+		data[2] = Integer.toString(test.getId());
+		for (int i = 0; i < answers.length; i++)
+		{
+			data[i + 3] = answers[i];
+		}
+		new SaveTestAsync().execute(data);
+	}
+
+	class LoadTestAsync extends AsyncTask<Integer, String, Test>
+	{
+		@Override
+		protected Test doInBackground(Integer... id)
+		{
+			Retrofit rf = new Retrofit.Builder()
+					.baseUrl(Util.IP)
+					.addConverterFactory(GsonConverterFactory.create())
+					.build();
+			TestService testService = rf.create(TestService.class);
+			Call<TestEntity> resp = testService.getTest(id[0]);
+			Test result = null;
+			try
+			{
+				Response<TestEntity> response = resp.execute();
+				TestEntity res = response.body();
+
+				if (res == null)
+				{
+					return null;
+				}
+
+				TaskService taskService = rf.create(TaskService.class);
+				Call<List<TaskEntity>> taskResp = taskService.getTasksOfTest(id[0]);
+				Response<List<TaskEntity>> taskResponse = taskResp.execute();
+				ArrayList<TaskEntity> tasks = new ArrayList<>(taskResponse.body());
+				tasks.sort(new TaskEntityComparator());
+				result = new Test(res, tasks);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(Test result)
+		{
+			test = result;
+			draw(0);
+		}
+	}
+
+	class SaveTestAsync extends AsyncTask<String, String, ServerAnswerEntity>
+	{
+		@Override
+		protected ServerAnswerEntity doInBackground(String... data)
+		{
+			Retrofit rf = new Retrofit.Builder()
+					.baseUrl(Util.IP)
+					.addConverterFactory(GsonConverterFactory.create())
+					.build();
+			TestService testService = rf.create(TestService.class);
+			String[] answers = Arrays.copyOfRange(data, 3, data.length);
+			Call<ServerAnswerEntity> resp = testService.setAnswer(answers, Integer.parseInt(data[2]), data[0], data[1]);
+			ServerAnswerEntity result = null;
+			try
+			{
+				Response<ServerAnswerEntity> response = resp.execute();
+				result = response.body();
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(ServerAnswerEntity result)
+		{
+			if (result != null && result.getAnswer().equals("OK"))
+			{
+				TestQActivity.this.finish();
+			}
+			else
+			{
+				draw(0);
+				Toast.makeText(TestQActivity.this, "Error", Toast.LENGTH_LONG).show();
+			}
 		}
 	}
 }

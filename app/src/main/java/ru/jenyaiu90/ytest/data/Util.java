@@ -1,9 +1,14 @@
 package ru.jenyaiu90.ytest.data;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import com.google.gson.Gson;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -12,6 +17,7 @@ public class Util
 	public static final String TASK_ = "task_"; //Для намерения: задание номер ...
 	public static final String TASK_TYPE_ = "task_type_"; //Для намерения: тип задания номер ...
 	public static final String TASKS = "tasks"; //Для намерения: количество заданий
+	public static final String IP = "http://192.168.1.43:8080"; //IP-адрес сервера
 
 	public static Test generateTest() //Временный метод, генерирующий тест
 	{
@@ -20,7 +26,7 @@ public class Util
 		choiceOne.add("2");
 		choiceOne.add("4");
 		choiceOne.add("8");
-		TaskOne taskOne = new TaskOne("Сколько будет 2 + 2?", null, 1, choiceOne, 3);
+		TaskOne taskOne = new TaskOne("Сколько будет 2 + 2?", 1, choiceOne, 3);
 
 		LinkedList<String> choiceMany = new LinkedList<>();
 		choiceMany.add("А");
@@ -32,14 +38,14 @@ public class Util
 		ansMany.add(0);
 		ansMany.add(3);
 		TaskMany taskMany = new TaskMany("Какие буквы есть и в русском, и в английском алфавитах?",
-				null, 1, choiceMany, ansMany);
+				1, choiceMany, ansMany);
 
 		TaskShort taskShort = new TaskShort("Какая часть речи отвечает на вопрос \"Какой\"?",
-				null, 1, new String[] {"прилагательное", "Прилагательное",
+				1, new String[] {"прилагательное", "Прилагательное",
 				"имя прилагательное", "Имя прилагательное", "причастие", "Причастие"});
 
 		TaskLong taskLong = new TaskLong("Назовите любой город Германии.",
-				null, 2);
+				2);
 
 		ArrayList<Task> t = new ArrayList<>(4);
 		t.add(taskOne);
@@ -96,5 +102,19 @@ public class Util
 			}
 		}
 		return new Test(alist);
+	}
+	public static byte[] bitmapToByteArray(Bitmap bitmap)
+	{
+		ByteBuffer byteBuffer = ByteBuffer.allocate(bitmap.getByteCount());
+		bitmap.copyPixelsToBuffer(byteBuffer);
+		byteBuffer.rewind();
+		return byteBuffer.array();
+	}
+	public static Bitmap byteArrayToBitmap(byte[] byteArray, int imageWidth, int imageHeight)
+	{
+		Bitmap bmp = Bitmap.createBitmap(imageWidth, imageHeight, Bitmap.Config.RGB_565);
+		ByteBuffer buffer = ByteBuffer.wrap(byteArray);
+		bmp.copyPixelsFromBuffer(buffer);
+		return bmp;
 	}
 }

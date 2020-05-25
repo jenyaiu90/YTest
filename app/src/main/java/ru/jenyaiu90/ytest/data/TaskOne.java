@@ -5,7 +5,10 @@ import android.graphics.Bitmap;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Arrays;
 import java.util.LinkedList;
+
+import ru.jenyaiu90.ytest.entity.TaskEntity;
 
 public class TaskOne extends Task
 {
@@ -14,13 +17,38 @@ public class TaskOne extends Task
 	protected int inAnswer;
 	protected boolean hasAnswer;
 
-	public TaskOne(String text, @Nullable Bitmap image, int cost, @NonNull LinkedList<String> choice, int answer)
+	public TaskOne(String text, int cost, @NonNull LinkedList<String> choice, int answer)
 	{
-		super(text, image, TaskType.ONE, cost);
+		super(text, TaskType.ONE, cost);
 		this.choice = choice;
 		this.answer = answer;
 		inAnswer = 0;
 		hasAnswer = false;
+	}
+
+	public TaskOne(TaskEntity entity)
+	{
+		super(entity);
+	}
+
+	@Override
+	protected void _fromEntity(TaskEntity entity)
+	{
+		choice = new LinkedList<>();
+		choice.addAll(Arrays.asList(entity.getChoice()));
+		answer = Integer.parseInt(entity.getAnswer()[0]);
+	}
+
+	@Override
+	protected TaskEntity _toEntity()
+	{
+		TaskEntity entity = new TaskEntity();
+		String[] choiceA = new String[] {};
+		choice.toArray(choiceA);
+		entity.setChoice(choiceA);
+		String[] answerA = new String[] { Integer.toString(answer) };
+		entity.setAnswer(answerA);
+		return entity;
 	}
 
 	public LinkedList<String> getChoice()

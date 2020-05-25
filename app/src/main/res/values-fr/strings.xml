@@ -1,0 +1,71 @@
+<resources>
+	<string name="app_name">YTest</string>
+	
+	<string name="yes">Oui</string>
+	<string name="no">Non</string>
+	
+	<string name="auth">Autorisation</string>
+	<string name="sign_in">Entrer sur son compte</string>
+	<string name="sign_up">Créer un compte</string>
+	<string name="login">Nom d`utilisateur</string>
+	<string name="password">Mot de passe</string>
+	<string name="name">Prénom</string>
+	<string name="surname">Nom</string>
+	<string name="im_teacher">Je suis un professeur</string>
+	
+	<string name="no_login">Entrer le nom d`utilisateur</string>
+	<string name="no_password">Entrer le mot de passe</string>
+	<string name="no_name">Entrer votre prénom</string>
+	<string name="no_surname">Entrer votre nom</string>
+	<string name="login_pass_space">Le nom d`utilisateur et le mot de passe ne doivent pas comporter d`espace</string>
+	<string name="no_internet">Une erreur est survenue, il est possible que vous ne soyez pas connécté à Internet</string>
+	<string name="login_already_exists">Un utilisateur avec ce nom d`utilisateur est déjà enregistré</string>
+	<string name="sign_up_success">Vous avez crée votre compte avec succès</string>
+	<string name="login_pass_incorrect">Nom dutilisateur ou mot de passe incorrect</string>
+	<string name="password_incorrect">Mot de passe incorrect</string>
+	<string name="couldnt_load_user">Le serveur n`a pas put trouver dinformations concernant l`utilisateur</string>
+	
+	<string name="icons_copyright">Les icones ont été crées par le site icons8.ru</string>
+	
+	<string name="teacher">Professeur</string>
+	<string name="student">Elève</string>
+	<string name="is_teacher">Type</string>
+	<string name="email">Email</string>
+	<string name="phone_number">Numéro de téléphone</string>
+	<string name="edit">Editer</string>
+	
+	<string name="save">Enregistrer</string>
+	<string name="cancel">Annuler</string>
+	<string name="old_password">Ancien mot de passe</string>
+	<string name="new_password">Nouveau mot de passe</string>
+	<string name="invalid_email">Email incorrect</string>
+	
+	<string name="prev">Précédent</string>
+	<string name="next">Suivant</string>
+	<string name="no_answer">Vous n`avez donné aucune réponse</string>
+	
+	<string name="one_q">Один из многих</string>
+	<string name="many_q">Несколько из многих</string>
+	<string name="short_q">Réponse courte</string>
+	<string name="long_q">Réponse détaillée</string>
+	
+	<string name="create_q">Créer une nouvelle question</string>
+	<string name="enter_task">Ecrivez votre queston ici</string>
+	<string name="answers">Réponses:</string>
+	<string name="answer">Réponse</string>
+	<string name="cost_">Points pour bonne réponse:</string>
+	<string name="cost">Points</string>
+	<string name="add_answer">Ajouter une réponse</string>
+	<string name="at_least_two_ans">Il doit y avoir minimun 2 réponses possibles</string>
+	<string name="at_least_one_ans">Il doit y avoir minimun une réponse correcte</string>
+	<string name="teacher_check">Les réponces détaillées sont vérifiées par le professeur.</string>
+	<string name="empty_answer">Необходимо ввести вариант ответа</string>
+	<string name="empty_task">В задании должен быть вопрос</string>
+	<string name="invalid_cost">Количество баллов должно быть целым числом</string>
+	<string name="answers_eq">Два варианта ответа не должны совпадать</string>
+	<string name="new_task">Nouvelle question</string>
+	<string name="delete">Supprimer</string>
+	<string name="delete_sure">Voulez-vous vraiment suprimer cette question?</string>
+	<string name="answer_sure">Are yot sure you want to finish a test?</string>
+	<string name="should_set_answer">Вы должны указать правильный ответ</string>
+</resources>

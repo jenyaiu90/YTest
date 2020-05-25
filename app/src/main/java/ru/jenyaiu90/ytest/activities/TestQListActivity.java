@@ -79,7 +79,7 @@ public class TestQListActivity extends Activity
 		LinkedList<String> list = new LinkedList<>();
 		list.add("1");
 		list.add("2");
-		TaskOne task = new TaskOne(getResources().getString(R.string.new_task), null, 1, list, 1);
+		TaskOne task = new TaskOne(getResources().getString(R.string.new_task), 1, list, 1);
 		test.addTask(task);
 		Intent i = new Intent(TestQListActivity.this, TestQEditActivity.class);
 		i.putExtra(TestQEditActivity.TASK_TYPE, Task.TaskType.ONE);

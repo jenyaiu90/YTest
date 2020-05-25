@@ -36,11 +36,9 @@ import ru.jenyaiu90.ytest.data.TaskShort;
 
 public class TestQEditActivity extends Activity
 {
-	public static final int GET_IMAGE_REQUEST = 1;
 	public static final String TASK_TYPE = "task_type";
 	public static final String TASK = "task";
 
-	protected ImageView imageIV;
 	protected EditText textET;
 	protected RadioButton[] modeRBs;
 	protected LinearLayout ansLL;
@@ -48,7 +46,6 @@ public class TestQEditActivity extends Activity
 	protected EditText costET;
 
 	protected Task task;
-	protected Bitmap image;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -56,7 +53,6 @@ public class TestQEditActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_test_q_edit);
 
-		imageIV = (ImageView)findViewById(R.id.imageIV);
 		textET = (EditText)findViewById(R.id.textET);
 		modeRBs = new RadioButton[] {
 				(RadioButton)findViewById(R.id.oneRB),
@@ -292,8 +288,6 @@ public class TestQEditActivity extends Activity
 				break;
 			}
 		}
-		image = task.getImage();
-		imageIV.setImageBitmap(image);
 		textET.setText(task.getText());
 		costET.setText(Integer.toString(task.getCost()));
 	}
@@ -348,7 +342,7 @@ public class TestQEditActivity extends Activity
 					return;
 				}
 
-				TaskOne taskOne = new TaskOne(textET.getText().toString(), image, Integer.parseInt(costET.getText().toString()), choice, i + 1);
+				TaskOne taskOne = new TaskOne(textET.getText().toString(), Integer.parseInt(costET.getText().toString()), choice, i + 1);
 
 				Intent intent = new Intent();
 				intent.putExtra(TASK, new Gson().toJson(taskOne));
@@ -393,7 +387,7 @@ public class TestQEditActivity extends Activity
 					return;
 				}
 
-				TaskMany taskMany = new TaskMany(textET.getText().toString(), image, Integer.parseInt(costET.getText().toString()), choice, answer);
+				TaskMany taskMany = new TaskMany(textET.getText().toString(), Integer.parseInt(costET.getText().toString()), choice, answer);
 
 				Intent intent = new Intent();
 				intent.putExtra(TASK, new Gson().toJson(taskMany));
@@ -430,7 +424,7 @@ public class TestQEditActivity extends Activity
 					i++;
 				}
 
-				TaskShort taskShort = new TaskShort(textET.getText().toString(), image, Integer.parseInt(costET.getText().toString()), ans);
+				TaskShort taskShort = new TaskShort(textET.getText().toString(), Integer.parseInt(costET.getText().toString()), ans);
 
 				Intent intent = new Intent();
 				intent.putExtra(TASK, new Gson().toJson(taskShort));
@@ -440,7 +434,7 @@ public class TestQEditActivity extends Activity
 			}
 			else if (modeRBs[3].isChecked())
 			{
-				TaskLong taskLong = new TaskLong(textET.getText().toString(), image, Integer.parseInt(costET.getText().toString()));
+				TaskLong taskLong = new TaskLong(textET.getText().toString(), Integer.parseInt(costET.getText().toString()));
 
 				Intent intent = new Intent();
 				intent.putExtra(TASK, new Gson().toJson(taskLong));
@@ -460,22 +454,6 @@ public class TestQEditActivity extends Activity
 	{
 		setResult(RESULT_CANCELED);
 		finish();
-	}
-
-	public void load(View view)
-	{
-		Intent getImage = new Intent(Intent.ACTION_PICK);
-		getImage.setType("image/*");
-		startActivityForResult(getImage, GET_IMAGE_REQUEST);
-	}
-
-	public void remove(View view)
-	{
-		if (image != null)
-		{
-			image = null;
-			imageIV.setImageBitmap(null);
-		}
 	}
 
 	public void mode(View view)
@@ -955,28 +933,5 @@ public class TestQEditActivity extends Activity
 	{
 		setResult(TestQListActivity.RESULT_DELETE);
 		finish();
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-		switch (requestCode)
-		{
-			case GET_IMAGE_REQUEST: //Получение изображения
-				if (resultCode == RESULT_OK)
-				{
-					try
-					{
-						Uri imageUri = data.getData();
-						InputStream imageStream = getContentResolver().openInputStream(imageUri);
-						image = BitmapFactory.decodeStream(imageStream);
-						imageIV.setImageBitmap(image);
-					}
-					catch (Exception e)
-					{
-						e.printStackTrace();
-					}
-				}
-		}
 	}
 }

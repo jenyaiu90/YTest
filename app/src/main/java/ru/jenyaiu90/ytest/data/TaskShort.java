@@ -5,16 +5,40 @@ import android.graphics.Bitmap;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.LinkedList;
+
+import ru.jenyaiu90.ytest.entity.TaskEntity;
+
 public class TaskShort extends Task
 {
 	protected String answers[];
 	protected String inAnswer;
 
-	public TaskShort(String text, @Nullable Bitmap image, int cost, @NonNull String answers[])
+	public TaskShort(String text, int cost, @NonNull String answers[])
 	{
-		super(text, image, TaskType.SHORT, cost);
+		super(text, TaskType.SHORT, cost);
 		this.answers = answers;
 		inAnswer = "";
+	}
+
+	public TaskShort(TaskEntity entity)
+	{
+		super(entity);
+		inAnswer = "";
+	}
+
+	@Override
+	protected void _fromEntity(TaskEntity entity)
+	{
+		answers = entity.getAnswer();
+	}
+
+	@Override
+	protected TaskEntity _toEntity()
+	{
+		TaskEntity entity = new TaskEntity();
+		entity.setAnswer(answers);
+		return entity;
 	}
 
 	public void inputAnswer(String ans)

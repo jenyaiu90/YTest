@@ -1,47 +1,47 @@
 package ru.jenyaiu90.ytest.data;
 
-import android.graphics.Bitmap;
-
-import androidx.annotation.Nullable;
-
-import java.util.LinkedList;
+import ru.jenyaiu90.ytest.entity.TaskEntity;
 
 public class TaskLong extends Task
 {
 	protected String inAnswerS;
-	protected LinkedList<Bitmap> inAnswerI;
 
-	public TaskLong(String text, @Nullable Bitmap image, int cost)
+	public TaskLong(String text, int cost)
 	{
-		super(text, image, TaskType.LONG, cost);
+		super(text, TaskType.LONG, cost);
 		inAnswerS = "";
-		inAnswerI = new LinkedList<>();
+	}
+
+	public TaskLong(TaskEntity entity)
+	{
+		super(entity);
+		inAnswerS = "";
+	}
+
+	@Override
+	protected void _fromEntity(TaskEntity entity)
+	{
+
+	}
+
+	@Override
+	protected TaskEntity _toEntity()
+	{
+		return new TaskEntity();
 	}
 
 	public void inputAnswer(String ans)
 	{
 		inAnswerS = ans;
-		inAnswerI = null;
-	}
-
-	public void inputAnswer(LinkedList<Bitmap> ans)
-	{
-		inAnswerS = "";
-		inAnswerI = ans;
 	}
 
 	public boolean isAnswer()
 	{
-		return !inAnswerS.isEmpty() || !inAnswerI.isEmpty();
+		return !inAnswerS.isEmpty();
 	}
 
 	public String getInAnswerS()
 	{
 		return inAnswerS;
-	}
-
-	public LinkedList<Bitmap> getInAnswerI()
-	{
-		return inAnswerI;
 	}
 }

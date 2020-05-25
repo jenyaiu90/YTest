@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 
 import androidx.annotation.Nullable;
 
+import ru.jenyaiu90.ytest.entity.TaskEntity;
+
 public abstract class Task
 {
 	public enum TaskType
@@ -14,22 +16,42 @@ public abstract class Task
 		LONG
 	}
 
-	protected Bitmap image;
+	protected int id;
 	protected String text;
 	protected TaskType type;
+	protected int num;
 	protected int cost;
 
-	protected Task(String text, @Nullable Bitmap image, TaskType type, int cost)
+	protected Task(String text, TaskType type, int cost)
 	{
 		this.text = text;
-		this.image = image;
 		this.type = type;
 		this.cost = cost;
 	}
 
-	public Bitmap getImage()
+	public Task(TaskEntity entity)
 	{
-		return image;
+		id = entity.getId();
+		type = entity.getType();
+		num = entity.getNum();
+		text = entity.getText();
+		cost = entity.getCost();
+		_fromEntity(entity);
+	}
+
+	protected abstract void _fromEntity(TaskEntity entity);
+
+	protected abstract TaskEntity _toEntity();
+
+	public TaskEntity toEntity()
+	{
+		TaskEntity entity = _toEntity();
+		entity.setId(id);
+		entity.setType(type);
+		entity.setNum(num);
+		entity.setText(text);
+		entity.setCost(cost);
+		return entity;
 	}
 
 	public String getText()

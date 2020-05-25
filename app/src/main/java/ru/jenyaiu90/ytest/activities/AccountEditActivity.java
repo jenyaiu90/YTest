@@ -1,35 +1,37 @@
 package ru.jenyaiu90.ytest.activities;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import java.io.InputStream;
+import java.io.IOException;
 
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import ru.jenyaiu90.ytest.R;
 import ru.jenyaiu90.ytest.data.User;
+import ru.jenyaiu90.ytest.data.Util;
+import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
+import ru.jenyaiu90.ytest.services.UserService;
 
 public class AccountEditActivity extends Activity
 {
 	public static final String USER = "user"; //Для намерения: пользователь
-	public static final int GET_IMAGE_REQUEST = 1; //Код запроса на получение фотографии
 
 	protected User user;
-	protected Bitmap image;
 
-	protected ImageView imageIV;
+	protected LinearLayout accountLL;
 	protected TextView loginTV;
 	protected EditText nameET, surnameET, emailET, phoneNumberET, oldPasswordET, newPasswordET;
 
@@ -41,7 +43,7 @@ public class AccountEditActivity extends Activity
 
 		user = new Gson().fromJson(getIntent().getStringExtra(USER), User.class);
 
-		imageIV = (ImageView)findViewById(R.id.imageIV);
+		accountLL = (LinearLayout)findViewById(R.id.accountLL);
 		loginTV = (TextView)findViewById(R.id.loginTV);
 		nameET = (EditText)findViewById(R.id.nameET);
 		surnameET = (EditText)findViewById(R.id.surnameET);
@@ -50,15 +52,6 @@ public class AccountEditActivity extends Activity
 		oldPasswordET = (EditText)findViewById(R.id.oldPasswordET);
 		newPasswordET = (EditText)findViewById(R.id.newPasswordET);
 
-		image = user.getImage();
-		if (image == null)
-		{
-			imageIV.setImageDrawable(getResources().getDrawable(R.drawable.account));
-		}
-		else
-		{
-			imageIV.setImageBitmap(image);
-		}
 		loginTV.setText(user.getLogin());
 		nameET.setText(user.getName());
 		surnameET.setText(user.getSurname());
@@ -66,25 +59,9 @@ public class AccountEditActivity extends Activity
 		phoneNumberET.setText(user.getPhone_number());
 	}
 
-	public void load(View view) //Загрузка изображения
-	{
-		Intent getImage = new Intent(Intent.ACTION_PICK);
-		getImage.setType("image/*");
-		startActivityForResult(getImage, GET_IMAGE_REQUEST);
-	}
-
-	public void remove(View view) //Удаление изображения
-	{
-		if (image != null)
-		{
-			image = null;
-			imageIV.setImageDrawable(getResources().getDrawable(R.drawable.account));
-		}
-	}
-
 	public void save(View view) //Сохранение данных
 	{
-		if (newPasswordET.getText().toString().isEmpty() ^ oldPasswordET.getText().toString().isEmpty()) //Если введён только один пароль
+		if (oldPasswordET.getText().toString().isEmpty())
 		{
 			Toast.makeText(AccountEditActivity.this, R.string.no_password, Toast.LENGTH_LONG).show();
 			return;
@@ -119,21 +96,28 @@ public class AccountEditActivity extends Activity
 				}
 
 			}
-			if (!wasA || !wasD) //Если в адресе не встретилось ни @, ни . после неё
+			if (!wasA || !wasD) //Если в адресе не встретилось @ или . после неё
 			{
 				Toast.makeText(AccountEditActivity.this, R.string.invalid_email, Toast.LENGTH_LONG).show();
 				return;
 			}
 		}
-		//Todo: check password
-		user.setName(nameET.getText().toString());
-		user.setSurname(surnameET.getText().toString());
-		user.setEmail(emailET.getText().toString());
-		user.setPhone_number(phoneNumberET.getText().toString());
-		user.setImage(image);
-		//Todo: send to server
-		setResult(RESULT_OK);
-		finish();
+
+		if (phoneNumberET.getText().toString().isEmpty())
+		{
+			phoneNumberET.setText("+0");
+		}
+
+		ProgressBar loadPB = new ProgressBar(AccountEditActivity.this);
+		loadPB.setLayoutParams(new LinearLayout.LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+		loadPB.setIndeterminate(true);
+		accountLL.addView(loadPB, 0);
+		new SaveAsync().execute(user.getLogin(), nameET.getText().toString(),
+				surnameET.getText().toString(), email, phoneNumberET.getText().toString(),
+				oldPasswordET.getText().toString(),
+				newPasswordET.getText().toString().isEmpty() ? oldPasswordET.getText().toString() :
+						newPasswordET.getText().toString());
 	}
 
 	public void cancel(View view) //Отменить
@@ -142,26 +126,50 @@ public class AccountEditActivity extends Activity
 		finish();
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	class SaveAsync extends AsyncTask<String, String, ServerAnswerEntity>
 	{
-		switch (requestCode)
+		@Override
+		protected ServerAnswerEntity doInBackground(String... user)
 		{
-			case GET_IMAGE_REQUEST: //Получение изображения
-				if (resultCode == RESULT_OK)
+			Retrofit rf = new Retrofit.Builder()
+					.baseUrl(Util.IP)
+					.addConverterFactory(GsonConverterFactory.create())
+					.build();
+			UserService uService = rf.create(UserService.class);
+			Call<ServerAnswerEntity> resp = uService.updateUser(user[0], user[1], user[2], user[3], user[4], user[5], user[6]);
+			ServerAnswerEntity res = null;
+			try
+			{
+				Response<ServerAnswerEntity> response = resp.execute();
+				res = response.body();
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+			return res;
+		}
+
+		@Override
+		protected void onPostExecute(ServerAnswerEntity result)
+		{
+			accountLL.removeViewAt(0);
+			if (result != null)
+			{
+				switch (result.getAnswer())
 				{
-					try
-					{
-						Uri imageUri = data.getData();
-						InputStream imageStream = getContentResolver().openInputStream(imageUri);
-						image = BitmapFactory.decodeStream(imageStream);
-						imageIV.setImageBitmap(image);
-					}
-					catch (Exception e)
-					{
-						e.printStackTrace();
-					}
+					case "OK":
+						setResult(RESULT_OK);
+						AccountEditActivity.this.finish();
+						break;
+					case "Error":
+						Toast.makeText(AccountEditActivity.this, R.string.couldnt_load_user, Toast.LENGTH_LONG).show();
+						break;
+					case "Password":
+						Toast.makeText(AccountEditActivity.this, R.string.password_incorrect, Toast.LENGTH_LONG).show();
+						break;
 				}
+			}
 		}
 	}
 }

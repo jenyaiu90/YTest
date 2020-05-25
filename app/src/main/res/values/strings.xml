@@ -17,6 +17,13 @@
 	<string name="no_password">Password must be filled</string>
 	<string name="no_name">Name must be filled</string>
 	<string name="no_surname">Surname must be filled</string>
+	<string name="login_pass_space">Login and password cannot contain space</string>
+	<string name="no_internet">An error occurred, probably you`re not connected to the Internet</string>
+	<string name="login_already_exists">A user with that login have already signed up</string>
+	<string name="sign_up_success">You have successfully created an account</string>
+	<string name="login_pass_incorrect">Login or password is incorrect</string>
+	<string name="password_incorrect">Password is incorrect</string>
+	<string name="couldnt_load_user">Server couldn`t find information about user</string>
 	
 	<string name="icons_copyright">Icons were created by icons8.ru</string>
 	
@@ -27,9 +34,6 @@
 	<string name="phone_number">Phone number</string>
 	<string name="edit">Edit</string>
 	
-	<string name="load_image">Load image</string>
-	<string name="remove_image">Remove image</string>
-	<string name="remove_images">Remove images</string>
 	<string name="save">Save</string>
 	<string name="cancel">Cancel</string>
 	<string name="old_password">Old password</string>
@@ -62,5 +66,6 @@
 	<string name="new_task">New task</string>
 	<string name="delete">Delete</string>
 	<string name="delete_sure">Do you want to delete this task?</string>
+	<string name="answer_sure">Are yot sure you want to finish a test?</string>
 	<string name="should_set_answer">You should set a right answer</string>
 </resources>

@@ -1,0 +1,71 @@
+<resources>
+	<string name="app_name">YTest</string>
+	
+	<string name="yes">Да</string>
+	<string name="no">Нет</string>
+	
+	<string name="auth">Авторизация</string>
+	<string name="sign_in">Вход</string>
+	<string name="sign_up">Регистрация</string>
+	<string name="login">Логин</string>
+	<string name="password">Пароль</string>
+	<string name="name">Имя</string>
+	<string name="surname">Фамилия</string>
+	<string name="im_teacher">Я учитель</string>
+	
+	<string name="no_login">Необходимо ввести логин</string>
+	<string name="no_password">Необходимо ввести пароль</string>
+	<string name="no_name">Необходимо ввести имя</string>
+	<string name="no_surname">Необходимо ввести фамилию</string>
+	<string name="login_pass_space">Логин и пароль не могут содержать пробел</string>
+	<string name="no_internet">Произошла ошибка, возможно, вы не подключены к Интернету</string>
+	<string name="login_already_exists">Пользователь с таким логином уже зарегистрирован</string>
+	<string name="sign_up_success">Вы успешно создали аккаунт</string>
+	<string name="login_pass_incorrect">Неверный логин или пароль</string>
+	<string name="password_incorrect">Неверный пароль</string>
+	<string name="couldnt_load_user">Серверу не удалось найти информацию о пользователе</string>
+	
+	<string name="icons_copyright">В приложении использованы иконки с сайта icons8.ru</string>
+	
+	<string name="teacher">Учитель</string>
+	<string name="student">Ученик</string>
+	<string name="is_teacher">Тип</string>
+	<string name="email">Электронная почта</string>
+	<string name="phone_number">Номер телефона</string>
+	<string name="edit">Редактировать</string>
+	
+	<string name="save">Сохранить</string>
+	<string name="cancel">Отмена</string>
+	<string name="old_password">Старый пароль</string>
+	<string name="new_password">Новый пароль</string>
+	<string name="invalid_email">Неверная электронная почта</string>
+	
+	<string name="prev">Назад</string>
+	<string name="next">Вперёд</string>
+	<string name="no_answer">Вы не дали ответ на вопрос</string>
+	
+	<string name="one_q">Один из многих</string>
+	<string name="many_q">Несколько из многих</string>
+	<string name="short_q">Короткий ответ</string>
+	<string name="long_q">Развёрнутый ответ</string>
+	
+	<string name="create_q">Создать новое задание</string>
+	<string name="enter_task">Введите вопрос здесь</string>
+	<string name="answers">Ответы:</string>
+	<string name="answer">Ответ</string>
+	<string name="cost_">Баллы:</string>
+	<string name="cost">Баллы</string>
+	<string name="add_answer">Добавить ответ</string>
+	<string name="at_least_two_ans">В тесте должно быть как минимум два вариана ответа</string>
+	<string name="at_least_one_ans">В тесте должен быть как минимум один верный вариант</string>
+	<string name="teacher_check">Задания с развёрнутым ответом проверяются учителем.</string>
+	<string name="empty_answer">Необходимо ввести вариант ответа</string>
+	<string name="empty_task">В задании должен быть вопрос</string>
+	<string name="invalid_cost">Количество баллов должно быть целым числом</string>
+	<string name="answers_eq">Два варианта ответа не должны совпадать</string>
+	<string name="new_task">Новое задание</string>
+	<string name="delete">Удалить</string>
+	<string name="delete_sure">Вы действительно хотите удалить задание?</string>
+	<string name="answer_sure">Вы действительно хотито завершить выполнение задания?</string>
+	<string name="should_set_answer">Вы должны указать правильный ответ</string>
+</resources>
