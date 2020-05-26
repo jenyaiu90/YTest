@@ -36,6 +36,7 @@
 	
 	<string name="save">Enregistrer</string>
 	<string name="cancel">Annuler</string>
+	<string name="ok">ОК</string>
 	<string name="old_password">Ancien mot de passe</string>
 	<string name="new_password">Nouveau mot de passe</string>
 	<string name="invalid_email">Email incorrect</string>
@@ -51,12 +52,16 @@
 	
 	<string name="result">Résultat</string>
 	<string name="create_q">Créer une nouvelle question</string>
+	<string name="create_test">Создать новый тест</string>
 	<string name="enter_task">Ecrivez votre queston ici</string>
+	<string name="enter_name_subject">Введите имя теста и предмет</string>
 	<string name="answers">Réponses:</string>
 	<string name="answer">Réponse</string>
 	<string name="cost_">Points pour bonne réponse:</string>
 	<string name="cost">Points</string>
 	<string name="points">Баллы</string>
+	<string name="test_name">Название теста</string>
+	<string name="subject">Предмет</string>
 	<string name="task">Задание</string>
 	<string name="add_answer">Ajouter une réponse</string>
 	<string name="at_least_two_ans">Il doit y avoir minimun 2 réponses possibles</string>

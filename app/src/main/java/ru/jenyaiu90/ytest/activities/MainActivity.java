@@ -4,12 +4,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 
@@ -32,8 +35,6 @@ public class MainActivity extends AppCompatActivity
 	public static final String LOGIN = "login"; //Для намерения: логин
 	public static final String PASSWORD = "password"; //Для намерения: пароль
 	public static final String IS_TEACHER = "is_teacher"; //Для намерения: является ли учителем
-
-	protected Test test;
 
 	protected String login, password;
 	protected boolean isTeacher;
@@ -61,25 +62,50 @@ public class MainActivity extends AppCompatActivity
 		signOutIB.setImageDrawable(getResources().getDrawable(R.drawable.sign_out));
 
 		auth(null);
-
-		test = Util.generateTest();
 	}
 
 	public void tests(@Nullable View view) //Перейти к тестам
 	{
-		Intent i;
 		if (isTeacher)
 		{
-			i = new Intent(MainActivity.this, TestQListActivity.class);
-			Util.putTest(test, i);
-			startActivity(i);
+			AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+
+			alert.setTitle(R.string.create_test);
+			alert.setMessage(R.string.enter_name_subject);
+
+			LinearLayout inputLL = new LinearLayout(MainActivity.this);
+			inputLL.setOrientation(LinearLayout.VERTICAL);
+			final EditText nameET = new EditText(MainActivity.this);
+			nameET.setHint(R.string.test_name);
+			final EditText subjectET = new EditText(MainActivity.this);
+			subjectET.setHint(R.string.subject);
+			inputLL.addView(nameET);
+			inputLL.addView(subjectET);
+			alert.setView(inputLL);
+
+			alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
+			{
+				@Override
+				public void onClick(DialogInterface dialog, int whichButton)
+				{
+					Intent testQListIntent = new Intent(MainActivity.this, TestQListActivity.class);
+					testQListIntent.putExtra(TestQListActivity.LOGIN, login);
+					testQListIntent.putExtra(TestQListActivity.PASSWORD, password);
+					testQListIntent.putExtra(TestQListActivity.TEST_NAME, nameET.getText().toString());
+					testQListIntent.putExtra(TestQListActivity.SUBJECT, subjectET.getText().toString());
+					startActivity(testQListIntent);
+				}
+			});
+			alert.setNegativeButton(R.string.cancel, null);
+			alert.show();
 		}
 		else
 		{
-			i = new Intent(MainActivity.this, TestListActivity.class);
-			i.putExtra(TestListActivity.LOGIN, login);
-			i.putExtra(TestListActivity.PASSWORD, password);
-			startActivity(i);
+			Intent testListIntent;
+			testListIntent = new Intent(MainActivity.this, TestListActivity.class);
+			testListIntent.putExtra(TestListActivity.LOGIN, login);
+			testListIntent.putExtra(TestListActivity.PASSWORD, password);
+			startActivity(testListIntent);
 		}
 	}
 	public void groups(@Nullable View view) //Перейти к группам

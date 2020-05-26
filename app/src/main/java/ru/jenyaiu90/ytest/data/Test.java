@@ -3,6 +3,7 @@ package ru.jenyaiu90.ytest.data;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ru.jenyaiu90.ytest.entity.TaskEntity;
 import ru.jenyaiu90.ytest.entity.TestEntity;
@@ -11,10 +12,14 @@ public class Test
 {
 	protected int id;
 	protected String name;
+	protected String subject;
 	protected ArrayList<Task> tasks;
 
-	public Test(@NonNull ArrayList<Task> tasks)
+	public Test(String name, String subject, @NonNull ArrayList<Task> tasks)
 	{
+		id = 0;
+		this.name = name;
+		this.subject = subject;
 		this.tasks = tasks;
 	}
 
@@ -22,6 +27,7 @@ public class Test
 	{
 		id = entity.getId();
 		name = entity.getName();
+		subject = entity.getSubject();
 		this.tasks = new ArrayList<>(tasks.size());
 		for (TaskEntity task : tasks)
 		{
@@ -43,14 +49,16 @@ public class Test
 		}
 	}
 
-	public void toEntity()
+	public TestEntity toEntity()
 	{
 		TestEntity entity = new TestEntity();
 		entity.setId(id);
 		entity.setName(name);
+		entity.setSubject(subject);
+		return entity;
 	}
 
-	public ArrayList<TaskEntity> tasksToEntity()
+	public List<TaskEntity> tasksToEntity()
 	{
 		ArrayList<TaskEntity> entities = new ArrayList<>(tasks.size());
 		for (Task i : tasks)

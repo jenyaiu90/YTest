@@ -3,16 +3,21 @@ package ru.jenyaiu90.ytest.services;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import ru.jenyaiu90.ytest.entity.AnswerEntity;
 import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
+import ru.jenyaiu90.ytest.entity.TaskEntity;
 import ru.jenyaiu90.ytest.entity.TestEntity;
 import ru.jenyaiu90.ytest.entity.UserEntity;
 
 public interface TestService
 {
+	@POST("/test/create")
+	Call<TestEntity> createTest(@Query("test_name") String test_name, @Query("subject") String subject, @Body List<TaskEntity> tasks, @Query("login") String user, @Query("password") String password);
+
 	@GET("/test/get")
 	Call<TestEntity> getTest(@Query("test_id") int test_id);
 

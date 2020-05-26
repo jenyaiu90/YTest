@@ -17,7 +17,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ru.jenyaiu90.ytest.R;
-import ru.jenyaiu90.ytest.adapters.TestAdapter;
+import ru.jenyaiu90.ytest.adapters.TestStudentAdapter;
 import ru.jenyaiu90.ytest.data.Util;
 import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
 import ru.jenyaiu90.ytest.entity.TestEntity;
@@ -72,7 +72,7 @@ public class TestListActivity extends Activity
 					.build();
 			TestService tService = rf.create(TestService.class);
 
-			Call<List<TestEntity>> resp = tService.getTestsForUser(login[0]);
+			Call<List<TestEntity>> resp = login[1].equals("true") ? tService.getTestsOfUser(login[0]) : tService.getTestsForUser(login[0]);
 			List<TestEntity> res = null;
 			List<Result> result = null;
 			try
@@ -87,14 +87,16 @@ public class TestListActivity extends Activity
 					Response<UserEntity> author_response = author_resp.execute();
 					UserEntity author = author_response.body();
 
-					Call<ServerAnswerEntity> solved_resp = tService.getIsSolved(login[0], test.getId());
-					Response<ServerAnswerEntity> solved_response = solved_resp.execute();
-					ServerAnswerEntity solved = solved_response.body();
-
 					Result r = new Result();
+					if (!login[1].equals("true"))
+					{
+						Call<ServerAnswerEntity> solved_resp = tService.getIsSolved(login[0], test.getId());
+						Response<ServerAnswerEntity> solved_response = solved_resp.execute();
+						ServerAnswerEntity solved = solved_response.body();
+						r.solved = solved.getAnswer().equals("Solved");
+					}
 					r.test = test;
 					r.user = author;
-					r.solved = solved.getAnswer().equals("Solved");
 					result.add(r);
 				}
 			}
@@ -111,15 +113,15 @@ public class TestListActivity extends Activity
 			testsLL.removeViewAt(0);
 			if (result != null && !result.isEmpty())
 			{
-				TestAdapter.TestSolve[] tests = new TestAdapter.TestSolve[result.size()];
+				TestStudentAdapter.TestSolve[] tests = new TestStudentAdapter.TestSolve[result.size()];
 				for (int i = 0; i < result.size(); i++)
 				{
-					tests[i] = new TestAdapter.TestSolve();
+					tests[i] = new TestStudentAdapter.TestSolve();
 					tests[i].test = result.get(i).test;
 					tests[i].author = result.get(i).user.getLogin();
 					tests[i].isSolved = result.get(i).solved;
 				}
-				TestAdapter adapter = new TestAdapter(TestListActivity.this, tests, login, password);
+				TestStudentAdapter adapter = new TestStudentAdapter(TestListActivity.this, tests, login, password);
 				testsLV.setAdapter(adapter);
 			}
 		}

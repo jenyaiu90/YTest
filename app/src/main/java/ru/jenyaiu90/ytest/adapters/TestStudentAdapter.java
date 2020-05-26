@@ -13,10 +13,9 @@ import androidx.annotation.NonNull;
 import ru.jenyaiu90.ytest.R;
 import ru.jenyaiu90.ytest.activities.TestQActivity;
 import ru.jenyaiu90.ytest.activities.TestResultActivity;
-import ru.jenyaiu90.ytest.data.Test;
 import ru.jenyaiu90.ytest.entity.TestEntity;
 
-public class TestAdapter extends ArrayAdapter<TestAdapter.TestSolve>
+public class TestStudentAdapter extends ArrayAdapter<TestStudentAdapter.TestSolve>
 {
 	public static class TestSolve
 	{
@@ -28,7 +27,7 @@ public class TestAdapter extends ArrayAdapter<TestAdapter.TestSolve>
 	protected View[] views;
 	protected String login, password;
 
-	public TestAdapter(Context context, TestSolve[] content, String login, String password)
+	public TestStudentAdapter(Context context, TestSolve[] content, String login, String password)
 	{
 		super(context, R.layout.list_item_test, content);
 		views = new View[content.length];

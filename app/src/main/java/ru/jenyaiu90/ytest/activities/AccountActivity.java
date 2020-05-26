@@ -130,7 +130,7 @@ public class AccountActivity extends Activity
 				String infos[][] = new String[][]
 						{{ getResources().getString(R.string.login), accountLogin },
 								{ getResources().getString(R.string.name), user.getName() + " " + user.getSurname() },
-								{ "Is teacher", getResources().getString(user.getIsTeacher() ? R.string.teacher : R.string.student) },
+								{ getResources().getString(R.string.is_teacher), getResources().getString(user.getIsTeacher() ? R.string.teacher : R.string.student) },
 								{ getResources().getString(R.string.email), user.getEmail() == null ? getResources().getString(R.string.no) : user.getEmail() },
 								{ getResources().getString(R.string.phone_number), user.getPhone_number() == null ? getResources().getString(R.string.no) : user.getPhone_number() }};
 				InfoAdapter infoAdapter = new InfoAdapter(AccountActivity.this, infos);
