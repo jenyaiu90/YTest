@@ -72,7 +72,7 @@ public class TestListActivity extends Activity
 					.build();
 			TestService tService = rf.create(TestService.class);
 
-			Call<List<TestEntity>> resp = login[1].equals("true") ? tService.getTestsOfUser(login[0]) : tService.getTestsForUser(login[0]);
+			Call<List<TestEntity>> resp = tService.getTestsForUser(login[0]);
 			List<TestEntity> res = null;
 			List<Result> result = null;
 			try
@@ -88,13 +88,10 @@ public class TestListActivity extends Activity
 					UserEntity author = author_response.body();
 
 					Result r = new Result();
-					if (!login[1].equals("true"))
-					{
-						Call<ServerAnswerEntity> solved_resp = tService.getIsSolved(login[0], test.getId());
-						Response<ServerAnswerEntity> solved_response = solved_resp.execute();
-						ServerAnswerEntity solved = solved_response.body();
-						r.solved = solved.getAnswer().equals("Solved");
-					}
+					Call<ServerAnswerEntity> solved_resp = tService.getIsSolved(login[0], test.getId());
+					Response<ServerAnswerEntity> solved_response = solved_resp.execute();
+					ServerAnswerEntity solved = solved_response.body();
+					r.solved = solved.getAnswer().equals("Solved");
 					r.test = test;
 					r.user = author;
 					result.add(r);

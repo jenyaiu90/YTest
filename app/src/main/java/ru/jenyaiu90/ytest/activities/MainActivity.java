@@ -110,7 +110,11 @@ public class MainActivity extends AppCompatActivity
 	}
 	public void groups(@Nullable View view) //Перейти к группам
 	{
-		//TODO: to groups
+		Intent groupListIntent = new Intent(MainActivity.this, GroupListActivity.class);
+		groupListIntent.putExtra(GroupListActivity.LOGIN, login);
+		groupListIntent.putExtra(GroupListActivity.PASSWORD, password);
+		groupListIntent.putExtra(GroupListActivity.IS_TEACHER, isTeacher);
+		startActivity(groupListIntent);
 	}
 	public void account(@Nullable View view) //Перейти к аккаунту
 	{
