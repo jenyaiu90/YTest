@@ -172,7 +172,6 @@ public class TestQListActivity extends Activity
 
 	class CreateTestAsync extends AsyncTask<Data, String, TestEntity>
 	{
-
 		@Override
 		protected TestEntity doInBackground(Data... data)
 		{

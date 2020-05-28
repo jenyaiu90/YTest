@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+	<color name="color">#FFAAAA</color>
 	<color name="colorPrimary">#41009E</color>
 	<color name="colorPrimaryDark">#1F0065</color>
 	<color name="colorAccent">#00E1CB</color>
@@ -9,4 +10,5 @@
 	<color name="colorCurrentTask">#EEEE33</color>
 	<color name="colorSavedTask">#5555FF</color>
 	<color name="colorSolved">#66FF66</color>
+	<color name="colorNotChecked">#F90202</color>
 </resources>

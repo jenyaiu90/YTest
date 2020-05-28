@@ -265,7 +265,7 @@ public class GroupListActivity extends Activity
 			{
 				GroupEntity[] arr = new GroupEntity[result.size()];
 				result.toArray(arr);
-				GroupAdapter adapter = new GroupAdapter(GroupListActivity.this, arr, login, password);
+				GroupAdapter adapter = new GroupAdapter(GroupListActivity.this, arr, login, password, isTeacher);
 				groupsLV.setAdapter(adapter);
 			}
 		}

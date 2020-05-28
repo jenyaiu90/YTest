@@ -11,35 +11,34 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import ru.jenyaiu90.ytest.R;
-import ru.jenyaiu90.ytest.activities.GroupViewActivity;
+import ru.jenyaiu90.ytest.activities.AccountActivity;
 import ru.jenyaiu90.ytest.entity.GroupEntity;
+import ru.jenyaiu90.ytest.entity.UserEntity;
 
-public class GroupAdapter extends ArrayAdapter<GroupEntity>
+public class UserAdapter extends ArrayAdapter<UserEntity>
 {
 	protected String login, password;
-	protected boolean isTeacher;
 	protected View[] views;
 
-	public GroupAdapter(Context context, GroupEntity[] arr, String login, String password, boolean isTeacher)
+	public UserAdapter(Context context, UserEntity[] arr, String login, String password)
 	{
 		super(context, R.layout.list_item_info, arr);
 		this.login = login;
 		this.password = password;
-		this.isTeacher = isTeacher;
 		views = new View[arr.length];
 	}
 
 	@Override @NonNull
 	public View getView(int position, View convertView, @NonNull ViewGroup parent)
 	{
-		GroupEntity group = getItem(position);
+		UserEntity user = getItem(position);
 		if (convertView == null)
 		{
 			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_info, null);
 		}
 		views[position] = convertView;
-		((TextView)convertView.findViewById(R.id.hintTV)).setText(Integer.toString(group.getId()));
-		((TextView)convertView.findViewById(R.id.dataTV)).setText(group.getName());
+		((TextView)convertView.findViewById(R.id.hintTV)).setText(user.getLogin());
+		((TextView)convertView.findViewById(R.id.dataTV)).setText(user.getSurname() + " " + user.getName());
 		convertView.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -57,13 +56,10 @@ public class GroupAdapter extends ArrayAdapter<GroupEntity>
 				{
 					return;
 				}
-				Intent groupViewIntent = new Intent(getContext(), GroupViewActivity.class);
-				groupViewIntent.putExtra(GroupViewActivity.LOGIN, login);
-				groupViewIntent.putExtra(GroupViewActivity.PASSWORD, password);
-				groupViewIntent.putExtra(GroupViewActivity.IS_TEACHER, isTeacher);
-				groupViewIntent.putExtra(GroupViewActivity.GROUP_ID, getItem(pos).getId());
-				groupViewIntent.putExtra(GroupViewActivity.GROUP_NAME, getItem(pos).getName());
-				getContext().startActivity(groupViewIntent);
+				Intent accountIntent = new Intent(getContext(), AccountActivity.class);
+				accountIntent.putExtra(AccountActivity.LOGIN, login);
+				accountIntent.putExtra(AccountActivity.ACC_LOGIN, getItem(pos).getLogin());
+				getContext().startActivity(accountIntent);
 			}
 		});
 		return convertView;
