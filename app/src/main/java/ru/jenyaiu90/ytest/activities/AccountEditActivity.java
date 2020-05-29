@@ -145,7 +145,7 @@ public class AccountEditActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+				res = new ServerAnswerEntity(ServerAnswerEntity.NO_INTERNET);
 			}
 			return res;
 		}
@@ -156,18 +156,14 @@ public class AccountEditActivity extends Activity
 			accountLL.removeViewAt(0);
 			if (result != null)
 			{
-				switch (result.getAnswer())
+				if (result.getAnswer().equals(ServerAnswerEntity.OK))
 				{
-					case "OK":
-						setResult(RESULT_OK);
-						AccountEditActivity.this.finish();
-						break;
-					case "Error":
-						Toast.makeText(AccountEditActivity.this, R.string.couldnt_load_user, Toast.LENGTH_LONG).show();
-						break;
-					case "Password":
-						Toast.makeText(AccountEditActivity.this, R.string.password_incorrect, Toast.LENGTH_LONG).show();
-						break;
+					setResult(RESULT_OK);
+					AccountEditActivity.this.finish();
+				}
+				else
+				{
+					Util.errorToast(AccountEditActivity.this, result.getAnswer());
 				}
 			}
 		}

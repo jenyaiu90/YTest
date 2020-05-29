@@ -21,6 +21,7 @@ import ru.jenyaiu90.ytest.R;
 import ru.jenyaiu90.ytest.adapters.UserResultAdapter;
 import ru.jenyaiu90.ytest.data.Util;
 import ru.jenyaiu90.ytest.entity.AnswerEntity;
+import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
 import ru.jenyaiu90.ytest.entity.TaskEntity;
 import ru.jenyaiu90.ytest.entity.UserEntity;
 import ru.jenyaiu90.ytest.services.GroupService;
@@ -120,7 +121,7 @@ public class UserResultActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+
 			}
 			return userResult;
 		}
@@ -129,7 +130,11 @@ public class UserResultActivity extends Activity
 		protected void onPostExecute(List<UserResultAdapter.UserResult> result)
 		{
 			resultsLL.removeViewAt(0);
-			if (result != null)
+			if (result == null)
+			{
+				Util.errorToast(UserResultActivity.this, ServerAnswerEntity.NO_INTERNET);
+			}
+			else
 			{
 				UserResultAdapter.UserResult[] uResult = new UserResultAdapter.UserResult[result.size()];
 				result.toArray(uResult);

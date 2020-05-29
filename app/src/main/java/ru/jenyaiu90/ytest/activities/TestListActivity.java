@@ -99,7 +99,7 @@ public class TestListActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+
 			}
 			return result;
 		}
@@ -108,18 +108,25 @@ public class TestListActivity extends Activity
 		protected void onPostExecute(List<Result> result)
 		{
 			testsLL.removeViewAt(0);
-			if (result != null && !result.isEmpty())
+			if (result == null)
 			{
-				TestStudentAdapter.TestSolve[] tests = new TestStudentAdapter.TestSolve[result.size()];
-				for (int i = 0; i < result.size(); i++)
+				Util.errorToast(TestListActivity.this, ServerAnswerEntity.NO_INTERNET);
+			}
+			else
+			{
+				if (!result.isEmpty())
 				{
-					tests[i] = new TestStudentAdapter.TestSolve();
-					tests[i].test = result.get(i).test;
-					tests[i].author = result.get(i).user.getLogin();
-					tests[i].isSolved = result.get(i).solved;
+					TestStudentAdapter.TestSolve[] tests = new TestStudentAdapter.TestSolve[result.size()];
+					for (int i = 0; i < result.size(); i++)
+					{
+						tests[i] = new TestStudentAdapter.TestSolve();
+						tests[i].test = result.get(i).test;
+						tests[i].author = result.get(i).user.getLogin();
+						tests[i].isSolved = result.get(i).solved;
+					}
+					TestStudentAdapter adapter = new TestStudentAdapter(TestListActivity.this, tests, login, password);
+					testsLV.setAdapter(adapter);
 				}
-				TestStudentAdapter adapter = new TestStudentAdapter(TestListActivity.this, tests, login, password);
-				testsLV.setAdapter(adapter);
 			}
 		}
 	}

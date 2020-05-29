@@ -12,7 +12,7 @@ import ru.jenyaiu90.ytest.entity.UserEntity;
 public interface UserService
 {
 	@POST("/user/create")
-	Call<UserEntity> createUser(@Body UserEntity user);
+	Call<ServerAnswerEntity> createUser(@Body UserEntity user);
 
 	@GET("/user/auth")
 	Call<UserEntity> signIn(@Query("login") String login, @Query("password") String password);

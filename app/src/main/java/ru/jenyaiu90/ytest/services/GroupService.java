@@ -16,10 +16,10 @@ import ru.jenyaiu90.ytest.entity.UserEntity;
 public interface GroupService
 {
 	@POST("/group/create")
-	public Call<GroupEntity> createGroup(@Body GroupEntity group, @Query("login") String login, @Query("password") String password);
+	public Call<ServerAnswerEntity> createGroup(@Body GroupEntity group, @Query("login") String login, @Query("password") String password);
 
 	@PUT("/group/join")
-	public Call<GroupEntity> joinGroup(@Query("group_id") int group_id, @Query("login") String login, @Query("password") String password);
+	public Call<ServerAnswerEntity> joinGroup(@Query("group_id") int group_id, @Query("login") String login, @Query("password") String password);
 
 	@GET("/group/get_groups_of")
 	public Call<List<GroupEntity>> getGroupsOf(@Query("login") String login);

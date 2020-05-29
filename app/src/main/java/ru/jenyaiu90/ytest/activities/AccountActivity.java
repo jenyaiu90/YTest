@@ -25,6 +25,7 @@ import ru.jenyaiu90.ytest.R;
 import ru.jenyaiu90.ytest.adapters.InfoAdapter;
 import ru.jenyaiu90.ytest.data.User;
 import ru.jenyaiu90.ytest.data.Util;
+import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
 import ru.jenyaiu90.ytest.entity.UserEntity;
 import ru.jenyaiu90.ytest.services.UserService;
 
@@ -114,7 +115,8 @@ public class AccountActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+				res = new UserEntity();
+				res.setId(-1);
 			}
 			return res;
 		}
@@ -125,16 +127,23 @@ public class AccountActivity extends Activity
 			accountLL.removeViewAt(0);
 			if (result != null)
 			{
-				user = new User(result);
+				if (result.getId() == -1)
+				{
+					Util.errorToast(AccountActivity.this, ServerAnswerEntity.NO_INTERNET);
+				}
+				else
+				{
+					user = new User(result);
 
-				String infos[][] = new String[][]
-						{{ getResources().getString(R.string.login), accountLogin },
-								{ getResources().getString(R.string.name), user.getName() + " " + user.getSurname() },
-								{ getResources().getString(R.string.is_teacher), getResources().getString(user.getIsTeacher() ? R.string.teacher : R.string.student) },
-								{ getResources().getString(R.string.email), user.getEmail() == null ? getResources().getString(R.string.no) : user.getEmail() },
-								{ getResources().getString(R.string.phone_number), user.getPhone_number() == null ? getResources().getString(R.string.no) : user.getPhone_number() }};
-				InfoAdapter infoAdapter = new InfoAdapter(AccountActivity.this, infos);
-				infoLV.setAdapter(infoAdapter);
+					String infos[][] = new String[][]
+							{{ getResources().getString(R.string.login), accountLogin },
+									{ getResources().getString(R.string.name), user.getName() + " " + user.getSurname() },
+									{ getResources().getString(R.string.is_teacher), getResources().getString(user.getIsTeacher() ? R.string.teacher : R.string.student) },
+									{ getResources().getString(R.string.email), user.getEmail() == null ? getResources().getString(R.string.no) : user.getEmail() },
+									{ getResources().getString(R.string.phone_number), user.getPhone_number() == null ? getResources().getString(R.string.no) : user.getPhone_number() }};
+					InfoAdapter infoAdapter = new InfoAdapter(AccountActivity.this, infos);
+					infoLV.setAdapter(infoAdapter);
+				}
 			}
 			else
 			{

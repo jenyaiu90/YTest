@@ -23,6 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import ru.jenyaiu90.ytest.R;
 import ru.jenyaiu90.ytest.data.User;
 import ru.jenyaiu90.ytest.data.Util;
+import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
 import ru.jenyaiu90.ytest.entity.UserEntity;
 import ru.jenyaiu90.ytest.services.UserService;
 
@@ -189,44 +190,48 @@ public class AuthActivity extends Activity
 		finish();
 	}
 
-	class SignUpAsync extends AsyncTask<UserEntity, String, Boolean>
+	class SignUpAsync extends AsyncTask<UserEntity, String, ServerAnswerEntity>
 	{
 		@Override
-		protected Boolean doInBackground(UserEntity... user) {
+		protected ServerAnswerEntity doInBackground(UserEntity... user) {
 			Retrofit rf = new Retrofit.Builder()
 					.baseUrl(Util.IP)
 					.addConverterFactory(GsonConverterFactory.create())
 					.build();
 			UserService uService = rf.create(UserService.class);
-			Call<UserEntity> resp = uService.createUser(user[0]);
-			boolean b = false;
+			Call<ServerAnswerEntity> resp = uService.createUser(user[0]);
+			ServerAnswerEntity result = null;
 			try
 			{
-				Response<UserEntity> response = resp.execute();
-				UserEntity res = response.body();
-				b = res != null;
+				Response<ServerAnswerEntity> response = resp.execute();
+				result = response.body();
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+				result = new ServerAnswerEntity(ServerAnswerEntity.NO_INTERNET);
 			}
-			return b;
+			return result;
 		}
 
 		@Override
-		protected void onPostExecute(Boolean result)
+		protected void onPostExecute(ServerAnswerEntity result)
 		{
-			super.onPostExecute(result);
 			inputLL.removeViewAt(inputLL.getChildCount() - 1);
-			Toast.makeText(AuthActivity.this, result ? R.string.sign_up_success : R.string.login_already_exists, Toast.LENGTH_LONG).show();
-			if (result)
+			if (result != null)
 			{
-				ProgressBar loadPB = new ProgressBar(AuthActivity.this);
-				loadPB.setLayoutParams(new LinearLayout.LayoutParams(
-						ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-				loadPB.setIndeterminate(true);
-				inputLL.addView(loadPB);
-				new SignInAsync().execute(loginET.getText().toString(), passwordET.getText().toString());
+				if (result.getAnswer().equals(ServerAnswerEntity.OK))
+				{
+					Toast.makeText(AuthActivity.this, R.string.sign_up_success, Toast.LENGTH_LONG).show();
+					ProgressBar loadPB = new ProgressBar(AuthActivity.this);
+					loadPB.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+					loadPB.setIndeterminate(true);
+					inputLL.addView(loadPB);
+					new SignInAsync().execute(loginET.getText().toString(), passwordET.getText().toString());
+				}
+				else
+				{
+					Util.errorToast(AuthActivity.this, result.getAnswer());
+				}
 			}
 		}
 	}
@@ -241,7 +246,6 @@ public class AuthActivity extends Activity
 					.build();
 			UserService uService = rf.create(UserService.class);
 			Call<UserEntity> resp = uService.signIn(login_password[0], login_password[1]);
-			boolean b = false;
 			UserEntity res = null;
 			try
 			{
@@ -250,7 +254,8 @@ public class AuthActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+				res = new UserEntity();
+				res.setId(-1);
 			}
 			return res;
 		}
@@ -266,8 +271,15 @@ public class AuthActivity extends Activity
 			}
 			else
 			{
-				user = new User(result);
-				signIn();
+				if (result.getId() == -1)
+				{
+					Util.errorToast(AuthActivity.this, ServerAnswerEntity.NO_INTERNET);
+				}
+				else
+				{
+					user = new User(result);
+					signIn();
+				}
 			}
 		}
 	}

@@ -374,7 +374,7 @@ public class TestQActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+
 			}
 			return result;
 		}
@@ -382,8 +382,15 @@ public class TestQActivity extends Activity
 		@Override
 		protected void onPostExecute(Test result)
 		{
-			test = result;
-			draw(0);
+			if (result == null)
+			{
+				Util.errorToast(TestQActivity.this, ServerAnswerEntity.NO_INTERNET);
+			}
+			else
+			{
+				test = result;
+				draw(0);
+			}
 		}
 	}
 
@@ -407,7 +414,7 @@ public class TestQActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+				result.setAnswer(ServerAnswerEntity.NO_INTERNET);
 			}
 			return result;
 		}
@@ -415,20 +422,23 @@ public class TestQActivity extends Activity
 		@Override
 		protected void onPostExecute(ServerAnswerEntity result)
 		{
-			if (result != null && result.getAnswer().equals("OK"))
+			if (result != null)
 			{
-				Intent testResultIntent = new Intent(TestQActivity.this, TestResultActivity.class);
-				testResultIntent.putExtra(TestResultActivity.LOGIN, login);
-				testResultIntent.putExtra(TestResultActivity.TEST_ID, test.getId());
-				testResultIntent.putExtra(TestResultActivity.TEST_NAME, test.getName());
-				startActivity(testResultIntent);
+				if (result.getAnswer().equals(ServerAnswerEntity.OK))
+				{
+					Intent testResultIntent = new Intent(TestQActivity.this, TestResultActivity.class);
+					testResultIntent.putExtra(TestResultActivity.LOGIN, login);
+					testResultIntent.putExtra(TestResultActivity.TEST_ID, test.getId());
+					testResultIntent.putExtra(TestResultActivity.TEST_NAME, test.getName());
+					startActivity(testResultIntent);
 
-				TestQActivity.this.finish();
-			}
-			else
-			{
-				draw(0);
-				Toast.makeText(TestQActivity.this, "Error", Toast.LENGTH_LONG).show();
+					TestQActivity.this.finish();
+				}
+				else
+				{
+					draw(0);
+					Util.errorToast(TestQActivity.this, result.getAnswer());
+				}
 			}
 		}
 	}

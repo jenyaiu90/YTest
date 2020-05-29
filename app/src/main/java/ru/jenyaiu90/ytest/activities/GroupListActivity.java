@@ -26,6 +26,7 @@ import ru.jenyaiu90.ytest.R;
 import ru.jenyaiu90.ytest.adapters.GroupAdapter;
 import ru.jenyaiu90.ytest.data.Util;
 import ru.jenyaiu90.ytest.entity.GroupEntity;
+import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
 import ru.jenyaiu90.ytest.entity.UserEntity;
 import ru.jenyaiu90.ytest.services.GroupService;
 import ru.jenyaiu90.ytest.services.UserService;
@@ -151,50 +152,57 @@ public class GroupListActivity extends Activity
 		new LoadGroupsAsync().execute(login, isTeacher ? "true" : "false");
 	}
 
-	class JoinGroupAsync extends AsyncTask<String, String, GroupEntity>
+	class JoinGroupAsync extends AsyncTask<String, String, ServerAnswerEntity>
 	{
 		@Override
-		protected GroupEntity doInBackground(String... data)
+		protected ServerAnswerEntity doInBackground(String... data)
 		{
 			Retrofit rf = new Retrofit.Builder()
 					.baseUrl(Util.IP)
 					.addConverterFactory(GsonConverterFactory.create())
 					.build();
 			GroupService gService = rf.create(GroupService.class);
-			Call<GroupEntity> resp = gService.joinGroup(Integer.parseInt(data[0]), data[1], data[2]);
-			GroupEntity result = null;
+			Call<ServerAnswerEntity> resp = gService.joinGroup(Integer.parseInt(data[0]), data[1], data[2]);
+			ServerAnswerEntity result = null;
 			try
 			{
-				Response<GroupEntity> response = resp.execute();
+				Response<ServerAnswerEntity> response = resp.execute();
 				result = response.body();
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+				result = new ServerAnswerEntity(ServerAnswerEntity.NO_INTERNET);
 			}
 			return result;
 		}
 
 		@Override
-		protected void onPostExecute(GroupEntity result)
+		protected void onPostExecute(ServerAnswerEntity result)
 		{
 			groupsLL.removeViewAt(1);
 			if (result != null)
 			{
-				ProgressBar loadPB = new ProgressBar(GroupListActivity.this);
-				loadPB.setLayoutParams(new LinearLayout.LayoutParams(
-						ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-				loadPB.setIndeterminate(true);
-				groupsLL.addView(loadPB, 1);
-				new LoadGroupsAsync().execute(login, isTeacher ? "true" : "false");
+				if (result.getAnswer().equals(ServerAnswerEntity.OK))
+				{
+					ProgressBar loadPB = new ProgressBar(GroupListActivity.this);
+					loadPB.setLayoutParams(new LinearLayout.LayoutParams(
+							ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+					loadPB.setIndeterminate(true);
+					groupsLL.addView(loadPB, 1);
+					new LoadGroupsAsync().execute(login, isTeacher ? "true" : "false");
+				}
+				else
+				{
+					Util.errorToast(GroupListActivity.this, result.getAnswer());
+				}
 			}
 		}
 	}
 
-	class CreateGroupAsync extends AsyncTask<String, String, GroupEntity>
+	class CreateGroupAsync extends AsyncTask<String, String, ServerAnswerEntity>
 	{
 		@Override
-		protected GroupEntity doInBackground(String... data)
+		protected ServerAnswerEntity doInBackground(String... data)
 		{
 			Retrofit rf = new Retrofit.Builder()
 					.baseUrl(Util.IP)
@@ -203,32 +211,39 @@ public class GroupListActivity extends Activity
 			GroupService gService = rf.create(GroupService.class);
 			GroupEntity entity = new GroupEntity();
 			entity.setName(data[0]);
-			Call<GroupEntity> resp = gService.createGroup(entity, data[1], data[2]);
-			GroupEntity result = null;
+			Call<ServerAnswerEntity> resp = gService.createGroup(entity, data[1], data[2]);
+			ServerAnswerEntity result = null;
 			try
 			{
-				Response<GroupEntity> response = resp.execute();
+				Response<ServerAnswerEntity> response = resp.execute();
 				result = response.body();
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+				result = new ServerAnswerEntity(ServerAnswerEntity.NO_INTERNET);
 			}
 			return result;
 		}
 
 		@Override
-		protected void onPostExecute(GroupEntity result)
+		protected void onPostExecute(ServerAnswerEntity result)
 		{
 			groupsLL.removeViewAt(1);
 			if (result != null)
 			{
-				ProgressBar loadPB = new ProgressBar(GroupListActivity.this);
-				loadPB.setLayoutParams(new LinearLayout.LayoutParams(
-						ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-				loadPB.setIndeterminate(true);
-				groupsLL.addView(loadPB, 1);
-				new LoadGroupsAsync().execute(login, isTeacher ? "true" : "false");
+				if (result.getAnswer().equals(ServerAnswerEntity.OK))
+				{
+					ProgressBar loadPB = new ProgressBar(GroupListActivity.this);
+					loadPB.setLayoutParams(new LinearLayout.LayoutParams(
+							ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+					loadPB.setIndeterminate(true);
+					groupsLL.addView(loadPB, 1);
+					new LoadGroupsAsync().execute(login, isTeacher ? "true" : "false");
+				}
+				else
+				{
+					Util.errorToast(GroupListActivity.this, result.getAnswer());
+				}
 			}
 		}
 	}
@@ -252,7 +267,7 @@ public class GroupListActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+
 			}
 			return result;
 		}
@@ -267,6 +282,10 @@ public class GroupListActivity extends Activity
 				result.toArray(arr);
 				GroupAdapter adapter = new GroupAdapter(GroupListActivity.this, arr, login, password, isTeacher);
 				groupsLV.setAdapter(adapter);
+			}
+			else
+			{
+				Util.errorToast(GroupListActivity.this, ServerAnswerEntity.NO_INTERNET);
 			}
 		}
 	}

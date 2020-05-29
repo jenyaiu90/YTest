@@ -182,6 +182,10 @@ public class GroupViewActivity extends Activity
 				TestTeacherAdapter adapter = new TestTeacherAdapter(testsLV.getContext(), tests, login, password, groupId, type);
 				testsLV.setAdapter(adapter);
 			}
+			else
+			{
+				Util.errorToast(GroupViewActivity.this, ServerAnswerEntity.NO_INTERNET);
+			}
 		}
 	}
 
@@ -204,7 +208,7 @@ public class GroupViewActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+				result = new ServerAnswerEntity(ServerAnswerEntity.NO_INTERNET);
 			}
 			return result;
 		}
@@ -212,7 +216,17 @@ public class GroupViewActivity extends Activity
 		@Override
 		protected void onPostExecute(ServerAnswerEntity result)
 		{
-			Toast.makeText(GroupViewActivity.this, R.string.test_is_set, Toast.LENGTH_LONG).show();
+			if (result != null)
+			{
+				if (result.getAnswer().equals(ServerAnswerEntity.OK))
+				{
+					Toast.makeText(GroupViewActivity.this, R.string.test_is_set, Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+					Util.errorToast(GroupViewActivity.this, result.getAnswer());
+				}
+			}
 		}
 	}
 
@@ -235,7 +249,7 @@ public class GroupViewActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+
 			}
 			return result;
 		}
@@ -250,6 +264,10 @@ public class GroupViewActivity extends Activity
 				result.toArray(users);
 				UserAdapter adapter = new UserAdapter(GroupViewActivity.this, users, login, password);
 				usersLV.setAdapter(adapter);
+			}
+			else
+			{
+				Util.errorToast(GroupViewActivity.this, ServerAnswerEntity.NO_INTERNET);
 			}
 		}
 	}

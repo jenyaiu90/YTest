@@ -19,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import ru.jenyaiu90.ytest.R;
 import ru.jenyaiu90.ytest.data.Util;
 import ru.jenyaiu90.ytest.entity.AnswerEntity;
+import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
 import ru.jenyaiu90.ytest.entity.TaskEntity;
 import ru.jenyaiu90.ytest.services.TaskService;
 import ru.jenyaiu90.ytest.services.TestService;
@@ -88,7 +89,7 @@ public class TestResultActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+
 			}
 			return res;
 		}
@@ -97,41 +98,44 @@ public class TestResultActivity extends Activity
 		protected void onPostExecute(Result result)
 		{
 			resultPB.setIndeterminate(false);
-			if (result != null && result.answers != null && result.tasks != null &&
-					result.answers.size() == result.tasks.size())
+			if (result == null)
 			{
-				int score = 0, mayScore = 0, max = 0;
-				boolean isChecked = true;
-				for (int i = 0; i < result.answers.size(); i++)
-				{
-					max += result.tasks.get(i).getCost();
-					if (result.answers.get(i).getIsChecked())
-					{
-						score += result.answers.get(i).getPoints();
-						mayScore += result.answers.get(i).getPoints();
-					}
-					else
-					{
-						isChecked = false;
-						mayScore += result.tasks.get(i).getCost();
-					}
-				}
-				resultTV.setText(score + " / " + max);
-				resultPercentTV.setText("(" + Math.round(((double)score / max) * 100) + " %)");
-				resultPB.setProgress((int)Math.round(((double)score / max) * 100));
-				if (!isChecked)
-				{
-					resultPB.setSecondaryProgress((int)Math.round(((double)mayScore / max) * 100));
-					TextView notCheckedTV = new TextView(TestResultActivity.this);
-					notCheckedTV.setLayoutParams(new LinearLayout.LayoutParams(
-							ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-					notCheckedTV.setText(R.string.not_checked);
-					resultLL.addView(notCheckedTV);
-				}
+				Util.errorToast(TestResultActivity.this, ServerAnswerEntity.NO_INTERNET);
 			}
 			else
 			{
-				Toast.makeText(TestResultActivity.this, "Error", Toast.LENGTH_LONG).show();
+				if (result.answers != null && result.tasks != null &&
+						result.answers.size() == result.tasks.size())
+				{
+					int score = 0, mayScore = 0, max = 0;
+					boolean isChecked = true;
+					for (int i = 0; i < result.answers.size(); i++)
+					{
+						max += result.tasks.get(i).getCost();
+						if (result.answers.get(i).getIsChecked())
+						{
+							score += result.answers.get(i).getPoints();
+							mayScore += result.answers.get(i).getPoints();
+						}
+						else
+						{
+							isChecked = false;
+							mayScore += result.tasks.get(i).getCost();
+						}
+					}
+					resultTV.setText(score + " / " + max);
+					resultPercentTV.setText("(" + Math.round(((double)score / max) * 100) + " %)");
+					resultPB.setProgress((int)Math.round(((double)score / max) * 100));
+					if (!isChecked)
+					{
+						resultPB.setSecondaryProgress((int)Math.round(((double)mayScore / max) * 100));
+						TextView notCheckedTV = new TextView(TestResultActivity.this);
+						notCheckedTV.setLayoutParams(new LinearLayout.LayoutParams(
+								ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+						notCheckedTV.setText(R.string.not_checked);
+						resultLL.addView(notCheckedTV);
+					}
+				}
 			}
 		}
 	}

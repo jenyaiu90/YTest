@@ -70,11 +70,8 @@
 	<string name="no_name">Name must be filled</string>
 	<string name="no_surname">Surname must be filled</string>
 	<string name="login_pass_space">Login and password cannot contain space</string>
-	<string name="no_internet">An error occurred, probably you`re not connected to the Internet</string>
-	<string name="login_already_exists">A user with that login have already signed up</string>
 	<string name="sign_up_success">You have successfully created an account</string>
 	<string name="login_pass_incorrect">Login or password is incorrect</string>
-	<string name="password_incorrect">Password is incorrect</string>
 	<string name="couldnt_load_user">Server couldn`t find information about user</string>
 	<string name="icons_copyright">Icons were created by icons8.ru</string>
 	<string name="invalid_email">Invalid email</string>
@@ -89,11 +86,21 @@
 	<string name="answer_sure">Are yot sure you want to finish a test?</string>
 	<string name="should_set_answer">You should set a right answer</string>
 	<string name="not_checked">Some tasks haven`t been checked by teacher yet.</string>
-	<string name="error">An error occurred</string>
 	<string name="no_group_name">You should enter a group`s name</string>
 	<string name="no_group_id">You should enter a group`s id</string>
 	<string name="test_is_set">The test is successfully set</string>
-	<string name="enter_points">Enter points count — a number from 0 to </string>
+	<string name="enter_points">Enter points count — a number from 0 to</string>
+	
+	<!-- Server errors -->
+	<string name="error">An unknown error occurred</string>
+	<string name="no_internet">Couldn`t find the server, probably you`re not connected to the Internet</string>
+	<string name="error_password">Your password is incorrect</string>
+	<string name="error_no_user">An error occurred, you wasn`t found in the database of the users</string>
+	<string name="error_no_group">An error occurred, the group wasn`t found</string>
+	<string name="error_no_test">An error occurred, the test wasn`t found</string>
+	<string name="error_no_access">An error occurred, your access wasn`t granted</string>
+	<string name="error_no_task">An error occurred, couldn`t find the task</string>
+	<string name="error_user_already_exists">A user with that login have already signed up</string>
 	
 	<!-- Task types -->
 	<string name="one_q">One of many</string>

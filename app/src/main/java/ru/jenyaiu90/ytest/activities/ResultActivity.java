@@ -141,7 +141,7 @@ public class ResultActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+				result.setAnswer(ServerAnswerEntity.NO_INTERNET);
 			}
 			return result;
 		}
@@ -149,7 +149,17 @@ public class ResultActivity extends Activity
 		@Override
 		protected void onPostExecute(ServerAnswerEntity result)
 		{
-			load();
+			if (result != null)
+			{
+				if (result.getAnswer().equals(ServerAnswerEntity.OK))
+				{
+					load();
+				}
+				else
+				{
+					Util.errorToast(ResultActivity.this, result.getAnswer());
+				}
+			}
 		}
 	}
 
@@ -188,7 +198,7 @@ public class ResultActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+
 			}
 			return result;
 		}
@@ -197,12 +207,19 @@ public class ResultActivity extends Activity
 		protected void onPostExecute(List<ResultAdapter.Answers> result)
 		{
 			resultLL.removeViewAt(0);
-			if (result != null && !result.isEmpty())
+			if (result == null)
 			{
-				ResultAdapter.Answers[] answers = new ResultAdapter.Answers[result.size()];
-				result.toArray(answers);
-				ResultAdapter adapter = new ResultAdapter(ResultActivity.this, answers, login, password);
-				resultLV.setAdapter(adapter);
+				Util.errorToast(ResultActivity.this, ServerAnswerEntity.NO_INTERNET);
+			}
+			else
+			{
+				if (!result.isEmpty())
+				{
+					ResultAdapter.Answers[] answers = new ResultAdapter.Answers[result.size()];
+					result.toArray(answers);
+					ResultAdapter adapter = new ResultAdapter(ResultActivity.this, answers, login, password);
+					resultLV.setAdapter(adapter);
+				}
 			}
 		}
 	}

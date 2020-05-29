@@ -31,6 +31,7 @@ import ru.jenyaiu90.ytest.data.TaskOne;
 import ru.jenyaiu90.ytest.data.TaskShort;
 import ru.jenyaiu90.ytest.data.Test;
 import ru.jenyaiu90.ytest.data.Util;
+import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
 import ru.jenyaiu90.ytest.entity.TaskEntity;
 import ru.jenyaiu90.ytest.entity.TestEntity;
 import ru.jenyaiu90.ytest.services.TaskService;
@@ -193,7 +194,7 @@ public class TestQListActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+
 			}
 			return result;
 		}
@@ -202,7 +203,11 @@ public class TestQListActivity extends Activity
 		protected void onPostExecute(TestEntity result)
 		{
 			testLL.removeViewAt(2);
-			if (result != null)
+			if (result == null)
+			{
+				Util.errorToast(TestQListActivity.this, ServerAnswerEntity.NO_INTERNET);
+			}
+			else
 			{
 				TestQListActivity.this.finish();
 			}
