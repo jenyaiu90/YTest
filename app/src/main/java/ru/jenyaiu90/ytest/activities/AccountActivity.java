@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -115,8 +116,11 @@ public class AccountActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				res = new UserEntity();
-				res.setId(-1);
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					res = new UserEntity();
+					res.setId(-1);
+				}
 			}
 			return res;
 		}

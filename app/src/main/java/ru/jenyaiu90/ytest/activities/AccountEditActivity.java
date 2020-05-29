@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -145,7 +146,10 @@ public class AccountEditActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				res = new ServerAnswerEntity(ServerAnswerEntity.NO_INTERNET);
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					res = new ServerAnswerEntity(ServerAnswerEntity.NO_INTERNET);
+				}
 			}
 			return res;
 		}

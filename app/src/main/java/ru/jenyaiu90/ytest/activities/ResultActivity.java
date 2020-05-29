@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,7 +142,10 @@ public class ResultActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				result.setAnswer(ServerAnswerEntity.NO_INTERNET);
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					result.setAnswer(ServerAnswerEntity.NO_INTERNET);
+				}
 			}
 			return result;
 		}
@@ -198,7 +202,14 @@ public class ResultActivity extends Activity
 			}
 			catch (IOException e)
 			{
-
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					ResultAdapter.Answers r = new ResultAdapter.Answers();
+					r.answer = new AnswerEntity();
+					r.answer.setId(-1);
+					result = new ArrayList<>(1);
+					result.add(r);
+				}
 			}
 			return result;
 		}
@@ -207,18 +218,21 @@ public class ResultActivity extends Activity
 		protected void onPostExecute(List<ResultAdapter.Answers> result)
 		{
 			resultLL.removeViewAt(0);
-			if (result == null)
-			{
-				Util.errorToast(ResultActivity.this, ServerAnswerEntity.NO_INTERNET);
-			}
-			else
+			if (result != null)
 			{
 				if (!result.isEmpty())
 				{
-					ResultAdapter.Answers[] answers = new ResultAdapter.Answers[result.size()];
-					result.toArray(answers);
-					ResultAdapter adapter = new ResultAdapter(ResultActivity.this, answers, login, password);
-					resultLV.setAdapter(adapter);
+					if (result.get(0).answer != null && result.get(0).answer.getId() == -1)
+					{
+						Util.errorToast(ResultActivity.this, ServerAnswerEntity.NO_INTERNET);
+					}
+					else
+					{
+						ResultAdapter.Answers[] answers = new ResultAdapter.Answers[result.size()];
+						result.toArray(answers);
+						ResultAdapter adapter = new ResultAdapter(ResultActivity.this, answers, login, password);
+						resultLV.setAdapter(adapter);
+					}
 				}
 			}
 		}

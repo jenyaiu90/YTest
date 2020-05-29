@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,7 +100,14 @@ public class TestListActivity extends Activity
 			}
 			catch (IOException e)
 			{
-
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					Result r = new Result();
+					r.user = new UserEntity();
+					r.user.setId(-1);
+					result = new ArrayList<>(1);
+					result.add(r);
+				}
 			}
 			return result;
 		}
@@ -108,24 +116,27 @@ public class TestListActivity extends Activity
 		protected void onPostExecute(List<Result> result)
 		{
 			testsLL.removeViewAt(0);
-			if (result == null)
-			{
-				Util.errorToast(TestListActivity.this, ServerAnswerEntity.NO_INTERNET);
-			}
-			else
+			if (result != null)
 			{
 				if (!result.isEmpty())
 				{
-					TestStudentAdapter.TestSolve[] tests = new TestStudentAdapter.TestSolve[result.size()];
-					for (int i = 0; i < result.size(); i++)
+					if (result.get(0).user != null && result.get(0).user.getId() == -1)
 					{
-						tests[i] = new TestStudentAdapter.TestSolve();
-						tests[i].test = result.get(i).test;
-						tests[i].author = result.get(i).user.getLogin();
-						tests[i].isSolved = result.get(i).solved;
+						Util.errorToast(TestListActivity.this, ServerAnswerEntity.NO_INTERNET);
 					}
-					TestStudentAdapter adapter = new TestStudentAdapter(TestListActivity.this, tests, login, password);
-					testsLV.setAdapter(adapter);
+					else
+					{
+						TestStudentAdapter.TestSolve[] tests = new TestStudentAdapter.TestSolve[result.size()];
+						for (int i = 0; i < result.size(); i++)
+						{
+							tests[i] = new TestStudentAdapter.TestSolve();
+							tests[i].test = result.get(i).test;
+							tests[i].author = result.get(i).user.getLogin();
+							tests[i].isSolved = result.get(i).solved;
+						}
+						TestStudentAdapter adapter = new TestStudentAdapter(TestListActivity.this, tests, login, password);
+						testsLV.setAdapter(adapter);
+					}
 				}
 			}
 		}

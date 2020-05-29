@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -194,7 +195,11 @@ public class TestQListActivity extends Activity
 			}
 			catch (IOException e)
 			{
-
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					result = new TestEntity();
+					result.setId(-1);
+				}
 			}
 			return result;
 		}
@@ -203,13 +208,16 @@ public class TestQListActivity extends Activity
 		protected void onPostExecute(TestEntity result)
 		{
 			testLL.removeViewAt(2);
-			if (result == null)
+			if (result != null)
 			{
-				Util.errorToast(TestQListActivity.this, ServerAnswerEntity.NO_INTERNET);
-			}
-			else
-			{
-				TestQListActivity.this.finish();
+				if (result.getId() == -1)
+				{
+					Util.errorToast(TestQListActivity.this, ServerAnswerEntity.NO_INTERNET);
+				}
+				else
+				{
+					TestQListActivity.this.finish();
+				}
 			}
 		}
 	}

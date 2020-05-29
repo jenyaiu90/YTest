@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,7 +122,14 @@ public class UserResultActivity extends Activity
 			}
 			catch (IOException e)
 			{
-
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					UserResultAdapter.UserResult r = new UserResultAdapter.UserResult();
+					r.user = new UserEntity();
+					r.user.setId(-1);
+					userResult = new ArrayList<>(1);
+					userResult.add(r);
+				}
 			}
 			return userResult;
 		}
@@ -130,12 +138,12 @@ public class UserResultActivity extends Activity
 		protected void onPostExecute(List<UserResultAdapter.UserResult> result)
 		{
 			resultsLL.removeViewAt(0);
-			if (result == null)
+			if (result != null)
 			{
-				Util.errorToast(UserResultActivity.this, ServerAnswerEntity.NO_INTERNET);
-			}
-			else
-			{
+				if (!result.isEmpty() && result.get(0).user.getId() == -1)
+				{
+					Util.errorToast(UserResultActivity.this, ServerAnswerEntity.NO_INTERNET);
+				}
 				UserResultAdapter.UserResult[] uResult = new UserResultAdapter.UserResult[result.size()];
 				result.toArray(uResult);
 				UserResultAdapter adapter = new UserResultAdapter(UserResultActivity.this, uResult, login, password, testId);

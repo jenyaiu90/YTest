@@ -45,11 +45,16 @@ public class TaskMany extends Task
 	protected TaskEntity _toEntity()
 	{
 		TaskEntity entity = new TaskEntity();
-		String[] choiceA = new String[] {};
+		String[] choiceA = new String[choice.size()];
 		choice.toArray(choiceA);
 		entity.setChoice(choiceA);
-		String[] answerA = new String[] {};
-		answer.toArray(answerA);
+		String[] answerA = new String[answer.size()];
+		Integer[] answerIA = new Integer[answer.size()];
+		answer.toArray(answerIA);
+		for (int i = 0; i < answer.size(); i++)
+		{
+			answerA[i] = Integer.toString(answerIA[i]);
+		}
 		entity.setAnswer(answerA);
 		return entity;
 	}

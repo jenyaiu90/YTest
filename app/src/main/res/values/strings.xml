@@ -24,7 +24,7 @@
 	<string name="chose_test_set">Chose test for set</string>
 	<string name="view_results">View results of tests</string>
 	<string name="chose_test_result">Chose test for view result</string>
-	<string name="more">And more...</string>
+	<string name="more">And more…</string>
 	<string name="check">Checking answer</string>
 	
 	<!-- Hints -->
@@ -73,7 +73,7 @@
 	<string name="sign_up_success">You have successfully created an account</string>
 	<string name="login_pass_incorrect">Login or password is incorrect</string>
 	<string name="couldnt_load_user">Server couldn`t find information about user</string>
-	<string name="icons_copyright">Icons were created by icons8.ru</string>
+	<string name="icons_copyright">YTest, Alpha 1.0.0\nIcons were created by icons8.ru</string>
 	<string name="invalid_email">Invalid email</string>
 	<string name="no_answer">You didn`t give an answer</string>
 	<string name="at_least_two_ans">A test must have at least two answers</string>
@@ -87,7 +87,7 @@
 	<string name="should_set_answer">You should set a right answer</string>
 	<string name="not_checked">Some tasks haven`t been checked by teacher yet.</string>
 	<string name="no_group_name">You should enter a group`s name</string>
-	<string name="no_group_id">You should enter a group`s id</string>
+	<string name="no_group_id">You should enter a group`s ID</string>
 	<string name="test_is_set">The test is successfully set</string>
 	<string name="enter_points">Enter points count — a number from 0 to</string>
 	

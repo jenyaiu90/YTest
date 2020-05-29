@@ -43,7 +43,7 @@ public class TaskOne extends Task
 	protected TaskEntity _toEntity()
 	{
 		TaskEntity entity = new TaskEntity();
-		String[] choiceA = new String[] {};
+		String[] choiceA = new String[choice.size()];
 		choice.toArray(choiceA);
 		entity.setChoice(choiceA);
 		String[] answerA = new String[] { Integer.toString(answer) };

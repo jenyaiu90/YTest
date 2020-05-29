@@ -378,7 +378,7 @@ public class TestQEditActivity extends Activity
 				{
 					if (((CheckBox) answersChLL.getChildAt(i)).isChecked())
 					{
-						answer.add(i);
+						answer.add(i + 1);
 					}
 				}
 				if (answer.isEmpty())

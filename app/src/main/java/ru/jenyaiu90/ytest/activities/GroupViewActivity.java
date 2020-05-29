@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -167,7 +168,13 @@ public class GroupViewActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					TestEntity r = new TestEntity();
+					r.setId(-1);
+					result = new ArrayList<>(1);
+					result.add(r);
+				}
 			}
 			return result;
 		}
@@ -177,10 +184,17 @@ public class GroupViewActivity extends Activity
 		{
 			if (result != null)
 			{
-				TestEntity[] tests = new TestEntity[result.size()];
-				result.toArray(tests);
-				TestTeacherAdapter adapter = new TestTeacherAdapter(testsLV.getContext(), tests, login, password, groupId, type);
-				testsLV.setAdapter(adapter);
+				if (result.size() == 1 && result.get(0).getId() == -1)
+				{
+					Util.errorToast(GroupViewActivity.this, ServerAnswerEntity.NO_INTERNET);
+				}
+				else
+				{
+					TestEntity[] tests = new TestEntity[result.size()];
+					result.toArray(tests);
+					TestTeacherAdapter adapter = new TestTeacherAdapter(testsLV.getContext(), tests, login, password, groupId, type);
+					testsLV.setAdapter(adapter);
+				}
 			}
 			else
 			{
@@ -208,7 +222,10 @@ public class GroupViewActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				result = new ServerAnswerEntity(ServerAnswerEntity.NO_INTERNET);
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					result = new ServerAnswerEntity(ServerAnswerEntity.NO_INTERNET);
+				}
 			}
 			return result;
 		}
@@ -249,7 +266,13 @@ public class GroupViewActivity extends Activity
 			}
 			catch (IOException e)
 			{
-
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					UserEntity r = new UserEntity();
+					r.setId(-1);
+					result = new ArrayList<>(1);
+					result.add(r);
+				}
 			}
 			return result;
 		}
@@ -260,10 +283,17 @@ public class GroupViewActivity extends Activity
 			groupLL.removeViewAt(2);
 			if (result != null)
 			{
-				UserEntity[] users = new UserEntity[result.size()];
-				result.toArray(users);
-				UserAdapter adapter = new UserAdapter(GroupViewActivity.this, users, login, password);
-				usersLV.setAdapter(adapter);
+				if (result.size() == 1 && result.get(0).getId() == -1)
+				{
+					Util.errorToast(GroupViewActivity.this, ServerAnswerEntity.NO_INTERNET);
+				}
+				else
+				{
+					UserEntity[] users = new UserEntity[result.size()];
+					result.toArray(users);
+					UserAdapter adapter = new UserAdapter(GroupViewActivity.this, users, login, password);
+					usersLV.setAdapter(adapter);
+				}
 			}
 			else
 			{

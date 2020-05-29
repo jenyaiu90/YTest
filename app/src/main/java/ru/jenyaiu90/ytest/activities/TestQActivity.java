@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -196,7 +197,7 @@ public class TestQActivity extends Activity
 				{
 					if (((RadioButton)(choiceRG.getChildAt(i))).isChecked())
 					{
-						s = i;
+						s = i + 1;
 						break;
 					}
 				}
@@ -216,7 +217,7 @@ public class TestQActivity extends Activity
 				{
 					if (((CheckBox)(choiceLL.getChildAt(i))).isChecked())
 					{
-						answers.add(i);
+						answers.add(i + 1);
 					}
 				}
 				if (answers.isEmpty()) //Если ответ не был дан
@@ -414,7 +415,10 @@ public class TestQActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				result.setAnswer(ServerAnswerEntity.NO_INTERNET);
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					result.setAnswer(ServerAnswerEntity.NO_INTERNET);
+				}
 			}
 			return result;
 		}

@@ -1,0 +1,111 @@
+<resources>
+	<string name="app_name">YTest</string>
+	
+	<!-- Choice -->
+	<string name="yes">Да</string>
+	<string name="no">Нет</string>
+	<string name="ok">ОК</string>
+	<string name="save">Сохранить</string>
+	<string name="cancel">Отмена</string>
+	<string name="done">Готово</string>
+	
+	<!-- Titles -->
+	<string name="auth">Авторизация</string>
+	<string name="result">Результат</string>
+	<string name="enter_name_subject">Введите название теста и предмет</string>
+	<string name="answers">Ответы:</string>
+	<string name="cost_">Баллы:</string>
+	<string name="points">Баллы</string>
+	<string name="task">Задание</string>
+	<string name="delete_sure">Вы действительно хотите удалить этот тест?</string>
+	<string name="enter_group_name">Введите название группы</string>
+	<string name="enter_group_id">Введите ID группы</string>
+	<string name="set_test_title">Задать тест группе</string>
+	<string name="chose_test_set">Выберите тест, который хотите задать</string>
+	<string name="view_results">Просмотр результатов теста</string>
+	<string name="chose_test_result">Выберите тест для просмотра результатов</string>
+	<string name="more">И др.</string>
+	<string name="check">Проверка ответа</string>
+	
+	<!-- Hints -->
+	<string name="login">Логин</string>
+	<string name="password">Пароль</string>
+	<string name="name">Имя</string>
+	<string name="surname">Фамилия</string>
+	<string name="im_teacher">Я учитель</string>
+	<string name="teacher">Учитель</string>
+	<string name="student">Ученик</string>
+	<string name="is_teacher">Статус</string>
+	<string name="email">Электронная почта</string>
+	<string name="phone_number">Телефонный номер</string>
+	<string name="old_password">Старый пароль</string>
+	<string name="new_password">Новый пароль</string>
+	<string name="enter_task">Введите задание здесь</string>
+	<string name="answer">Ответ</string>
+	<string name="cost">Баллы</string>
+	<string name="test_name">Название теста</string>
+	<string name="subject">Предмет</string>
+	<string name="group_name">Название группы</string>
+	<string name="group_id">ID группы</string>
+	
+	<!-- Buttons -->
+	<string name="sign_in">Вход</string>
+	<string name="sign_up">Регистрация</string>
+	<string name="edit">Редактировать</string>
+	<string name="prev">Назад</string>
+	<string name="next">Вперёд</string>
+	<string name="create_q">Создать новое задание</string>
+	<string name="create_test">Создать новый тест</string>
+	<string name="add_answer">Добавить ответ</string>
+	<string name="new_task">Новое задание</string>
+	<string name="delete">Удалить</string>
+	<string name="create_group">Создать новую группу</string>
+	<string name="join_group">Присоединиться к группе</string>
+	<string name="set_test">Задать тест</string>
+	<string name="results">Результаты</string>
+	
+	<!-- Messages -->
+	<string name="no_login">Требуется ввести логин</string>
+	<string name="no_password">Требуется ввести пароль</string>
+	<string name="no_name">Требуется ввести имя</string>
+	<string name="no_surname">Требуется ввести фамилию</string>
+	<string name="login_pass_space">Логин и пароль не могут содержать пробел</string>
+	<string name="sign_up_success">Вы упешно создали аккаунт</string>
+	<string name="login_pass_incorrect">Логин или пароль неверны</string>
+	<string name="couldnt_load_user">Сервер не может найти информацию о пользователе</string>
+	<string name="icons_copyright">YTest, Alpha 1.0.0\nIcons were created by icons8.ru</string>
+	<string name="invalid_email">Некорректный адрес электронной почты</string>
+	<string name="no_answer">Вы не ответили</string>
+	<string name="at_least_two_ans">В задании должно быть как минимум два ответа</string>
+	<string name="at_least_one_ans">В задании должно быть как минимум один верный ответ</string>
+	<string name="teacher_check">Задания с развёрнутым ответом проверяются учителем.</string>
+	<string name="empty_answer">Ответ не может быть пустым</string>
+	<string name="empty_task">Вопрос не может быть пустым</string>
+	<string name="invalid_cost">Количество баллов должно быть целым числом</string>
+	<string name="answers_eq">Ответы не могут быть равны</string>
+	<string name="answer_sure">Вы уверены, что хотите завершить выполнение теста?</string>
+	<string name="should_set_answer">Вы должны установить верный ответ</string>
+	<string name="not_checked">Ответы на некоторые вопросы ещё не были проверены учителем.</string>
+	<string name="no_group_name">Вы должны ввести название группы</string>
+	<string name="no_group_id">Вы должны ввести ID группы</string>
+	<string name="test_is_set">Группа успешно получила задание</string>
+	<string name="enter_points">Введите количество баллов — целое число от 0 до</string>
+	
+	<!-- Server errors -->
+	<string name="error">Неизвестная ошибка</string>
+	<string name="no_internet">Не удалось подключиться к серверу, возможно, у Вас нет соединения с Интернетом</string>
+	<string name="error_password">Ваш пароль неверен</string>
+	<string name="error_no_user">Ошибка: вы не были найдены в базе данных пользователей</string>
+	<string name="error_no_group">Ошибка: группа не найдена</string>
+	<string name="error_no_test">Ошибка: тест не найден</string>
+	<string name="error_no_access">Ошибка: отказано в доступе</string>
+	<string name="error_no_task">Ошбика: не удалось найти задание</string>
+	<string name="error_user_already_exists">Пользователь с таким логином уже зарегистрирован</string>
+	
+	<!-- Task types -->
+	<string name="one_q">Один из нескольких</string>
+	<string name="many_q">Несколько из нескольких</string>
+	<string name="short_q">Краткий ответ</string>
+	<string name="long_q">Развёрнутый ответ</string>
+
+</resources>

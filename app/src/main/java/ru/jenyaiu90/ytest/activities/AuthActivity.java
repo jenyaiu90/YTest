@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -208,7 +209,10 @@ public class AuthActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				result = new ServerAnswerEntity(ServerAnswerEntity.NO_INTERNET);
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					result = new ServerAnswerEntity(ServerAnswerEntity.NO_INTERNET);
+				}
 			}
 			return result;
 		}
@@ -254,8 +258,11 @@ public class AuthActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				res = new UserEntity();
-				res.setId(-1);
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					res = new UserEntity();
+					res.setId(-1);
+				}
 			}
 			return res;
 		}
@@ -265,15 +272,15 @@ public class AuthActivity extends Activity
 		{
 			super.onPostExecute(result);
 			inputLL.removeViewAt(inputLL.getChildCount() - 1);
-			if (result == null)
-			{
-				Toast.makeText(AuthActivity.this, R.string.login_pass_incorrect, Toast.LENGTH_LONG).show();
-			}
-			else
+			if (result != null)
 			{
 				if (result.getId() == -1)
 				{
 					Util.errorToast(AuthActivity.this, ServerAnswerEntity.NO_INTERNET);
+				}
+				else if (result.getId() == 0)
+				{
+					Toast.makeText(AuthActivity.this, R.string.login_pass_incorrect, Toast.LENGTH_LONG).show();
 				}
 				else
 				{

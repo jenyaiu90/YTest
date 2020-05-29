@@ -16,6 +16,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -171,7 +173,10 @@ public class GroupListActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				result = new ServerAnswerEntity(ServerAnswerEntity.NO_INTERNET);
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					result = new ServerAnswerEntity(ServerAnswerEntity.NO_INTERNET);
+				}
 			}
 			return result;
 		}
@@ -220,7 +225,10 @@ public class GroupListActivity extends Activity
 			}
 			catch (IOException e)
 			{
-				result = new ServerAnswerEntity(ServerAnswerEntity.NO_INTERNET);
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					result = new ServerAnswerEntity(ServerAnswerEntity.NO_INTERNET);
+				}
 			}
 			return result;
 		}
@@ -267,7 +275,13 @@ public class GroupListActivity extends Activity
 			}
 			catch (IOException e)
 			{
-
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					GroupEntity r = new GroupEntity();
+					r.setId(-1);
+					result = new ArrayList<>(1);
+					result.add(r);
+				}
 			}
 			return result;
 		}
@@ -278,14 +292,17 @@ public class GroupListActivity extends Activity
 			groupsLL.removeViewAt(1);
 			if (result != null && !result.isEmpty())
 			{
-				GroupEntity[] arr = new GroupEntity[result.size()];
-				result.toArray(arr);
-				GroupAdapter adapter = new GroupAdapter(GroupListActivity.this, arr, login, password, isTeacher);
-				groupsLV.setAdapter(adapter);
-			}
-			else
-			{
-				Util.errorToast(GroupListActivity.this, ServerAnswerEntity.NO_INTERNET);
+				if (result.get(0).getId() == -1)
+				{
+					Util.errorToast(GroupListActivity.this, ServerAnswerEntity.NO_INTERNET);
+				}
+				else
+				{
+					GroupEntity[] arr = new GroupEntity[result.size()];
+					result.toArray(arr);
+					GroupAdapter adapter = new GroupAdapter(GroupListActivity.this, arr, login, password, isTeacher);
+					groupsLV.setAdapter(adapter);
+				}
 			}
 		}
 	}

@@ -1,0 +1,111 @@
+<resources>
+	<string name="app_name">YTest</string>
+	
+	<!-- Choice -->
+	<string name="yes">Oui</string>
+	<string name="no">Non</string>
+	<string name="ok">ОК</string>
+	<string name="save">Enregistrer</string>
+	<string name="cancel">Annuler</string>
+	<string name="done">Finir</string>
+	
+	<!-- Titles -->
+	<string name="auth">Autorisation</string>
+	<string name="result">Résultat</string>
+	<string name="enter_name_subject">Nommez le nom du test et la matière</string>
+	<string name="answers">Réponses:</string>
+	<string name="cost_">Points pour bonne réponse:</string>
+	<string name="points">Points</string>
+	<string name="task">Question</string>
+	<string name="delete_sure">Voulez-vous vraiment suprimer cette question?</string>
+	<string name="enter_group_name">Nommez le nom du groupe</string>
+	<string name="enter_group_id">Nommez l`ID du groupe</string>
+	<string name="set_test_title">Donner le test au groupe</string>
+	<string name="chose_test_set">Choisissez le test que vous voulez donner</string>
+	<string name="view_results">Les résultats du test</string>
+	<string name="chose_test_result">Choisissez le test dont vous voulez voir les résultats</string>
+	<string name="more">Et autres</string>
+	<string name="check">Corriger la réponse</string>
+	
+	<!-- Hints -->
+	<string name="login">Nom d`utilisateur</string>
+	<string name="password">Mot de passe</string>
+	<string name="name">Prénom</string>
+	<string name="surname">Nom</string>
+	<string name="im_teacher">Je suis un professeur</string>
+	<string name="teacher">Professeur</string>
+	<string name="student">Elève</string>
+	<string name="is_teacher">Status</string>
+	<string name="email">Email</string>
+	<string name="phone_number">Numéro de téléphone</string>
+	<string name="old_password">Ancien mot de passe</string>
+	<string name="new_password">Nouveau mot de passe</string>
+	<string name="enter_task">Ecrivez votre question ici</string>
+	<string name="answer">Réponse</string>
+	<string name="cost">Points</string>
+	<string name="test_name">Le nom du test</string>
+	<string name="subject">Matière</string>
+	<string name="group_name">Le num du groupe</string>
+	<string name="group_id">L`ID du groupe</string>
+	
+	<!-- Buttons -->
+	<string name="sign_in">Entrer sur son compte</string>
+	<string name="sign_up">Créer un compte</string>
+	<string name="edit">Editer</string>
+	<string name="prev">Précédent</string>
+	<string name="next">Suivant</string>
+	<string name="create_q">Créer une nouvelle question</string>
+	<string name="create_test">Créer un nouveau test</string>
+	<string name="add_answer">Ajouter une réponse</string>
+	<string name="new_task">Nouvelle question</string>
+	<string name="delete">Supprimer</string>
+	<string name="create_group">Créer un nouveau groupe</string>
+	<string name="join_group">Joindre le groupe</string>
+	<string name="set_test">Donner un test</string>
+	<string name="results">Résultats</string>
+	
+	<!-- Messages -->
+	<string name="no_login">Entrer le nom d`utilisateur</string>
+	<string name="no_password">Entrer le mot de passe</string>
+	<string name="no_name">Entrer votre prénom</string>
+	<string name="no_surname">Entrer votre nom</string>
+	<string name="login_pass_space">Entrer votre nom</string>
+	<string name="sign_up_success">Vous avez crée votre compte avec succès</string>
+	<string name="login_pass_incorrect">Nom dutilisateur ou mot de passe incorrect</string>
+	<string name="couldnt_load_user">Le serveur n`a pas put trouver dinformations concernant l`utilisateur</string>
+	<string name="icons_copyright">YTest, Alpha 1.0.0\nLes icones ont été crées par le site icons8.ru</string>
+	<string name="invalid_email">Email incorrect</string>
+	<string name="no_answer">Vous n`avez donné aucune réponse</string>
+	<string name="at_least_two_ans">Il doit y avoir minimun 2 réponses possibles</string>
+	<string name="at_least_one_ans">Il doit y avoir minimun une réponse correcte</string>
+	<string name="teacher_check">Les réponses détaillées sont vérifiées par le professeur.</string>
+	<string name="empty_answer">La réponse ne peut pas être vide</string>
+	<string name="empty_task">La question ne peut pas être vide</string>
+	<string name="invalid_cost">La quantité de points doit être un nombre entier</string>
+	<string name="answers_eq">Les réponses ne doivent pas être identiques</string>
+	<string name="answer_sure">Voulez-vous terminer?</string>
+	<string name="should_set_answer">Vous devez choisir quelle réponse sera la bonne</string>
+	<string name="not_checked">Certaines réponses n`ont pas encore été corrigées par le professeur.</string>
+	<string name="no_group_name">Vous devez nommer le groupe</string>
+	<string name="no_group_id">Vous devez nommer l`ID du groupe</string>
+	<string name="test_is_set">Le groupe a reçu le test</string>
+	<string name="enter_points">Écrivez la quantité de points — un nombre entier de 0 à</string>
+	
+	<!-- Server errors -->
+	<string name="error">Erreur inconnue</string>
+	<string name="no_internet">Une erreur est survenue, il est possible que vous ne soyez pas connécté à Internet</string>
+	<string name="error_password">Mot de passe incorrect</string>
+	<string name="error_no_user">Erreur: vous n`étiez pas trouvés dans la base de données</string>
+	<string name="error_no_group">Erreur: Le groupe n`a pas été trouvé</string>
+	<string name="error_no_test">Erreur: Le test n`a pas été trouvé</string>
+	<string name="error_no_access">Erreur: L`accès est dénié</string>
+	<string name="error_no_task">Erreur: La question n`a pas été trouvé</string>
+	<string name="error_user_already_exists">Un utilisateur avec ce nom d`utilisateur est déjà enregistré</string>
+	
+	<!-- Task types -->
+	<string name="one_q">Une réponse sur plusieures est correcte</string>
+	<string name="many_q">Plusieures réponses sur plusieures sont correctes</string>
+	<string name="short_q">Réponse courte</string>
+	<string name="long_q">Réponse détaillée</string>
+
+</resources>

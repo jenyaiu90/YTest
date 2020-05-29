@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -89,7 +91,14 @@ public class TestResultActivity extends Activity
 			}
 			catch (IOException e)
 			{
-
+				if (e.getClass() == SocketTimeoutException.class)
+				{
+					AnswerEntity r = new AnswerEntity();
+					r.setId(-1);
+					res = new Result();
+					res.answers = new ArrayList<>(1);
+					res.answers.add(r);
+				}
 			}
 			return res;
 		}
@@ -98,42 +107,43 @@ public class TestResultActivity extends Activity
 		protected void onPostExecute(Result result)
 		{
 			resultPB.setIndeterminate(false);
-			if (result == null)
+			if (result != null)
 			{
-				Util.errorToast(TestResultActivity.this, ServerAnswerEntity.NO_INTERNET);
-			}
-			else
-			{
-				if (result.answers != null && result.tasks != null &&
-						result.answers.size() == result.tasks.size())
+				if (result.answers != null && result.answers.get(0).getId() == -1)
 				{
-					int score = 0, mayScore = 0, max = 0;
-					boolean isChecked = true;
-					for (int i = 0; i < result.answers.size(); i++)
+					Util.errorToast(TestResultActivity.this, ServerAnswerEntity.NO_INTERNET);
+				}
+				else
+				{
+					if (result.answers != null && result.tasks != null &&
+						result.answers.size() == result.tasks.size())
 					{
-						max += result.tasks.get(i).getCost();
-						if (result.answers.get(i).getIsChecked())
+						int score = 0, mayScore = 0, max = 0;
+						boolean isChecked = true;
+						for (int i = 0; i < result.answers.size(); i++)
 						{
-							score += result.answers.get(i).getPoints();
-							mayScore += result.answers.get(i).getPoints();
+							max += result.tasks.get(i).getCost();
+							if (result.answers.get(i).getIsChecked())
+							{
+								score += result.answers.get(i).getPoints();
+								mayScore += result.answers.get(i).getPoints();
+							} else
+							{
+								isChecked = false;
+								mayScore += result.tasks.get(i).getCost();
+							}
 						}
-						else
+						resultTV.setText(score + " / " + max);
+						resultPercentTV.setText("(" + Math.round(((double) score / max) * 100) + " %)");
+						resultPB.setProgress((int) Math.round(((double) score / max) * 100));
+						if (!isChecked)
 						{
-							isChecked = false;
-							mayScore += result.tasks.get(i).getCost();
+							resultPB.setSecondaryProgress((int) Math.round(((double) mayScore / max) * 100));
+							TextView notCheckedTV = new TextView(TestResultActivity.this);
+							notCheckedTV.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+							notCheckedTV.setText(R.string.not_checked);
+							resultLL.addView(notCheckedTV);
 						}
-					}
-					resultTV.setText(score + " / " + max);
-					resultPercentTV.setText("(" + Math.round(((double)score / max) * 100) + " %)");
-					resultPB.setProgress((int)Math.round(((double)score / max) * 100));
-					if (!isChecked)
-					{
-						resultPB.setSecondaryProgress((int)Math.round(((double)mayScore / max) * 100));
-						TextView notCheckedTV = new TextView(TestResultActivity.this);
-						notCheckedTV.setLayoutParams(new LinearLayout.LayoutParams(
-								ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-						notCheckedTV.setText(R.string.not_checked);
-						resultLL.addView(notCheckedTV);
 					}
 				}
 			}
