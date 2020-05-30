@@ -11,15 +11,19 @@ import ru.jenyaiu90.ytest.entity.UserEntity;
 
 public interface UserService
 {
+	//Создать пользователя
 	@POST("/user/create")
 	Call<ServerAnswerEntity> createUser(@Body UserEntity user);
 
+	//Попытка входа в систему
 	@GET("/user/auth")
 	Call<UserEntity> signIn(@Query("login") String login, @Query("password") String password);
 
+	//Получить пользователя
 	@GET("/user/get")
 	Call<UserEntity> getUser(@Query("login") String login);
 
+	//Изменить данные пользователя
 	@PUT("/user/update")
 	Call<ServerAnswerEntity> updateUser(@Query("login") String login, @Query("name") String name,
 										@Query("surname") String surname, @Query("email") String email,

@@ -10,6 +10,7 @@ import ru.jenyaiu90.ytest.entity.TestEntity;
 
 public interface TaskService
 {
+	//Получить список заданий теста
 	@GET("/task/get")
 	Call<List<TaskEntity>> getTasksOfTest(@Query("test_id") int test_id);
 }

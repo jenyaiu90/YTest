@@ -1,5 +1,6 @@
 package ru.jenyaiu90.ytest.entity;
 
+//Группа пользователей
 public class GroupEntity
 {
 	protected int id;

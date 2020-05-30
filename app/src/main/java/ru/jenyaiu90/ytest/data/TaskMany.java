@@ -1,20 +1,18 @@
 package ru.jenyaiu90.ytest.data;
 
-import android.graphics.Bitmap;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 
 import ru.jenyaiu90.ytest.entity.TaskEntity;
 
+//Задание с выбором нескольких варианотов
 public class TaskMany extends Task
 {
-	protected LinkedList<String> choice;
-	protected LinkedList<Integer> answer;
-	protected LinkedList<Integer> inAnswer;
+	protected LinkedList<String> choice; //Варианты ответа
+	protected LinkedList<Integer> answer; //Верный ответ
+	protected LinkedList<Integer> inAnswer; //Ответ ученика
 
 	public TaskMany(String text, int cost, @NonNull LinkedList<String> choice, @NonNull LinkedList<Integer> answer)
 	{
@@ -64,6 +62,7 @@ public class TaskMany extends Task
 		return choice;
 	}
 
+	//Ввод ответа ученика
 	public void inputAnswer(LinkedList<Integer> ans)
 	{
 		inAnswer = ans;

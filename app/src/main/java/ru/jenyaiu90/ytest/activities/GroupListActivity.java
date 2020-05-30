@@ -29,12 +29,12 @@ import ru.jenyaiu90.ytest.adapters.GroupAdapter;
 import ru.jenyaiu90.ytest.data.Util;
 import ru.jenyaiu90.ytest.entity.GroupEntity;
 import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
-import ru.jenyaiu90.ytest.entity.UserEntity;
 import ru.jenyaiu90.ytest.services.GroupService;
-import ru.jenyaiu90.ytest.services.UserService;
 
+//Список групп
 public class GroupListActivity extends Activity
 {
+	//Для намерения
 	public static final String LOGIN = "login";
 	public static final String PASSWORD = "password";
 	public static final String IS_TEACHER = "isTeacher";
@@ -60,7 +60,7 @@ public class GroupListActivity extends Activity
 		password = getIntent().getStringExtra(PASSWORD);
 		isTeacher = getIntent().getBooleanExtra(IS_TEACHER, false);
 
-		if (isTeacher)
+		if (isTeacher) //Добавление кнопки создания группы для учителя
 		{
 			newBT.setText(R.string.create_group);
 			newBT.setOnClickListener(new View.OnClickListener()
@@ -102,7 +102,7 @@ public class GroupListActivity extends Activity
 				}
 			});
 		}
-		else
+		else //Добавление кнопки присоединения к группе для ученика
 		{
 			newBT.setText(R.string.join_group);
 			newBT.setOnClickListener(new View.OnClickListener()
@@ -154,6 +154,7 @@ public class GroupListActivity extends Activity
 		new LoadGroupsAsync().execute(login, isTeacher ? "true" : "false");
 	}
 
+	//Присоединение к группе
 	class JoinGroupAsync extends AsyncTask<String, String, ServerAnswerEntity>
 	{
 		@Override
@@ -204,6 +205,7 @@ public class GroupListActivity extends Activity
 		}
 	}
 
+	//Создание группы
 	class CreateGroupAsync extends AsyncTask<String, String, ServerAnswerEntity>
 	{
 		@Override
@@ -256,6 +258,7 @@ public class GroupListActivity extends Activity
 		}
 	}
 
+	//Загрузка списка групп
 	class LoadGroupsAsync extends AsyncTask<String, String, List<GroupEntity>>
 	{
 		@Override
@@ -266,6 +269,7 @@ public class GroupListActivity extends Activity
 					.addConverterFactory(GsonConverterFactory.create())
 					.build();
 			GroupService gService = rf.create(GroupService.class);
+			//Загружаются разные списки в зависимости от того, является ли пользователь учителем
 			Call<List<GroupEntity>> resp = data[1].equals("true") ? gService.getGroupsOf(data[0]) : gService.getGroupsWith(data[0]);
 			List<GroupEntity> result = null;
 			try

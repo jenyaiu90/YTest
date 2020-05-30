@@ -1,10 +1,6 @@
 package ru.jenyaiu90.ytest.data;
 
-import android.graphics.Bitmap;
-
 import androidx.annotation.NonNull;
-
-import com.google.gson.Gson;
 
 import ru.jenyaiu90.ytest.entity.UserEntity;
 
@@ -27,6 +23,7 @@ public class User
 		isTeacher = entity.getIsTeacher();
 	}
 
+	//Пока не используется, но когда-нибудь может пригодиться
 	public UserEntity toEntity()
 	{
 		UserEntity entity = new UserEntity();

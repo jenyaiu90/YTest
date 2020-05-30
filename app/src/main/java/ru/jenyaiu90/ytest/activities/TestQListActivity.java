@@ -25,7 +25,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import ru.jenyaiu90.ytest.R;
 import ru.jenyaiu90.ytest.adapters.QuestionAdapter;
 import ru.jenyaiu90.ytest.data.Task;
-import ru.jenyaiu90.ytest.data.TaskEntityComparator;
 import ru.jenyaiu90.ytest.data.TaskLong;
 import ru.jenyaiu90.ytest.data.TaskMany;
 import ru.jenyaiu90.ytest.data.TaskOne;
@@ -35,16 +34,18 @@ import ru.jenyaiu90.ytest.data.Util;
 import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
 import ru.jenyaiu90.ytest.entity.TaskEntity;
 import ru.jenyaiu90.ytest.entity.TestEntity;
-import ru.jenyaiu90.ytest.services.TaskService;
 import ru.jenyaiu90.ytest.services.TestService;
 
+//Список заданий теста в редакторе тестов
 public class TestQListActivity extends Activity
 {
-	public static final int RESULT_DELETE = -2;
+	//Для намерения
 	public static final String LOGIN = "login";
 	public static final String PASSWORD = "password";
 	public static final String TEST_NAME = "test_name";
 	public static final String SUBJECT = "subject";
+
+	public static final int RESULT_DELETE = -2; //Удаление задания
 
 	protected Test test;
 	protected ArrayList<Task> alist;
@@ -72,6 +73,7 @@ public class TestQListActivity extends Activity
 		test = new Test(test_name, subject, alist);
 	}
 
+	//Загрузить список заданий
 	protected void loadTest()
 	{
 		String tasks[][] = new String[test.size()][2];
@@ -103,6 +105,7 @@ public class TestQListActivity extends Activity
 		questionsLV.setAdapter(adapter);
 	}
 
+	//Создание задания
 	public void create(View view)
 	{
 		LinkedList<String> list = new LinkedList<>();
@@ -150,10 +153,12 @@ public class TestQListActivity extends Activity
 		startActivityForResult(intent, requestCode);
 	}
 
+	//Сохранение теста
 	public void save(View view)
 	{
 		if (alist.isEmpty())
 		{
+			//Не сохранять пустой тест
 			finish();
 		}
 		else
@@ -172,6 +177,7 @@ public class TestQListActivity extends Activity
 		}
 	}
 
+	//Создание теста на сервере
 	class CreateTestAsync extends AsyncTask<Data, String, TestEntity>
 	{
 		@Override

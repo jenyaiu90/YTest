@@ -48,7 +48,7 @@ public class ResultAdapter extends ArrayAdapter<ResultAdapter.Answers>
 		String buff = "";
 		if (ans.answer.getAnswer() != null)
 		{
-			for (String i : ans.answer.getAnswer().split("/=@/"))
+			for (String i : ans.answer.getAnswer().split("/=@/")) //"/=@/" — это разделитель
 			{
 				buff += i + "\n";
 			}
@@ -79,7 +79,7 @@ public class ResultAdapter extends ArrayAdapter<ResultAdapter.Answers>
 			}
 		}
 		((TextView)convertView.findViewById(R.id.rightTV)).setText(buff);
-		if (!ans.answer.getIsChecked())
+		if (!ans.answer.getIsChecked()) //Если требуется проверка ответа
 		{
 			convertView.setBackgroundColor(getContext().getColor(R.color.colorNotChecked));
 			convertView.setOnClickListener(new View.OnClickListener()
@@ -97,7 +97,7 @@ public class ResultAdapter extends ArrayAdapter<ResultAdapter.Answers>
 					}
 					if (pos < views.length && getContext().getClass() == ResultActivity.class)
 					{
-						((ResultActivity) getContext()).check(getItem(pos).answer, getItem(pos).task);
+						((ResultActivity)getContext()).check(getItem(pos).answer, getItem(pos).task);
 					}
 				}
 			});

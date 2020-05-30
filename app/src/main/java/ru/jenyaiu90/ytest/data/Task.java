@@ -1,19 +1,17 @@
 package ru.jenyaiu90.ytest.data;
 
-import android.graphics.Bitmap;
-
-import androidx.annotation.Nullable;
-
 import ru.jenyaiu90.ytest.entity.TaskEntity;
 
+//Задание теста
 public abstract class Task
 {
+	//Тип задания
 	public enum TaskType
 	{
-		ONE,
-		MANY,
-		SHORT,
-		LONG
+		ONE,	//Один из нескольких
+		MANY,	//Несколько из нескольких
+		SHORT,	//Краткий ответ
+		LONG	//Развёрнутый ответ
 	}
 
 	protected int id;

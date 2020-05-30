@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
@@ -29,8 +28,10 @@ import ru.jenyaiu90.ytest.services.GroupService;
 import ru.jenyaiu90.ytest.services.TaskService;
 import ru.jenyaiu90.ytest.services.TestService;
 
+//Список результатов прохождения теста учениками группы
 public class UserResultActivity extends Activity
 {
+	//Для намерения
 	public static final String LOGIN = "login";
 	public static final String PASSWORD = "password";
 	public static final String GROUP_ID = "group_id";
@@ -66,6 +67,7 @@ public class UserResultActivity extends Activity
 		new LoadTestResultsAsync().execute(testId, groupId);
 	}
 
+	//Загрузить результаты
 	class LoadTestResultsAsync extends AsyncTask<Integer, String, List<UserResultAdapter.UserResult>>
 	{
 		@Override
@@ -92,7 +94,7 @@ public class UserResultActivity extends Activity
 
 				userResult = new ArrayList<>(users.size());
 
-				for (UserEntity i : users)
+				for (UserEntity i : users) //Загрузка резултатов для каждого пользователя
 				{
 					Call<List<AnswerEntity>> testResp = testService.getAnswers(i.getLogin(), data[0]);
 					Response<List<AnswerEntity>> testResponse = testResp.execute();

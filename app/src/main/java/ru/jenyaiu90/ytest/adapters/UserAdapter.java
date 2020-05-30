@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 
 import ru.jenyaiu90.ytest.R;
 import ru.jenyaiu90.ytest.activities.AccountActivity;
-import ru.jenyaiu90.ytest.entity.GroupEntity;
 import ru.jenyaiu90.ytest.entity.UserEntity;
 
 public class UserAdapter extends ArrayAdapter<UserEntity>

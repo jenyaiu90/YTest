@@ -25,19 +25,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import ru.jenyaiu90.ytest.R;
 import ru.jenyaiu90.ytest.adapters.TestTeacherAdapter;
 import ru.jenyaiu90.ytest.adapters.UserAdapter;
-import ru.jenyaiu90.ytest.adapters.UserResultAdapter;
 import ru.jenyaiu90.ytest.data.Util;
-import ru.jenyaiu90.ytest.entity.AnswerEntity;
 import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
-import ru.jenyaiu90.ytest.entity.TaskEntity;
 import ru.jenyaiu90.ytest.entity.TestEntity;
 import ru.jenyaiu90.ytest.entity.UserEntity;
 import ru.jenyaiu90.ytest.services.GroupService;
-import ru.jenyaiu90.ytest.services.TaskService;
-import ru.jenyaiu90.ytest.services.TestService;
 
+//Просмотр группы
 public class GroupViewActivity extends Activity
 {
+	//Для намерения
 	public static final String LOGIN = "login";
 	public static final String PASSWORD = "password";
 	public static final String IS_TEACHER = "is_teacher";
@@ -71,7 +68,7 @@ public class GroupViewActivity extends Activity
 
 		groupIdTV.setText(groupName + " (" + groupId + ")");
 
-		if (isTeacher)
+		if (isTeacher) //Добавление кнопок для добавления задания и проверки результатов для учителя
 		{
 			Button setBT = new Button(GroupViewActivity.this);
 			setBT.setLayoutParams(new LinearLayout.LayoutParams(
@@ -133,11 +130,13 @@ public class GroupViewActivity extends Activity
 		new LoadUsersAsync().execute(groupId);
 	}
 
+	//Задать тест
 	public void setTest(int testId)
 	{
 		new SetTestAsync().execute(Integer.toString(groupId), Integer.toString(testId), login, password);
 	}
 
+	//Загрузить список тестов, которые можно задать или которые уже были заданы группе
 	class LoadTestsForAsync extends AsyncTask<Integer, String, List<TestEntity>>
 	{
 		protected ListView testsLV;
@@ -203,6 +202,7 @@ public class GroupViewActivity extends Activity
 		}
 	}
 
+	//Задать группе задание
 	class SetTestAsync extends AsyncTask<String, String, ServerAnswerEntity>
 	{
 		@Override
@@ -247,6 +247,7 @@ public class GroupViewActivity extends Activity
 		}
 	}
 
+	//Загрузить список пользователей группы
 	class LoadUsersAsync extends AsyncTask<Integer, String, List<UserEntity>>
 	{
 		@Override

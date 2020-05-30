@@ -2,6 +2,7 @@ package ru.jenyaiu90.ytest.entity;
 
 import ru.jenyaiu90.ytest.data.Task;
 
+//Задание теста
 public class TaskEntity
 {
 	protected int id;
@@ -10,7 +11,7 @@ public class TaskEntity
 	protected String image;
 	protected String text;
 	protected int cost;
-	protected String[] choice;
+	protected String[] choice; //Варианты ответов
 	protected String[] answer;
 	protected int test;
 

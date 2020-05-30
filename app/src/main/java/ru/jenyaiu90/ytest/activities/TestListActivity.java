@@ -25,8 +25,10 @@ import ru.jenyaiu90.ytest.entity.TestEntity;
 import ru.jenyaiu90.ytest.entity.UserEntity;
 import ru.jenyaiu90.ytest.services.TestService;
 
+//Список заданных тестов
 public class TestListActivity extends Activity
 {
+	//Для намерения
 	public static final String LOGIN = "login";
 	public static final String PASSWORD = "password";
 
@@ -55,6 +57,7 @@ public class TestListActivity extends Activity
 		new LoadTestsAsync().execute(login);
 	}
 
+	//Загрузить список тестов
 	class LoadTestsAsync extends AsyncTask<String, String, List<LoadTestsAsync.Result>>
 	{
 		public class Result

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -30,10 +29,13 @@ import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
 import ru.jenyaiu90.ytest.entity.UserEntity;
 import ru.jenyaiu90.ytest.services.UserService;
 
+//Просмотр аккаунта
 public class AccountActivity extends Activity
 {
-	public static final String LOGIN = "login"; //Для намерения: логин просматриващего
-	public static final String ACC_LOGIN = "accountLogin"; //Для намерения: логин просматриваемого аккаунта
+	//Для намерения
+	public static final String LOGIN = "login";
+	public static final String ACC_LOGIN = "accountLogin";
+
 	public static final int EDIT_REQUEST = 1; //Код запроса активности редактирования аккаунта
 
 	protected LinearLayout accountLL;
@@ -97,6 +99,7 @@ public class AccountActivity extends Activity
 		}
 	}
 
+	//Загрузка данных о пользователе
 	class LoadUserAsync extends AsyncTask<String, String, UserEntity>
 	{
 		@Override

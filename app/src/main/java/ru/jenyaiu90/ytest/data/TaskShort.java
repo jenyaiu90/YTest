@@ -1,18 +1,14 @@
 package ru.jenyaiu90.ytest.data;
 
-import android.graphics.Bitmap;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import java.util.LinkedList;
 
 import ru.jenyaiu90.ytest.entity.TaskEntity;
 
+//Задание с кратким ответом
 public class TaskShort extends Task
 {
-	protected String answers[];
-	protected String inAnswer;
+	protected String answers[]; //Верные ответы
+	protected String inAnswer; //Ответ ученика
 
 	public TaskShort(String text, int cost, @NonNull String answers[])
 	{
@@ -41,6 +37,7 @@ public class TaskShort extends Task
 		return entity;
 	}
 
+	//Ввод ответа ученика
 	public void inputAnswer(String ans)
 	{
 		inAnswer = ans;

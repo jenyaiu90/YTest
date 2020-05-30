@@ -26,18 +26,17 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ru.jenyaiu90.ytest.R;
 import ru.jenyaiu90.ytest.adapters.ResultAdapter;
-import ru.jenyaiu90.ytest.adapters.TestStudentAdapter;
 import ru.jenyaiu90.ytest.data.Util;
 import ru.jenyaiu90.ytest.entity.AnswerEntity;
 import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
 import ru.jenyaiu90.ytest.entity.TaskEntity;
-import ru.jenyaiu90.ytest.entity.TestEntity;
-import ru.jenyaiu90.ytest.entity.UserEntity;
 import ru.jenyaiu90.ytest.services.TaskService;
 import ru.jenyaiu90.ytest.services.TestService;
 
+//Просмотр результата прохождения теста учеником для учителя
 public class ResultActivity extends Activity
 {
+	//Для намерения
 	public static final String LOGIN = "login";
 	public static final String PASSWORD = "password";
 	public static final String STUDENT = "student";
@@ -68,6 +67,7 @@ public class ResultActivity extends Activity
 		load();
 	}
 
+	//Загрузка информации о результатах
 	public void load()
 	{
 		resultLV.setAdapter(null);
@@ -80,6 +80,7 @@ public class ResultActivity extends Activity
 		new LoadAnswersAsync().execute(student, Integer.toString(testId));
 	}
 
+	//Проверка задания с развёрнутым ответом
 	public void check(final AnswerEntity answer, final TaskEntity task)
 	{
 		final AlertDialog.Builder alert = new AlertDialog.Builder(ResultActivity.this);
@@ -118,6 +119,7 @@ public class ResultActivity extends Activity
 		alert.show();
 	}
 
+	//Сохранение результатов проверки
 	class CheckAsync extends AsyncTask<String, String, ServerAnswerEntity>
 	{
 		@Override
@@ -167,6 +169,7 @@ public class ResultActivity extends Activity
 		}
 	}
 
+	//Загрузка результатов
 	class LoadAnswersAsync extends AsyncTask<String, String, List<ResultAdapter.Answers>>
 	{
 		@Override

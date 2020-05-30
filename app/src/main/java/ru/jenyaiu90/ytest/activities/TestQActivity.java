@@ -45,8 +45,10 @@ import ru.jenyaiu90.ytest.entity.TestEntity;
 import ru.jenyaiu90.ytest.services.TaskService;
 import ru.jenyaiu90.ytest.services.TestService;
 
+//Решение теста
 public class TestQActivity extends Activity
 {
+	//Для намерения
 	public static final String TEST_ID = "test_id";
 	public static final String LOGIN = "login";
 	public static final String PASSWORD = "password";
@@ -80,6 +82,7 @@ public class TestQActivity extends Activity
 		new LoadTestAsync().execute(getIntent().getIntExtra(TEST_ID, 1));
 	}
 
+	//Вывод задания на экран
 	protected void draw(int n)
 	{
 		task = n;
@@ -184,7 +187,8 @@ public class TestQActivity extends Activity
 		}
 	}
 
-	public void save(View view) //Сохранение ответа
+	//Сохранение ответа
+	public void save(View view)
 	{
 		switch (test.getTask(task).getType())
 		{
@@ -259,7 +263,8 @@ public class TestQActivity extends Activity
 		}
 	}
 
-	public void prev(View view) //Переход к предыдущему вопросу
+	//Переход к предыдущему вопросу
+	public void prev(View view)
 	{
 		if (task != 0)
 		{
@@ -267,9 +272,10 @@ public class TestQActivity extends Activity
 		}
 	}
 
-	public void next(View view) //Переход к следующему вопросу
+	//Переход к следующему вопросу
+	public void next(View view)
 	{
-		if (task == test.size() - 1)
+		if (task == test.size() - 1) //Завершение теста
 		{
 			AlertDialog.Builder builder = new AlertDialog.Builder(TestQActivity.this);
 			builder.setMessage(R.string.answer_sure)
@@ -293,6 +299,7 @@ public class TestQActivity extends Activity
 		}
 	}
 
+	//Завершение теста
 	protected void finishTest()
 	{
 		String[] answers = new String[test.getTasks().size()];
@@ -324,7 +331,7 @@ public class TestQActivity extends Activity
 			}
 			else
 			{
-				answers[i] = "/@=/";
+				answers[i] = "/@=/"; //Пустой ответ
 			}
 		}
 		counterLL.removeAllViews();
@@ -344,6 +351,7 @@ public class TestQActivity extends Activity
 		new SaveTestAsync().execute(data);
 	}
 
+	//Загрузка теста
 	class LoadTestAsync extends AsyncTask<Integer, String, Test>
 	{
 		@Override
@@ -395,6 +403,7 @@ public class TestQActivity extends Activity
 		}
 	}
 
+	//Сохранение ответов
 	class SaveTestAsync extends AsyncTask<String, String, ServerAnswerEntity>
 	{
 		@Override

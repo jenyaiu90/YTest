@@ -66,13 +66,13 @@ public class TestTeacherAdapter extends ArrayAdapter<TestEntity>
 				{
 					switch (action)
 					{
-						case SET_TEST:
+						case SET_TEST: //Если нажата кнопка задания теста группе, задать тест группе
 							if (getContext().getClass() == GroupViewActivity.class)
 							{
 								((GroupViewActivity)getContext()).setTest(getItem(pos).getId());
 							}
 							break;
-						case VIEW_RESULTS:
+						case VIEW_RESULTS: //Если нажата кнопка просмотра результатов, перейти к просмотру результатов
 							Intent userResultIntent = new Intent(getContext(), UserResultActivity.class);
 							userResultIntent.putExtra(UserResultActivity.GROUP_ID, groupId);
 							userResultIntent.putExtra(UserResultActivity.TEST_ID, getItem(pos).getId());

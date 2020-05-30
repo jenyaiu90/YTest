@@ -13,8 +13,6 @@ import androidx.annotation.NonNull;
 
 import ru.jenyaiu90.ytest.R;
 import ru.jenyaiu90.ytest.activities.ResultActivity;
-import ru.jenyaiu90.ytest.entity.AnswerEntity;
-import ru.jenyaiu90.ytest.entity.TaskEntity;
 import ru.jenyaiu90.ytest.entity.UserEntity;
 
 public class UserResultAdapter extends ArrayAdapter<UserResultAdapter.UserResult>

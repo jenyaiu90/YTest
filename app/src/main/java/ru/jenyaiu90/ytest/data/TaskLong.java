@@ -2,9 +2,10 @@ package ru.jenyaiu90.ytest.data;
 
 import ru.jenyaiu90.ytest.entity.TaskEntity;
 
+//Задание с развёрнутым ответом
 public class TaskLong extends Task
 {
-	protected String inAnswerS;
+	protected String inAnswerS; //Ответ ученика на задание
 
 	public TaskLong(String text, int cost)
 	{
@@ -30,6 +31,7 @@ public class TaskLong extends Task
 		return new TaskEntity();
 	}
 
+	//Ввод ответа на задание
 	public void inputAnswer(String ans)
 	{
 		inAnswerS = ans;

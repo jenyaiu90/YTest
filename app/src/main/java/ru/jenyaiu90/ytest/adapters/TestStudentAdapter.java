@@ -66,7 +66,7 @@ public class TestStudentAdapter extends ArrayAdapter<TestStudentAdapter.TestSolv
 				}
 				if (pos < views.length)
 				{
-					if (getItem(pos).isSolved)
+					if (getItem(pos).isSolved) //Если тест уже решён, перейти к просмотру результата
 					{
 						Intent testResultIntent = new Intent(getContext(), TestResultActivity.class);
 						testResultIntent.putExtra(TestResultActivity.LOGIN, login);
@@ -74,7 +74,7 @@ public class TestStudentAdapter extends ArrayAdapter<TestStudentAdapter.TestSolv
 						testResultIntent.putExtra(TestResultActivity.TEST_NAME, getItem(pos).test.getName());
 						getContext().startActivity(testResultIntent);
 					}
-					else
+					else //Если тест ещё не решён, перейти к решению
 					{
 						Intent testQIntent = new Intent(getContext(), TestQActivity.class);
 						testQIntent.putExtra(TestQActivity.TEST_ID, getItem(pos).test.getId());

@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
@@ -26,8 +25,10 @@ import ru.jenyaiu90.ytest.entity.TaskEntity;
 import ru.jenyaiu90.ytest.services.TaskService;
 import ru.jenyaiu90.ytest.services.TestService;
 
+//Просмотр результата прохождения теста
 public class TestResultActivity extends Activity
 {
+	//Для намерения
 	public static final String LOGIN = "login";
 	public static final String TEST_ID = "test_id";
 	public static final String TEST_NAME = "test_name";
@@ -60,6 +61,7 @@ public class TestResultActivity extends Activity
 		new LoadResultAsync().execute(login, Integer.toString(test_id));
 	}
 
+	//Загрузить результат
 	class LoadResultAsync extends AsyncTask<String, String, LoadResultAsync.Result>
 	{
 		public class Result

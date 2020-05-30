@@ -28,6 +28,7 @@ import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
 import ru.jenyaiu90.ytest.entity.UserEntity;
 import ru.jenyaiu90.ytest.services.UserService;
 
+//Авторизация
 public class AuthActivity extends Activity
 {
 	protected RadioButton signInRB;
@@ -40,7 +41,7 @@ public class AuthActivity extends Activity
 	protected CheckBox teacherCB;
 	protected Button signBT;
 	protected User user;
-	protected boolean success_up;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -87,7 +88,9 @@ public class AuthActivity extends Activity
 			}
 		});
 	}
-	public void in(View view) //Переключение полей на вход
+
+	//Переключение полей на вход
+	public void in(View view)
 	{
 		inputLL.removeAllViews();
 		inputLL.addView(loginET);
@@ -117,7 +120,9 @@ public class AuthActivity extends Activity
 			}
 		});
 	}
-	public void up(View view) //Переключение полей на регистрацию
+
+	//Переключение полей на регистрацию
+	public void up(View view)
 	{
 		inputLL.removeAllViews();
 		inputLL.addView(loginET);
@@ -180,7 +185,9 @@ public class AuthActivity extends Activity
 			}
 		});
 	}
-	public void signIn() //Вход
+
+	//Вход
+	protected void signIn()
 	{
 		Intent i = new Intent();
 		i.putExtra(MainActivity.LOGIN, user.getLogin());
@@ -191,6 +198,7 @@ public class AuthActivity extends Activity
 		finish();
 	}
 
+	//Попытка регистрации
 	class SignUpAsync extends AsyncTask<UserEntity, String, ServerAnswerEntity>
 	{
 		@Override
@@ -240,6 +248,7 @@ public class AuthActivity extends Activity
 		}
 	}
 
+	//Попытка входа
 	class SignInAsync extends AsyncTask<String, String, UserEntity>
 	{
 		@Override

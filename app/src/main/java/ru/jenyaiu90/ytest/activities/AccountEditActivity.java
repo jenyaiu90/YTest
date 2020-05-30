@@ -26,9 +26,11 @@ import ru.jenyaiu90.ytest.data.Util;
 import ru.jenyaiu90.ytest.entity.ServerAnswerEntity;
 import ru.jenyaiu90.ytest.services.UserService;
 
+//Редактирование данных пользователя
 public class AccountEditActivity extends Activity
 {
-	public static final String USER = "user"; //Для намерения: пользователь
+	//Для намерения
+	public static final String USER = "user";
 
 	protected User user;
 
@@ -60,7 +62,8 @@ public class AccountEditActivity extends Activity
 		phoneNumberET.setText(user.getPhone_number());
 	}
 
-	public void save(View view) //Сохранение данных
+	//Сохранение данных
+	public void save(View view)
 	{
 		if (oldPasswordET.getText().toString().isEmpty())
 		{
@@ -106,7 +109,7 @@ public class AccountEditActivity extends Activity
 
 		if (phoneNumberET.getText().toString().isEmpty())
 		{
-			phoneNumberET.setText("+0");
+			phoneNumberET.setText("+0"); //Установка номера телефона по умолчанию
 		}
 
 		ProgressBar loadPB = new ProgressBar(AccountEditActivity.this);
@@ -121,12 +124,14 @@ public class AccountEditActivity extends Activity
 						newPasswordET.getText().toString());
 	}
 
-	public void cancel(View view) //Отменить
+	//Отменить
+	public void cancel(View view)
 	{
 		setResult(RESULT_CANCELED);
 		finish();
 	}
 
+	//Сохранение данных на сервере
 	class SaveAsync extends AsyncTask<String, String, ServerAnswerEntity>
 	{
 		@Override

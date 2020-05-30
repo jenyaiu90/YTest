@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +11,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -23,7 +19,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -34,8 +29,10 @@ import ru.jenyaiu90.ytest.data.TaskMany;
 import ru.jenyaiu90.ytest.data.TaskOne;
 import ru.jenyaiu90.ytest.data.TaskShort;
 
+//Редактирование задания
 public class TestQEditActivity extends Activity
 {
+	//Для намерения
 	public static final String TASK_TYPE = "task_type";
 	public static final String TASK = "task";
 
@@ -72,9 +69,15 @@ public class TestQEditActivity extends Activity
 				modeRBs[0].setChecked(true);
 				mode(modeRBs[0]);
 
+				//Кнопки удаления вариантов ответа
 				LinearLayout imagesLL = (LinearLayout) ((LinearLayout) ansLL.getChildAt(1)).getChildAt(0);
+
+				//Радиокнопки для выбора верного ответа
 				RadioGroup choiceRG = (RadioGroup) ((LinearLayout) ansLL.getChildAt(1)).getChildAt(1);
+
+				//Поля для ввода вариантов ответа
 				LinearLayout choiceLL = (LinearLayout) ((LinearLayout) ansLL.getChildAt(1)).getChildAt(2);
+
 				imagesLL.removeAllViews();
 				choiceRG.removeAllViews();
 				choiceLL.removeAllViews();
@@ -84,6 +87,7 @@ public class TestQEditActivity extends Activity
 				LinkedList<String> choices = taskOne.getChoice();
 				for (String i : choices)
 				{
+					//Удаление варианта ответа
 					ImageButton removeIB = new ImageButton(TestQEditActivity.this);
 					removeIB.setLayoutParams(new LinearLayout.LayoutParams(75, 75));
 					removeIB.setImageDrawable(getResources().getDrawable(R.drawable.remove));
@@ -114,17 +118,20 @@ public class TestQEditActivity extends Activity
 								choiceRG.removeViewAt(i);
 								choiceLL.removeViewAt(i);
 								removeIBs.remove(i);
-							} else
+							}
+							else
 							{
 								Toast.makeText(TestQEditActivity.this, R.string.at_least_two_ans, Toast.LENGTH_LONG).show();
 							}
 						}
 					});
 
+					//Выбор верного варианта ответа
 					RadioButton choiceRB = new RadioButton(TestQEditActivity.this);
 					choiceRB.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 					choiceRB.setHeight(75);
 
+					//Ввод варианта ответа
 					EditText choiceET = new EditText(TestQEditActivity.this);
 					choiceET.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 					choiceET.setHint(R.string.answer);
@@ -145,9 +152,15 @@ public class TestQEditActivity extends Activity
 				modeRBs[1].setChecked(true);
 				mode(modeRBs[1]);
 
+				//Кнопки удаления вариантов ответа
 				LinearLayout imagesLL = (LinearLayout)((LinearLayout)ansLL.getChildAt(1)).getChildAt(0);
+
+				//Флажки для выбора верноых ответов
 				LinearLayout choiceChLL = (LinearLayout)((LinearLayout)ansLL.getChildAt(1)).getChildAt(1);
+
+				//Поля для ввода вариантов ответа
 				LinearLayout choiceLL = (LinearLayout)((LinearLayout)ansLL.getChildAt(1)).getChildAt(2);
+
 				imagesLL.removeAllViews();
 				choiceChLL.removeAllViews();
 				choiceLL.removeAllViews();
@@ -157,6 +170,7 @@ public class TestQEditActivity extends Activity
 				LinkedList<String> choices = taskMany.getChoice();
 				for (String i : choices)
 				{
+					//Удаление варианта ответа
 					ImageButton removeIB = new ImageButton(TestQEditActivity.this);
 					removeIB.setLayoutParams(new LinearLayout.LayoutParams(75, 75));
 					removeIB.setImageDrawable(getResources().getDrawable(R.drawable.remove));
@@ -195,10 +209,12 @@ public class TestQEditActivity extends Activity
 						}
 					});
 
+					//Выбор верных вариантов ответа
 					CheckBox choiceCB = new CheckBox(TestQEditActivity.this);
 					choiceCB.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 					choiceCB.setHeight(75);
 
+					//Ввода вариантов ответа
 					EditText choiceET = new EditText(TestQEditActivity.this);
 					choiceET.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 					choiceET.setHint(R.string.answer);
@@ -223,8 +239,12 @@ public class TestQEditActivity extends Activity
 				modeRBs[2].setChecked(true);
 				mode(modeRBs[2]);
 
+				//Кнопки для удаления варианта ответа
 				LinearLayout imagesLL = (LinearLayout)((LinearLayout)ansLL.getChildAt(1)).getChildAt(0);
+
+				//Поля для ввода верных ответов
 				LinearLayout choiceLL = (LinearLayout)((LinearLayout)ansLL.getChildAt(1)).getChildAt(1);
+
 				imagesLL.removeAllViews();
 				choiceLL.removeAllViews();
 				removeIBs.clear();
@@ -232,6 +252,7 @@ public class TestQEditActivity extends Activity
 				TaskShort taskShort = (TaskShort) task;
 				for (String i : taskShort.getAnswers())
 				{
+					//Удаление варианта ответа
 					ImageButton removeIB = new ImageButton(TestQEditActivity.this);
 					removeIB.setLayoutParams(new LinearLayout.LayoutParams(75, 75));
 					removeIB.setImageDrawable(getResources().getDrawable(R.drawable.remove));
@@ -268,6 +289,7 @@ public class TestQEditActivity extends Activity
 						}
 					});
 
+					//Ввод верного ответа
 					EditText choiceET = new EditText(TestQEditActivity.this);
 					choiceET.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 					choiceET.setHint(R.string.answer);
@@ -292,6 +314,7 @@ public class TestQEditActivity extends Activity
 		costET.setText(Integer.toString(task.getCost()));
 	}
 
+	//Сохранение задания
 	public void save(View view)
 	{
 		if (textET.getText().toString().isEmpty())
@@ -301,11 +324,11 @@ public class TestQEditActivity extends Activity
 		}
 		if (costET.getText().toString().isEmpty())
 		{
-			costET.setText("1");
+			costET.setText("1"); //Количество баллов по умолчанию
 		}
 		try
 		{
-			if (modeRBs[0].isChecked())
+			if (modeRBs[0].isChecked()) //Один из нескольких
 			{
 				LinkedList<String> choice = new LinkedList<>();
 				LinearLayout answersLL = (LinearLayout) ((LinearLayout) ansLL.getChildAt(1)).getChildAt(2);
@@ -328,7 +351,7 @@ public class TestQEditActivity extends Activity
 				}
 
 				RadioGroup answersRG = (RadioGroup) ((LinearLayout) ansLL.getChildAt(1)).getChildAt(1);
-				int i;
+				int i; //Верный ответ
 				for (i = 0; i < answersRG.getChildCount(); i++)
 				{
 					if (((RadioButton) answersRG.getChildAt(i)).isChecked())
@@ -350,9 +373,9 @@ public class TestQEditActivity extends Activity
 				setResult(RESULT_OK, intent);
 				finish();
 			}
-			else if (modeRBs[1].isChecked())
+			else if (modeRBs[1].isChecked()) //Несколько из нескольких
 			{
-				LinkedList<String> choice = new LinkedList<>();
+				LinkedList<String> choice = new LinkedList<>(); //Варианты ответа
 				LinearLayout answersLL = (LinearLayout) ((LinearLayout) ansLL.getChildAt(1)).getChildAt(2);
 				for (int i = 0; i < answersLL.getChildCount(); i++)
 				{
@@ -373,7 +396,7 @@ public class TestQEditActivity extends Activity
 				}
 
 				LinearLayout answersChLL = (LinearLayout) ((LinearLayout) ansLL.getChildAt(1)).getChildAt(1);
-				LinkedList<Integer> answer = new LinkedList<>();
+				LinkedList<Integer> answer = new LinkedList<>(); //Верные ответы
 				for (int i = 0; i < answersChLL.getChildCount(); i++)
 				{
 					if (((CheckBox) answersChLL.getChildAt(i)).isChecked())
@@ -395,9 +418,9 @@ public class TestQEditActivity extends Activity
 				setResult(RESULT_OK, intent);
 				finish();
 			}
-			else if (modeRBs[2].isChecked())
+			else if (modeRBs[2].isChecked()) //Краткий ответ
 			{
-				LinkedList<String> choice = new LinkedList<>();
+				LinkedList<String> choice = new LinkedList<>(); //Верные ответы
 				LinearLayout answersLL = (LinearLayout) ((LinearLayout) ansLL.getChildAt(1)).getChildAt(1);
 				for (int i = 0; i < answersLL.getChildCount(); i++)
 				{
@@ -432,7 +455,7 @@ public class TestQEditActivity extends Activity
 				setResult(RESULT_OK, intent);
 				finish();
 			}
-			else if (modeRBs[3].isChecked())
+			else if (modeRBs[3].isChecked()) //Развёрнутый ответ
 			{
 				TaskLong taskLong = new TaskLong(textET.getText().toString(), Integer.parseInt(costET.getText().toString()));
 
@@ -456,11 +479,12 @@ public class TestQEditActivity extends Activity
 		finish();
 	}
 
+	//Выбор типа ответа
 	public void mode(View view)
 	{
 		ansLL.removeAllViews();
 		removeIBs.clear();
-		if (view == modeRBs[0])
+		if (view == modeRBs[0]) //Один из нескольких
 		{
 			TextView infoTV = new TextView(TestQEditActivity.this);
 			infoTV.setText(R.string.answers);
@@ -615,7 +639,7 @@ public class TestQEditActivity extends Activity
 			ansLL.addView(choiceLL);
 			ansLL.addView(addBT);
 		}
-		else if (view == modeRBs[1])
+		else if (view == modeRBs[1]) //Несколько из нескольких
 		{
 			TextView infoTV = new TextView(TestQEditActivity.this);
 			infoTV.setText(R.string.answers);
@@ -766,7 +790,7 @@ public class TestQEditActivity extends Activity
 			ansLL.addView(choiceLL);
 			ansLL.addView(addBT);
 		}
-		else if (view == modeRBs[2])
+		else if (view == modeRBs[2]) //Краткий ответ
 		{
 			TextView infoTV = new TextView(TestQEditActivity.this);
 			infoTV.setText(R.string.answers);
@@ -897,7 +921,7 @@ public class TestQEditActivity extends Activity
 			ansLL.addView(choiceLL);
 			ansLL.addView(addBT);
 		}
-		else if (view == modeRBs[3])
+		else if (view == modeRBs[3]) //Развёрнутый ответ
 		{
 			TextView infoTV = new TextView(TestQEditActivity.this);
 			infoTV.setText(R.string.teacher_check);
@@ -910,6 +934,7 @@ public class TestQEditActivity extends Activity
 		}
 	}
 
+	//Удаление задания
 	public void delete(View view)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(TestQEditActivity.this);

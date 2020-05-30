@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -14,27 +13,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 import ru.jenyaiu90.ytest.R;
-import ru.jenyaiu90.ytest.data.Task;
-import ru.jenyaiu90.ytest.data.TaskLong;
-import ru.jenyaiu90.ytest.data.TaskMany;
-import ru.jenyaiu90.ytest.data.TaskOne;
-import ru.jenyaiu90.ytest.data.TaskShort;
-import ru.jenyaiu90.ytest.data.Test;
-import ru.jenyaiu90.ytest.data.Util;
 
 public class MainActivity extends AppCompatActivity
 {
-	public static final int AUTH_REQUEST = 1; //Код запроса на вход
+	//Для намерения
+	public static final String LOGIN = "login";
+	public static final String PASSWORD = "password";
+	public static final String IS_TEACHER = "is_teacher";
 
-	public static final String LOGIN = "login"; //Для намерения: логин
-	public static final String PASSWORD = "password"; //Для намерения: пароль
-	public static final String IS_TEACHER = "is_teacher"; //Для намерения: является ли учителем
+	public static final int AUTH_REQUEST = 1; //Код запроса на вход
 
 	protected String login, password;
 	protected boolean isTeacher;
@@ -64,9 +52,10 @@ public class MainActivity extends AppCompatActivity
 		auth(null);
 	}
 
-	public void tests(@Nullable View view) //Перейти к тестам
+	//Кнопка «Тесты»
+	public void tests(@Nullable View view)
 	{
-		if (isTeacher)
+		if (isTeacher) //Для учителя: создание теста
 		{
 			AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
 
@@ -99,7 +88,7 @@ public class MainActivity extends AppCompatActivity
 			alert.setNegativeButton(R.string.cancel, null);
 			alert.show();
 		}
-		else
+		else //Для ученика: переход к списку заданных тестов
 		{
 			Intent testListIntent;
 			testListIntent = new Intent(MainActivity.this, TestListActivity.class);
@@ -108,7 +97,9 @@ public class MainActivity extends AppCompatActivity
 			startActivity(testListIntent);
 		}
 	}
-	public void groups(@Nullable View view) //Перейти к группам
+
+	//Кнопка «Группы»
+	public void groups(@Nullable View view)
 	{
 		Intent groupListIntent = new Intent(MainActivity.this, GroupListActivity.class);
 		groupListIntent.putExtra(GroupListActivity.LOGIN, login);
@@ -116,19 +107,25 @@ public class MainActivity extends AppCompatActivity
 		groupListIntent.putExtra(GroupListActivity.IS_TEACHER, isTeacher);
 		startActivity(groupListIntent);
 	}
-	public void account(@Nullable View view) //Перейти к аккаунту
+
+	//Кнопка «Аккаунт»
+	public void account(@Nullable View view)
 	{
 		Intent i = new Intent(MainActivity.this, AccountActivity.class);
 		i.putExtra(AccountActivity.LOGIN, login);
 		i.putExtra(AccountActivity.ACC_LOGIN, login);
 		startActivity(i);
 	}
-	public void auth(@Nullable View view) //Перейти ко входу
+
+	//Кнопка «Выход» / переход к экрану авторизации
+	public void auth(@Nullable View view)
 	{
 		Intent i = new Intent(MainActivity.this, AuthActivity.class);
 		startActivityForResult(i, AUTH_REQUEST);
 	}
-	public void info(View view) //Информация
+
+	//Информация о приложении
+	public void info(View view)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 		builder.setMessage(R.string.icons_copyright)
@@ -144,7 +141,7 @@ public class MainActivity extends AppCompatActivity
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode)
 		{
-			case AUTH_REQUEST: //Получение логина
+			case AUTH_REQUEST: //Получение некоторых данных пользователя
 				login = data.getStringExtra(LOGIN);
 				password = data.getStringExtra(PASSWORD);
 				isTeacher = data.getBooleanExtra(IS_TEACHER, false);
