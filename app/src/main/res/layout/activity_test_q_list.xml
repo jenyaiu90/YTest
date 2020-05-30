@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/testLL"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	<Button
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/save"
+		android:onClick="save"/>
+	<Button
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/create_q"
+		android:onClick="create"/>
+	<ListView
+		android:id="@+id/questionsLV"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
+</LinearLayout>

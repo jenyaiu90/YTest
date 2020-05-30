@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="ru.jenyaiu90.ytest">
+	
+	<application
+		android:allowBackup="true"
+		android:icon="@drawable/icon"
+		android:label="@string/app_name"
+		android:roundIcon="@drawable/icon"
+		android:supportsRtl="true"
+		android:theme="@style/AppTheme"
+		android:usesCleartextTraffic="true">
+		<activity android:name=".activities.MainActivity" android:configChanges="orientation|screenSize">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+				
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+		<activity android:name=".activities.AuthActivity" android:configChanges="orientation|screenSize"/>
+		<activity android:name=".activities.AccountActivity" android:configChanges="orientation|screenSize"/>
+		<activity android:name=".activities.AccountEditActivity" android:configChanges="orientation|screenSize"/>
+		<activity android:name=".activities.TestQActivity" android:configChanges="orientation|screenSize"/>
+		<activity android:name=".activities.TestQListActivity" android:configChanges="orientation|screenSize"/>
+		<activity android:name=".activities.TestQEditActivity" android:configChanges="orientation|screenSize"/>
+		<activity android:name=".activities.TestListActivity" android:configChanges="orientation|screenSize"/>
+		<activity android:name=".activities.TestResultActivity" android:configChanges="orientation|screenSize"/>
+		<activity android:name=".activities.GroupListActivity" android:configChanges="orientation|screenSize"/>
+		<activity android:name=".activities.GroupViewActivity" android:configChanges="orientation|screenSize"/>
+		<activity android:name=".activities.UserResultActivity" android:configChanges="orientation|screenSize"/>
+		<activity android:name=".activities.ResultActivity" android:configChanges="orientation|screenSize"/>
+	</application>
+	
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.INTERNET"/>
+
+</manifest>

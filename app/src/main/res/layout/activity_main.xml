@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:background="@color/colorBack">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+		<TextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:text="@string/app_name"
+			android:layout_weight="1"
+			android:textSize="40sp"
+			android:textColor="@color/colorPrimary"/>
+		<ImageView
+			android:id="@+id/infoIV"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:onClick="info"/>
+			
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:orientation="horizontal">
+		<ImageButton
+			android:id="@+id/testsIB"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:onClick="tests"/>
+		<ImageButton
+			android:id="@+id/groupsIB"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:onClick="groups"/>
+	</LinearLayout>
+	<LinearLayout
+	android:layout_width="match_parent"
+	android:layout_height="0dp"
+	android:layout_weight="1"
+	android:orientation="horizontal">
+		<ImageButton
+			android:id="@+id/accountIB"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:onClick="account"/>
+		<ImageButton
+			android:id="@+id/signOutIB"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:onClick="auth"/>
+</LinearLayout>
+</LinearLayout>

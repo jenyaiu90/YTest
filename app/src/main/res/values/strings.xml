@@ -1,0 +1,111 @@
+<resources>
+	<string name="app_name">YTest</string>
+	
+	<!-- Choice -->
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	<string name="ok">OK</string>
+	<string name="save">Save</string>
+	<string name="cancel">Cancel</string>
+	<string name="done">Done</string>
+	
+	<!-- Titles -->
+	<string name="auth">Authorization</string>
+	<string name="result">Result</string>
+	<string name="enter_name_subject">Enter test`s name and subject</string>
+	<string name="answers">Answers:</string>
+	<string name="cost_">Cost:</string>
+	<string name="points">Points</string>
+	<string name="task">Task</string>
+	<string name="delete_sure">Do you want to delete this task?</string>
+	<string name="enter_group_name">Enter group name</string>
+	<string name="enter_group_id">Enter group`s ID</string>
+	<string name="set_test_title">Set test for the group</string>
+	<string name="chose_test_set">Chose test for set</string>
+	<string name="view_results">View results of tests</string>
+	<string name="chose_test_result">Chose test for view result</string>
+	<string name="more">And more…</string>
+	<string name="check">Checking answer</string>
+	
+	<!-- Hints -->
+	<string name="login">Login</string>
+	<string name="password">Password</string>
+	<string name="name">Name</string>
+	<string name="surname">Surname</string>
+	<string name="im_teacher">I`m a teacher</string>
+	<string name="teacher">Teacher</string>
+	<string name="student">Student</string>
+	<string name="is_teacher">Type</string>
+	<string name="email">E-mail</string>
+	<string name="phone_number">Phone number</string>
+	<string name="old_password">Old password</string>
+	<string name="new_password">New password</string>
+	<string name="enter_task">Enter task here</string>
+	<string name="answer">Answer</string>
+	<string name="cost">Cost</string>
+	<string name="test_name">Test name</string>
+	<string name="subject">Subject</string>
+	<string name="group_name">Group name</string>
+	<string name="group_id">Group`s ID</string>
+	
+	<!-- Buttons -->
+	<string name="sign_in">Sign in</string>
+	<string name="sign_up">Sign up</string>
+	<string name="edit">Edit</string>
+	<string name="prev">Previous</string>
+	<string name="next">Next</string>
+	<string name="create_q">Create new task</string>
+	<string name="create_test">Create new test</string>
+	<string name="add_answer">Add answer</string>
+	<string name="new_task">New task</string>
+	<string name="delete">Delete</string>
+	<string name="create_group">Create new group</string>
+	<string name="join_group">Join group</string>
+	<string name="set_test">Set test</string>
+	<string name="results">Results</string>
+	
+	<!-- Messages -->
+	<string name="no_login">Login must be filled</string>
+	<string name="no_password">Password must be filled</string>
+	<string name="no_name">Name must be filled</string>
+	<string name="no_surname">Surname must be filled</string>
+	<string name="login_pass_space">Login and password cannot contain space</string>
+	<string name="sign_up_success">You have successfully created an account</string>
+	<string name="login_pass_incorrect">Login or password is incorrect</string>
+	<string name="couldnt_load_user">Server couldn`t find information about user</string>
+	<string name="icons_copyright">YTest, Alpha 1.0.0\nIcons were created by icons8.ru</string>
+	<string name="invalid_email">Invalid email</string>
+	<string name="no_answer">You didn`t give an answer</string>
+	<string name="at_least_two_ans">A test must have at least two answers</string>
+	<string name="at_least_one_ans">A test must have at least one answer</string>
+	<string name="teacher_check">Tasks with a long answer are checked by the teacher.</string>
+	<string name="empty_answer">An answer can`t be empty</string>
+	<string name="empty_task">A task must have a question</string>
+	<string name="invalid_cost">The cost must be an integer number</string>
+	<string name="answers_eq">The answers can`t be equals</string>
+	<string name="answer_sure">Are yot sure you want to finish a test?</string>
+	<string name="should_set_answer">You should set a right answer</string>
+	<string name="not_checked">Some tasks haven`t been checked by teacher yet.</string>
+	<string name="no_group_name">You should enter a group`s name</string>
+	<string name="no_group_id">You should enter a group`s ID</string>
+	<string name="test_is_set">The test is successfully set</string>
+	<string name="enter_points">Enter points count — a number from 0 to</string>
+	
+	<!-- Server errors -->
+	<string name="error">An unknown error occurred</string>
+	<string name="no_internet">Couldn`t find the server, probably you`re not connected to the Internet</string>
+	<string name="error_password">Your password is incorrect</string>
+	<string name="error_no_user">An error occurred, you wasn`t found in the database of the users</string>
+	<string name="error_no_group">An error occurred, the group wasn`t found</string>
+	<string name="error_no_test">An error occurred, the test wasn`t found</string>
+	<string name="error_no_access">An error occurred, your access wasn`t granted</string>
+	<string name="error_no_task">An error occurred, couldn`t find the task</string>
+	<string name="error_user_already_exists">A user with that login have already signed up</string>
+	
+	<!-- Task types -->
+	<string name="one_q">One of many</string>
+	<string name="many_q">Many of many</string>
+	<string name="short_q">Short answer</string>
+	<string name="long_q">Long answer</string>
+	
+</resources>
